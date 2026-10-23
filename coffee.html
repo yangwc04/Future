@@ -1,0 +1,540 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>커피 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gothic+A1:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column; each section is a stop on the trip from coffee cherry to the futures screen */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --fg:#2a211c; --muted:#6c625b; --line:#dfdcd3;
+  --roast:#6b3f24; --roast-soft:#f1e5db;
+  --cherry:#b8322a; --cherry-soft:#f8e1de;
+  --bean:#5f7f3c; --bean-soft:#e3ecd7;
+  --robusta:#b9771c; --robusta-soft:#f7ead2;
+  --frost:#2d6c8c; --frost-soft:#dcecf4;
+  --display:"Do Hyeon","Gothic A1",system-ui,sans-serif;
+  --body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17130f; --surface:#211b16; --fg:#efe7df; --muted:#b0a397; --line:#3a3029;
+  --roast:#d9a27a; --roast-soft:#3a2819;
+  --cherry:#ff7d70; --cherry-soft:#3d1c18;
+  --bean:#9cc56f; --bean-soft:#22301a;
+  --robusta:#f0b55a; --robusta-soft:#3a2b12;
+  --frost:#6db6d9; --frost-soft:#14303d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17130f; --surface:#211b16; --fg:#efe7df; --muted:#b0a397; --line:#3a3029;
+  --roast:#d9a27a; --roast-soft:#3a2819;
+  --cherry:#ff7d70; --cherry-soft:#3d1c18;
+  --bean:#9cc56f; --bean-soft:#22301a;
+  --robusta:#f0b55a; --robusta-soft:#3a2b12;
+  --frost:#6db6d9; --frost-soft:#14303d; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.2rem)}
+h2{font-size:1.8rem}
+h3{font-size:1.2rem}
+p{margin:0}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--cherry)}
+.lead{font-size:1.1rem;color:var(--muted)}
+.answer{background:var(--roast-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--roast)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--roast);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:0}
+.cap{font-size:.85rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.bad{color:var(--cherry)} td.good{color:var(--bean);font-weight:600}
+.vs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.vs>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.vs .head{display:flex;align-items:center;gap:12px}
+.vs .head svg{flex:none}
+.vs .head small{display:block;color:var(--muted);font-size:.85rem}
+.meter{display:flex;flex-direction:column;gap:3px}
+.meter .lbl{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+.meter .lbl b{color:var(--fg);font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.ara .bar i{background:var(--bean)}
+.rob .bar i{background:var(--robusta)}
+.uses{font-size:.9rem;color:var(--muted)}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.who>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-sell{background:var(--bean-soft);color:var(--bean)}
+.t-buy{background:var(--frost-soft);color:var(--frost)}
+.t-mid{background:var(--robusta-soft);color:var(--robusta)}
+.t-spec{background:var(--cherry-soft);color:var(--cherry)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800}
+.up{color:var(--cherry)} .down{color:var(--bean)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%}
+.spec.a h3{background:var(--bean-soft)} .spec.a .dot{background:var(--bean)}
+.spec.r h3{background:var(--robusta-soft)} .spec.r .dot{background:var(--robusta)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--fg);padding:5px 14px;border-radius:99px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--roast);color:var(--surface)}
+.seg button:focus-visible{outline:2px solid var(--frost);outline-offset:2px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs input:focus-visible{outline:2px solid var(--frost);outline-offset:1px}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500}
+.pos{color:var(--bean)} .neg{color:var(--cherry)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--cherry);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fun{background:var(--surface);border:1px dashed var(--roast);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+@media (prefers-reduced-motion: no-preference){
+  .bar i{animation:grow .9s ease-out both}
+  @keyframes grow{from{transform:scaleX(.2);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+}
+
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--bean) 88%,#000);--hero-b:color-mix(in srgb,var(--roast) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--bean) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--roast) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--bean) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--roast) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{display:flex;flex-direction:column;background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow,main>header h1 span{color:#ffe3a3!important}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8);font-size:.85rem;text-decoration:none}
+section>.eyebrow{align-self:flex-start;background:var(--bean-soft);color:var(--bean);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+.fig,.calc,.spec,.quote>div,.warn>div,.who>div,.risks>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.who>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.who>div:hover{transform:translateY(-2px);border-color:var(--bean)}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))!important}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--bean-soft),var(--surface) 70%)}
+.note{border-left-color:var(--bean)}
+.ptnote{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:.92rem;box-shadow:var(--shadow)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+</style>
+
+<main>
+
+<header>
+  <a class="back" href="index.html">← 미국 선물 한눈에 보기</a>
+  <span class="eyebrow">원자재 선물 · COFFEE</span>
+  <h1>커피 선물은 왜<br><span style="color:var(--bean)">초록색 콩</span>을 거래할까?</h1>
+  <p class="lead">IBKR에서 보이는 커피 선물(KC, RC)은 볶은 원두가 아니라 <b>볶기 전 생두(그린빈)</b>를 거래합니다. 오렌지주스가 "냉동 농축액"이었던 것과 같은 이유예요.</p>
+  <div class="answer">
+    <p><strong>한 줄 정답:</strong> 볶은 원두는 몇 주면 향이 날아가고, 볶는 방식이 회사마다 달라서 "똑같은 물건"이 될 수 없어요.</p>
+    <p>생두는 잘 말려두면 <b>1년 넘게 보관</b>되고, <b>결점두 개수·콩 크기·맛 테스트로 등급을 숫자로 매길 수</b> 있고, <b>60kg 자루에 담아 배로</b> 전 세계에 보낼 수 있어요. 커피 회사들이 실제로 사고파는 것도 생두라서, 선물 시장도 생두를 기준으로 만들어졌습니다.</p>
+  </div>
+  <nav class="toc" aria-label="목차">
+    <a href="#process">생두가 되는 과정</a><a href="#types">아라비카 vs 로부스타</a><a href="#origins">주요 산지</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a>
+  </nav>
+</header>
+
+<section id="process">
+  <span class="eyebrow">1. 커피 열매가 선물이 되기까지</span>
+  <h2>체리에서 생두 자루까지</h2>
+  <div class="fig">
+    <svg viewBox="0 0 760 270" role="img" aria-label="커피 체리 수확, 과육 제거, 건조, 생두 선별, 자루 포장, 그리고 선물 이후의 로스팅 과정">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+      <!-- 1 cherries on branch -->
+      <path d="M20 60 Q60 50 110 70" stroke="var(--roast)" stroke-width="4" fill="none"/>
+      <ellipse cx="40" cy="45" rx="14" ry="7" fill="var(--bean)" transform="rotate(-20 40 45)"/>
+      <ellipse cx="92" cy="52" rx="14" ry="7" fill="var(--bean)" transform="rotate(15 92 52)"/>
+      <circle cx="50" cy="76" r="11" fill="var(--cherry)"/><circle cx="68" cy="82" r="11" fill="var(--cherry)"/><circle cx="84" cy="76" r="11" fill="var(--cherry)"/>
+      <circle cx="46" cy="72" r="3" fill="var(--surface)" opacity=".5"/>
+      <text x="65" y="150" text-anchor="middle" class="b">수확</text>
+      <text x="65" y="170" text-anchor="middle" class="sm">빨간 커피 체리</text>
+      <line x1="120" y1="80" x2="155" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 2 pulp removed: cherry cut showing 2 seeds -->
+      <circle cx="205" cy="80" r="32" fill="var(--cherry-soft)" stroke="var(--cherry)" stroke-width="3"/>
+      <ellipse cx="193" cy="80" rx="10" ry="17" fill="var(--bean)" opacity=".85"/>
+      <ellipse cx="217" cy="80" rx="10" ry="17" fill="var(--bean)" opacity=".85"/>
+      <text x="205" y="150" text-anchor="middle" class="b">과육 벗기기</text>
+      <text x="205" y="170" text-anchor="middle" class="sm">안에 씨앗 2개</text>
+      <line x1="248" y1="80" x2="283" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 3 drying -->
+      <circle cx="345" cy="44" r="13" fill="var(--robusta)"/>
+      <g stroke="var(--robusta)" stroke-width="2"><line x1="345" y1="22" x2="345" y2="26"/><line x1="323" y1="44" x2="327" y2="44"/><line x1="363" y1="44" x2="367" y2="44"/></g>
+      <rect x="298" y="90" width="94" height="14" rx="3" fill="var(--roast-soft)" stroke="var(--roast)" stroke-width="1.5"/>
+      <g fill="var(--bean)"><ellipse cx="312" cy="86" rx="6" ry="4"/><ellipse cx="327" cy="86" rx="6" ry="4"/><ellipse cx="342" cy="86" rx="6" ry="4"/><ellipse cx="357" cy="86" rx="6" ry="4"/><ellipse cx="372" cy="86" rx="6" ry="4"/></g>
+      <text x="345" y="150" text-anchor="middle" class="b">말리기</text>
+      <text x="345" y="170" text-anchor="middle" class="sm">수분 약 11~12%로</text>
+      <line x1="402" y1="80" x2="437" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 4 grading -->
+      <rect x="452" y="54" width="76" height="52" rx="8" fill="var(--surface)" stroke="var(--frost)" stroke-width="2"/>
+      <g fill="var(--bean)"><ellipse cx="470" cy="72" rx="7" ry="10"/><ellipse cx="490" cy="72" rx="7" ry="10"/><ellipse cx="510" cy="72" rx="7" ry="10"/></g>
+      <ellipse cx="480" cy="94" rx="5" ry="7" fill="var(--muted)"/>
+      <line x1="472" y1="86" x2="488" y2="102" stroke="var(--cherry)" stroke-width="2"/>
+      <text x="490" y="150" text-anchor="middle" class="b">선별·등급</text>
+      <text x="490" y="170" text-anchor="middle" class="sm">결점두·크기·맛 검사</text>
+      <line x1="540" y1="80" x2="575" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- 5 sacks -->
+      <path d="M592 52 Q590 46 598 46 L632 46 Q640 46 638 52 L642 112 Q642 118 634 118 L596 118 Q588 118 588 112z" fill="var(--roast-soft)" stroke="var(--roast)" stroke-width="2"/>
+      <text x="615" y="88" text-anchor="middle" class="b" style="font-size:13px;fill:var(--roast)">60kg</text>
+      <path d="M648 60 Q646 54 654 54 L684 54 Q692 54 690 60 L694 112 Q694 118 686 118 L652 118 Q644 118 644 112z" fill="var(--roast-soft)" stroke="var(--roast)" stroke-width="2"/>
+      <text x="641" y="150" text-anchor="middle" class="b">자루 → 인증 창고</text>
+      <text x="641" y="170" text-anchor="middle" class="sm">1년 넘게 보관 가능</text>
+      <rect x="440" y="190" width="300" height="28" rx="14" fill="var(--bean-soft)"/>
+      <text x="590" y="209" text-anchor="middle" class="b" style="font-size:13px;fill:var(--bean)">선물은 여기, 이 생두 자루를 거래</text>
+      <!-- after: roasting -->
+      <line x1="30" y1="246" x2="730" y2="246" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="30" y="238" class="sm">선물 이후 단계 (커피 회사 몫)</text>
+      <g fill="var(--roast)"><ellipse cx="260" cy="234" rx="7" ry="10"/><ellipse cx="278" cy="234" rx="7" ry="10"/></g>
+      <text x="296" y="239" class="sm">로스팅 → 2~4주면 향이 빠짐 → 그래서 선물 대상이 될 수 없어요</text>
+    </svg>
+  </div>
+  <p class="cap">카페에서 보는 갈색 원두는 생두를 볶은 거예요. 볶는 정도와 블렌딩은 브랜드마다 다르고 금방 상하니까, 시장은 "볶기 직전의 표준 상태"인 생두로 가격을 정합니다.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>볶은 원두</th><th>생두 (그린빈)</th></tr></thead>
+    <tbody>
+      <tr><td>보관</td><td class="bad">몇 주면 향 손실</td><td class="good">잘 보관하면 1년 이상</td></tr>
+      <tr><td>품질 통일</td><td class="bad">로스팅 정도가 제각각</td><td class="good">결점두 수·스크린 크기·커핑 점수로 등급화</td></tr>
+      <tr><td>운송</td><td>밀봉 포장 필요</td><td class="good">60kg 마대 자루로 컨테이너 운송</td></tr>
+      <tr><td>실제 거래</td><td>소매 시장</td><td class="good">농장·수출상·로스터가 사고파는 단위</td></tr>
+      <tr><td>선물로 적합?</td><td class="bad">✗</td><td class="good">✓</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="types">
+  <span class="eyebrow">2. 커피 선물은 두 종류</span>
+  <h2>아라비카 vs 로부스타</h2>
+  <p>같은 커피지만 다른 나무, 다른 맛, 다른 거래소예요. 뉴스에서 "커피 가격"이라고 하면 보통 뉴욕의 <b>아라비카(KC)</b>를 말합니다.</p>
+  <div class="vs">
+    <div class="ara">
+      <div class="head">
+        <svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true"><ellipse cx="22" cy="28" rx="17" ry="25" fill="var(--bean)"/><path d="M22 6 Q14 28 22 50" stroke="var(--surface)" stroke-width="3" fill="none"/></svg>
+        <div><h3>아라비카 <span style="font-family:var(--mono);font-size:.9rem;color:var(--bean)">KC</span></h3><small>길쭉한 타원형, S자 홈 · 뉴욕 ICE US</small></div>
+      </div>
+      <div class="meter"><div class="lbl"><span>세계 생산 비중</span><b>약 55~60%</b></div><div class="bar"><i style="width:58%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>카페인</span><b>약 1.2~1.5%</b></div><div class="bar"><i style="width:45%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>재배 고도</span><b>약 1,000~2,000m 고지대</b></div><div class="bar"><i style="width:90%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>병충해·날씨 강도</span><b>약함 (서리·가뭄에 민감)</b></div><div class="bar"><i style="width:30%"></i></div></div>
+      <p class="uses"><b>맛:</b> 산미, 꽃·과일 향, 부드러움<br><b>쓰임:</b> 스페셜티, 핸드드립, 스타벅스 같은 카페 원두</p>
+    </div>
+    <div class="rob">
+      <div class="head">
+        <svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true"><ellipse cx="22" cy="28" rx="19" ry="21" fill="var(--robusta)"/><line x1="22" y1="9" x2="22" y2="47" stroke="var(--surface)" stroke-width="3"/></svg>
+        <div><h3>로부스타 <span style="font-family:var(--mono);font-size:.9rem;color:var(--robusta)">RC</span></h3><small>동글동글, 일자 홈 · 런던 ICE Europe</small></div>
+      </div>
+      <div class="meter"><div class="lbl"><span>세계 생산 비중</span><b>약 40~45%</b></div><div class="bar"><i style="width:42%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>카페인</span><b>약 2.2~2.7% (거의 2배)</b></div><div class="bar"><i style="width:85%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>재배 고도</span><b>약 0~800m 저지대</b></div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="meter"><div class="lbl"><span>병충해·날씨 강도</span><b>강함 (이름부터 robust)</b></div><div class="bar"><i style="width:80%"></i></div></div>
+      <p class="uses"><b>맛:</b> 쓴맛, 고소함, 묵직한 바디<br><b>쓰임:</b> 인스턴트 커피, 믹스커피, 에스프레소 블렌드(크레마용)</p>
+    </div>
+  </div>
+  <p class="note">한국 믹스커피·캔커피는 로부스타 비중이 높고, 카페 원두는 아라비카가 주력이에요. 보통 아라비카가 더 비싸고, 두 가격 차이(아라비카 − 로부스타 스프레드)도 트레이더들이 자주 보는 지표입니다.</p>
+</section>
+
+<section id="origins">
+  <span class="eyebrow">3. 어디서 나나</span>
+  <h2>브라질 하나가 세계의 1/3 이상</h2>
+  <div class="fig">
+    <svg viewBox="0 0 720 300" role="img" aria-label="국가별 커피 생산 비중 가로 막대 그래프. 브라질 약 37%, 베트남 약 17%, 콜롬비아 약 7%, 인도네시아 약 6%, 에티오피아 약 5%, 기타 약 28%">
+      <text x="20" y="26" class="sm">국가별 세계 커피 생산 비중 (대략, 최근 시즌 기준)</text>
+      <!-- scale: 0-40% -> x 170..650 (12px per %) -->
+      <g stroke="var(--line)" stroke-width="1">
+        <line x1="170" y1="40" x2="170" y2="262"/><line x1="290" y1="40" x2="290" y2="262"/><line x1="410" y1="40" x2="410" y2="262"/><line x1="530" y1="40" x2="530" y2="262"/><line x1="650" y1="40" x2="650" y2="262"/>
+      </g>
+      <g class="sm" text-anchor="middle"><text x="170" y="282">0%</text><text x="290" y="282">10%</text><text x="410" y="282">20%</text><text x="530" y="282">30%</text><text x="650" y="282">40%</text></g>
+      <!-- Brazil: 37% -> 444 width; split approx arabica 70% / robusta 30% -->
+      <text x="20" y="64" class="b">🇧🇷 브라질</text>
+      <rect x="170" y="48" width="311" height="24" rx="4" fill="var(--bean)"/>
+      <rect x="481" y="48" width="133" height="24" fill="var(--robusta)"/>
+      <text x="624" y="65" class="b">37%</text>
+      <!-- Vietnam 17% -> 204 -->
+      <text x="20" y="100" class="b">🇻🇳 베트남</text>
+      <rect x="170" y="84" width="204" height="24" rx="4" fill="var(--robusta)"/>
+      <text x="384" y="101" class="b">17%</text>
+      <!-- Colombia 7% -> 84 -->
+      <text x="20" y="136" class="b">🇨🇴 콜롬비아</text>
+      <rect x="170" y="120" width="84" height="24" rx="4" fill="var(--bean)"/>
+      <text x="264" y="137" class="b">7%</text>
+      <!-- Indonesia 6% -> 72 mostly robusta -->
+      <text x="20" y="172" class="b">🇮🇩 인도네시아</text>
+      <rect x="170" y="156" width="72" height="24" rx="4" fill="var(--robusta)"/>
+      <text x="252" y="173" class="b">6%</text>
+      <!-- Ethiopia 5% -> 60 -->
+      <text x="20" y="208" class="b">🇪🇹 에티오피아</text>
+      <rect x="170" y="192" width="60" height="24" rx="4" fill="var(--bean)"/>
+      <text x="240" y="209" class="b">5%</text>
+      <!-- others 28% -> 336 -->
+      <text x="20" y="244" class="b">기타 (온두라스·우간다·인도 등)</text>
+      <rect x="170" y="228" width="336" height="24" rx="4" fill="var(--line)"/>
+      <text x="516" y="245" class="b">28%</text>
+      <!-- legend -->
+      <rect x="540" y="104" width="12" height="12" rx="2" fill="var(--bean)"/><text x="558" y="115" class="sm">주로 아라비카</text>
+      <rect x="540" y="126" width="12" height="12" rx="2" fill="var(--robusta)"/><text x="558" y="137" class="sm">주로 로부스타</text>
+    </svg>
+  </div>
+  <div class="who">
+    <div><span class="tag t-sell">아라비카 + 로부스타</span><h3>브라질</h3><p>세계 1위. 아라비카 최대 산지이자 로부스타(코닐론)도 많이 생산해요. <b>브라질 날씨 = 커피 가격</b>이라고 봐도 될 정도예요.</p></div>
+    <div><span class="tag t-mid">로부스타</span><h3>베트남</h3><p>세계 2위이자 로부스타 1위. 중부 고원(닥락 등)에서 생산하고, 런던 로부스타(RC) 가격을 좌우합니다.</p></div>
+    <div><span class="tag t-sell">아라비카 (워시드)</span><h3>콜롬비아</h3><p>고급 수세식 아라비카의 대표. 맛이 좋아 KC 선물 가격보다 웃돈(프리미엄)을 받고 거래돼요.</p></div>
+  </div>
+  <p class="note">비중은 USDA 등 공개 통계를 바탕으로 한 대략적인 규모예요. 해마다 작황에 따라 몇 %씩 달라집니다.</p>
+</section>
+
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>커피 트레이더의 달력</h2>
+  <div class="fig">
+    <svg viewBox="0 0 740 250" role="img" aria-label="월별 달력: 브라질 수확 5~9월, 브라질 서리 위험 6~8월, 브라질 개화와 강우 9~11월, 베트남 수확 10~1월, 콜롬비아 주수확 10~12월">
+      <!-- 12 months: x from 150, width 48 each -->
+      <g class="sm" text-anchor="middle">
+        <text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text>
+      </g>
+      <g stroke="var(--line)" stroke-width="1">
+        <line x1="150" y1="38" x2="150" y2="232"/><line x1="294" y1="38" x2="294" y2="232"/><line x1="438" y1="38" x2="438" y2="232"/><line x1="582" y1="38" x2="582" y2="232"/><line x1="726" y1="38" x2="726" y2="232"/>
+      </g>
+      <!-- row 1 Brazil harvest May-Sep -->
+      <text x="16" y="66" class="b">브라질 수확</text>
+      <rect x="342" y="50" width="240" height="24" rx="12" fill="var(--bean-soft)" stroke="var(--bean)"/>
+      <text x="462" y="67" text-anchor="middle" style="font-size:12px;fill:var(--bean)" class="b">5~9월 · 공급 쏟아짐</text>
+      <!-- row 2 frost Jun-Aug -->
+      <text x="16" y="104" class="b">브라질 서리 위험</text>
+      <rect x="390" y="88" width="144" height="24" rx="12" fill="var(--frost-soft)" stroke="var(--frost)"/>
+      <text x="462" y="105" text-anchor="middle" style="font-size:12px;fill:var(--frost)" class="b">❄ 6~8월 · 남반구 겨울</text>
+      <!-- row 3 flowering Sep-Nov -->
+      <text x="16" y="142" class="b">브라질 개화·우기</text>
+      <rect x="534" y="126" width="144" height="24" rx="12" fill="var(--cherry-soft)" stroke="var(--cherry)"/>
+      <text x="606" y="143" text-anchor="middle" style="font-size:12px;fill:var(--cherry)" class="b">9~11월 · 비 오나?</text>
+      <!-- row 4 Vietnam Oct-Jan (wraps) -->
+      <text x="16" y="180" class="b">베트남 수확</text>
+      <rect x="582" y="164" width="144" height="24" rx="12" fill="var(--robusta-soft)" stroke="var(--robusta)"/>
+      <rect x="150" y="164" width="48" height="24" rx="12" fill="var(--robusta-soft)" stroke="var(--robusta)"/>
+      <text x="654" y="181" text-anchor="middle" style="font-size:12px;fill:var(--robusta)" class="b">10~1월 · RC에 영향</text>
+      <!-- row 5 Colombia main crop Oct-Dec -->
+      <text x="16" y="218" class="b">콜롬비아 주수확</text>
+      <rect x="582" y="202" width="144" height="24" rx="12" fill="var(--bean-soft)" stroke="var(--bean)"/>
+      <text x="654" y="219" text-anchor="middle" style="font-size:12px;fill:var(--bean)" class="b">10~12월</text>
+      <text x="174" y="219" text-anchor="middle" class="sm">(4~6월 소수확)</text>
+    </svg>
+  </div>
+  <p class="cap">지금(10월)은 브라질 개화가 잘 됐는지, 베트남 수확이 어떤지가 핵심 뉴스인 시기예요. 6~8월 브라질 한파 예보가 나오면 아라비카가 하루 만에 급등하기도 합니다.</p>
+</section>
+
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>커피는 날씨 + 환율 + 재고 상품</h2>
+  <div class="drivers">
+    <div><div class="k"><h3>브라질 서리·가뭄</h3><span class="dir up">▲ 가격 상승</span></div><p>한 번 얼어 죽은 나무는 다시 열매 맺기까지 2~3년이 걸려요. 그래서 서리 충격은 오래 갑니다. 1975년, 2021년 7월 서리가 대표적이에요.</p></div>
+    <div><div class="k"><h3>브라질 헤알화</h3><span class="dir down">▼ 헤알 약세면 하락</span></div><p>헤알이 싸지면 브라질 농가는 달러로 팔아도 자국 돈으로 많이 받으니 수출을 늘려요. 공급이 늘어 국제 가격엔 하락 압력.</p></div>
+    <div><div class="k"><h3>ICE 인증 재고</h3><span class="dir up">▼ 재고 줄면 ▲</span></div><p>거래소 창고에 있는 "선물로 인도 가능한" 생두 양이에요. 매일 발표되고, 줄어들면 공급 부족 신호로 읽힙니다.</p></div>
+    <div><div class="k"><h3>격년 주기 (on/off)</h3><span class="dir up">off 해엔 ▲</span></div><p>아라비카 나무는 한 해 많이 열리면 다음 해엔 쉬는 경향이 있어요. 브라질 생산이 해마다 들쭉날쭉한 이유예요.</p></div>
+    <div><div class="k"><h3>베트남 작황</h3><span class="dir up">흉작이면 ▲</span></div><p>로부스타 가격에 가장 직접적이에요. 엘니뇨로 가물면 베트남 생산이 줄어 RC가 크게 오릅니다.</p></div>
+    <div><div class="k"><h3>물류·규제·관세</h3><span class="dir up">막히면 ▲</span></div><p>해상 운임, 홍해 같은 항로 문제, EU 산림훼손 규제(EUDR), 각국 관세 정책이 수입 비용과 흐름을 바꿔요.</p></div>
+  </div>
+  <p class="note">2024~2025년에는 브라질·베트남 연속 가뭄과 낮은 재고가 겹쳐 아라비카가 파운드당 4달러를 넘는 사상 최고가를, 로부스타도 톤당 5,000달러를 넘는 기록을 찍었어요. 그만큼 변동성이 큰 상품입니다. 지금 가격은 IBKR 화면에서 확인하세요.</p>
+</section>
+
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 커피 선물을 거래할까</h2>
+  <div class="fig narrow">
+    <svg viewBox="0 0 660 200" role="img" aria-label="농가는 가격 하락이 걱정이라 선물을 팔고, 로스터는 가격 상승이 걱정이라 선물을 사며, 그 사이 투기자가 유동성을 공급한다">
+      <rect x="10" y="30" width="190" height="112" rx="14" fill="var(--bean-soft)"/>
+      <text x="105" y="62" text-anchor="middle" class="b" style="fill:var(--bean)">농가·협동조합·수출상</text>
+      <text x="105" y="90" text-anchor="middle">"수확 때 값 떨어지면?"</text>
+      <text x="105" y="116" text-anchor="middle" class="sm">→ 선물을 미리 팔아둠</text>
+      <rect x="460" y="30" width="190" height="112" rx="14" fill="var(--frost-soft)"/>
+      <text x="555" y="62" text-anchor="middle" class="b" style="fill:var(--frost)">로스터·커피 브랜드</text>
+      <text x="555" y="90" text-anchor="middle">"원두값 폭등하면?"</text>
+      <text x="555" y="116" text-anchor="middle" class="sm">→ 선물을 미리 사둠</text>
+      <circle cx="330" cy="86" r="54" fill="var(--roast-soft)" stroke="var(--roast)" stroke-width="2"/>
+      <text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--roast)">커피 선물</text>
+      <text x="330" y="102" text-anchor="middle" class="sm">가격을 미리 고정</text>
+      <line x1="205" y1="86" x2="272" y2="86" stroke="var(--bean)" stroke-width="3"/>
+      <line x1="388" y1="86" x2="455" y2="86" stroke="var(--frost)" stroke-width="3"/>
+      <text x="330" y="180" text-anchor="middle" class="sm">그 사이에서 펀드·개인 트레이더가 날씨와 수급에 베팅하며 유동성을 공급</text>
+    </svg>
+  </div>
+  <div class="who">
+    <div><span class="tag t-sell">매도 헤지</span><h3>농가·협동조합</h3><p>수확 전에 선물을 팔아 판매 가격을 잠가둬요. 나중에 값이 떨어져도 선물 이익으로 메꿉니다.</p></div>
+    <div><span class="tag t-mid">양방향</span><h3>무역상·수출입상</h3><p>생두를 사고팔면서 재고 가격 위험을 선물로 상쇄해요. 실물 거래는 "KC 가격 + 웃돈(디퍼렌셜)"으로 정하는 게 업계 관행이에요.</p></div>
+    <div><span class="tag t-buy">매수 헤지</span><h3>로스터·식품회사</h3><p>네슬레, 스타벅스 같은 회사가 몇 달 치 원료값을 미리 고정해요. 그래서 원두값이 뛰어도 매장 가격은 천천히 바뀌죠.</p></div>
+    <div><span class="tag t-spec">투기</span><h3>펀드·개인</h3><p>추세추종 펀드(CTA)와 개인 트레이더. 매주 CFTC COT 보고서로 이들의 포지션 쏠림을 볼 수 있어요.</p></div>
+  </div>
+</section>
+
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+  <div class="specs">
+    <div class="spec a">
+      <h3><span class="dot"></span>아라비카 (Coffee "C")</h3>
+      <dl>
+        <dt>거래소</dt><dd>ICE Futures U.S. <span>(뉴욕)</span></dd>
+        <dt>IBKR 심볼</dt><dd>KC <span>거래소는 NYBOT로 표시</span></dd>
+        <dt>계약 크기</dt><dd>37,500 lbs <span>약 17톤, 자루 약 250개</span></dd>
+        <dt>가격 단위</dt><dd>¢ / lb <span>파운드당 센트</span></dd>
+        <dt>최소 틱</dt><dd>0.05¢ = $18.75</dd>
+        <dt>1센트 움직이면</dt><dd>$375</dd>
+        <dt>월물</dt><dd>3·5·7·9·12월 <span>(H K N U Z)</span></dd>
+        <dt>결제</dt><dd>실물 인도</dd>
+      </dl>
+    </div>
+    <div class="spec r">
+      <h3><span class="dot"></span>로부스타 (Robusta)</h3>
+      <dl>
+        <dt>거래소</dt><dd>ICE Futures Europe <span>(런던)</span></dd>
+        <dt>IBKR 심볼</dt><dd>RC <span>ICE Europe 소프트 상품</span></dd>
+        <dt>계약 크기</dt><dd>10 metric tonnes <span>10톤</span></dd>
+        <dt>가격 단위</dt><dd>$ / tonne <span>톤당 달러</span></dd>
+        <dt>최소 틱</dt><dd>$1 = $10</dd>
+        <dt>$100 움직이면</dt><dd>$1,000</dd>
+        <dt>월물</dt><dd>1·3·5·7·9·11월 <span>(F H K N U X)</span></dd>
+        <dt>결제</dt><dd>실물 인도</dd>
+      </dl>
+    </div>
+  </div>
+  <p class="note">단위가 달라서 헷갈리기 쉬워요. 아라비카는 <b>센트/파운드</b>, 로부스타는 <b>달러/톤</b>이에요. 비교하려면 로부스타 가격 ÷ 22.046 하면 센트/파운드가 됩니다. (예: $4,500/톤 ≈ 204¢/lb)</p>
+</section>
+
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>한 계약에 얼마가 움직일까</h2>
+  <div class="calc">
+    <div class="seg" role="group" aria-label="상품 선택">
+      <button type="button" id="btn-kc" aria-pressed="true">아라비카 KC</button>
+      <button type="button" id="btn-rc" aria-pressed="false">로부스타 RC</button>
+    </div>
+    <div class="inputs">
+      <label for="in-entry">진입가 <span id="u1">(¢/lb)</span><input id="in-entry" type="number" step="0.05" value="300.00" inputmode="decimal"></label>
+      <label for="in-exit">청산가 <span id="u2">(¢/lb)</span><input id="in-exit" type="number" step="0.05" value="310.00" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익</small><b id="o-pnl">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">예시 가격은 계산 연습용이에요. 수수료와 증거금은 빠져 있고, 실제 증거금은 IBKR 주문 화면에서 확인하세요.</p>
+</section>
+
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>새벽 1시에 열리고 오전에 닫혀요</h2>
+  <div class="fig">
+    <svg viewBox="0 0 740 180" role="img" aria-label="캘리포니아 시간 기준 거래 시간. 아라비카 KC 오전 1:15~10:30 일년 내내. 로부스타 RC 평소 오전 1:00~9:30, 10월 25일~31일만 2:00~10:30">
+      <!-- axis: 00:00 -> 12:00 (12h), x 150..720, 47.5px/h -->
+      <g class="sm" text-anchor="middle">
+        <text x="150" y="28">00시</text><text x="245" y="28">02시</text><text x="340" y="28">04시</text><text x="435" y="28">06시</text><text x="530" y="28">08시</text><text x="625" y="28">10시</text><text x="720" y="28">12시</text>
+      </g>
+      <g stroke="var(--line)"><line x1="150" y1="36" x2="150" y2="140"/><line x1="245" y1="36" x2="245" y2="140"/><line x1="340" y1="36" x2="340" y2="140"/><line x1="435" y1="36" x2="435" y2="140"/><line x1="530" y1="36" x2="530" y2="140"/><line x1="625" y1="36" x2="625" y2="140"/><line x1="720" y1="36" x2="720" y2="140"/></g>
+      <line x1="411" y1="36" x2="411" y2="140" stroke="var(--cherry)" stroke-dasharray="3 3"/>
+      <text x="411" y="158" text-anchor="middle" class="sm" style="fill:var(--cherry)">05:30 미국 지표</text>
+      <text x="16" y="62" class="b" style="fill:var(--bean)">KC 아라비카</text>
+      <rect x="209" y="48" width="440" height="20" rx="10" fill="var(--bean)"/>
+      <text x="429" y="63" text-anchor="middle" style="font-size:12px;fill:var(--surface)" class="b">01:15 ~ 10:30 (일년 내내)</text>
+      <text x="16" y="92" class="b" style="fill:var(--roast)">RC 로부스타</text>
+      <rect x="198" y="78" width="404" height="20" rx="10" fill="var(--roast)"/>
+      <text x="400" y="93" text-anchor="middle" style="font-size:12px;fill:var(--surface)" class="b">01:00 ~ 09:30 (평소)</text>
+      <text x="16" y="122" class="b" style="fill:var(--roast)">RC 10/25~31</text>
+      <rect x="245" y="108" width="404" height="20" rx="10" fill="var(--roast-soft)" stroke="var(--roast)"/>
+      <text x="447" y="123" text-anchor="middle" style="font-size:12px;fill:var(--roast)" class="b">02:00 ~ 10:30 (이 일주일만)</text>
+    </svg>
+  </div>
+  <p class="cap">현지 시간: 아라비카 뉴욕 04:15~13:30, 로부스타 런던 09:00~17:30. 아라비카는 뉴욕 시장이라 캘리 시간이 <b>일년 내내 같아요</b>. 로부스타는 런던 시장인데, 올해는 영국이 10월 25일, 미국이 11월 1일에 서머타임이 끝나서 <b>10/25~10/31 일주일만</b> 한 시간 늦게 열고 닫혀요. 거래가 가장 활발한 건 뉴욕 사람들이 출근하는 캘리 오전 6~9시 사이예요. 정확한 세션은 IBKR 계약 정보(Contract Info)에서 다시 확인하세요.</p>
+</section>
+
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+  <div class="warn">
+    <div><h3>계약이 커요</h3><p>KC 1계약은 300¢일 때 명목가치 $112,500. 하루 5% 움직이면 약 $5,600이 왔다 갔다 해요. 변동성이 큰 시기엔 증거금도 크게 올라갑니다.</p></div>
+    <div><h3>실물 인도 상품</h3><p>만기 전 First Notice Day(첫 인도 통지일) 전에 IBKR이 포지션 청산을 요구하거나 자동 청산할 수 있어요. 롤오버 날짜를 미리 달력에 표시해 두세요.</p></div>
+    <div><h3>밤사이 갭</h3><p>브라질 서리 예보, 정부(Conab)·USDA 작황 보고서가 나오면 장 시작부터 크게 갭이 생길 수 있어요. 손절 주문이 원하는 가격에 안 잡힐 수 있습니다.</p></div>
+    <div><h3>로부스타는 더 얇아요</h3><p>RC는 KC보다 거래량이 적어 호가 간격이 벌어지기 쉬워요. 시장가 주문보다 지정가 주문이 안전합니다.</p></div>
+    <div><h3>시장 데이터 구독</h3><p>KC(ICE US)와 RC(ICE Europe)는 IBKR에서 시세 구독이 따로예요. 구독이 없으면 지연 시세만 보일 수 있어요.</p></div>
+    <div><h3>월물 간 가격차</h3><p>공급이 빠듯하면 근월물이 원월물보다 비싼 "백워데이션"이 자주 생겨요. 롤오버할 때 이 가격차만큼 손익이 달라집니다.</p></div>
+  </div>
+</section>
+
+<section class="fun">
+  <h3>☕ 보너스: 커피 한 잔에 생두 값은 얼마?</h3>
+  <p>에스프레소 한 샷에 원두 약 18g이 들어가요. 생두는 볶으면 무게가 약 15~20% 줄어드니까 생두로는 약 22g. 아라비카가 파운드당 3달러(약 454g)라면 한 잔에 들어가는 생두 값은 <b>약 0.15달러, 200원 남짓</b>이에요. 원두값이 두 배가 돼도 카페 커피값의 대부분은 임대료·인건비·우유라서, 매장 가격은 훨씬 천천히 오르는 거예요.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var mode = 'kc';
+  var cfg = {
+    kc: {unit:'(¢/lb)', step:0.05, tick:0.05, perTick:18.75, mult:375, entry:300, exit:310, fmt:function(v){return v.toFixed(2)+'¢'}},
+    rc: {unit:'($/톤)', step:1, tick:1, perTick:10, mult:10, entry:4500, exit:4650, fmt:function(v){return '$'+v.toLocaleString('en-US')}}
+  };
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v){var s=Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});return (v<0?'−$':'$')+s};
+  function setMode(m){
+    mode = m; var c = cfg[m];
+    $('btn-kc').setAttribute('aria-pressed', m==='kc'); $('btn-rc').setAttribute('aria-pressed', m==='rc');
+    $('u1').textContent = c.unit; $('u2').textContent = c.unit;
+    $('in-entry').step = c.step; $('in-exit').step = c.step;
+    $('in-entry').value = c.entry; $('in-exit').value = c.exit;
+    calc();
+  }
+  function calc(){
+    var c = cfg[mode];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { $('o-notional').textContent='–'; $('o-ticks').textContent='–'; $('o-pnl').textContent='–'; return; }
+    // KC price is in cents/lb: $ per contract = cents * 375. RC: $/tonne * 10.
+    var notional = e * c.mult;
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.perTick * q * side;
+    $('o-notional').textContent = usd(notional);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    $('o-explain').textContent = c.fmt(e) + ' → ' + c.fmt(x) + ' : ' + Math.abs(ticks) + '틱 × $' + c.perTick + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl);
+  }
+  $('btn-kc').addEventListener('click', function(){setMode('kc')});
+  $('btn-rc').addEventListener('click', function(){setMode('rc')});
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+
+</body></html>

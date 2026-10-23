@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>비트코인·이더리움 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f5f4f2; --surface:#ffffff; --fg:#20221f; --muted:#64605b; --line:#dbd8d3; --c1:#c26a12; --c1-soft:#f8e8d4; --c2:#2e7a5a; --c2-soft:#d9eee5; --c3:#5a5fb0; --c3-soft:#e4e4f6; --c4:#7a6a5a; --c4-soft:#ece8e3; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#121212; --surface:#1c1c1c; --fg:#eaebe6; --muted:#a6aaa2; --line:#363433; --c1:#f2a85a; --c1-soft:#3c2610; --c2:#7fd0ac; --c2-soft:#15302a; --c3:#a8acf2; --c3-soft:#23243f; --c4:#c4b6a6; --c4-soft:#2e2a26; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#121212; --surface:#1c1c1c; --fg:#eaebe6; --muted:#a6aaa2; --line:#363433; --c1:#f2a85a; --c1-soft:#3c2610; --c2:#7fd0ac; --c2-soft:#15302a; --c3:#a8acf2; --c3-soft:#23243f; --c4:#c4b6a6; --c4-soft:#2e2a26; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">암호화폐 선물 · CME 비트코인 BTC · MBT · 이더리움 ETH · MET</span>
+  <h1>비트코인 선물은 왜<br><span class="hl">비트코인을 주지 않을까?</span></h1>
+  <p class="lead">CME 비트코인 선물을 만기까지 들고 있어도 지갑으로 비트코인이 들어오지 않아요. 미국 규제 거래소에서 거래되는 이 선물은 <b>비트코인 기준 가격(CME CF BRR)</b>으로 <b>현금정산</b>만 해요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 거래소가 실물 비트코인을 주고받으려면 지갑 보관, 해킹 위험, 자금세탁 검사까지 떠안아야 해요. 그래서 CME는 여러 대형 현물 거래소의 체결가를 모아 만든 <b>기준 가격(런던 시간 오후 4시, 캘리 오전 8시쯤)</b>으로 정산하는 방식을 택했어요. 덕분에 증권 계좌만 있으면 지갑 없이 비트코인 가격에 투자할 수 있어요.</p><p>만기는 <b>매달 마지막 금요일</b>이에요. 기관과 미국 비트코인 현물 ETF를 운용하는 쪽이 헤지 수단으로 많이 쓰면서 CME는 세계에서 가장 큰 비트코인 선물 시장 중 하나가 됐어요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>MBT 마이크로 비트코인 12월물</small><b>$83,625</b><span>0.1 BTC · 1계약 $8,363</span></div><div><small>BTC 1계약 명목가치</small><b>$418,125</b><span>5 BTC × $83,625</span></div><div><small>ETH 이더리움 12월물</small><b>$2,518.5</b><span>직전 종가 · 거래 적은 월물</span></div><div><small>MET 1계약 명목가치</small><b>$252</b><span>0.1 ETH</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간). 비트코인은 마이크로 12월물 체결가, 이더리움은 12월물 직전 종가예요. 11월물이 최근월이라 12월물은 거래가 적어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">현금정산 구조</a><a href="#compare">선물 vs 현물</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 지갑 없는 비트코인</span>
+  <h2>가격만 가져오는 구조</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="여러 현물 거래소의 체결가가 CME CF 기준 가격이 되고, CME 비트코인 선물은 그 가격으로 매달 마지막 금요일 현금정산된다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">현물 거래소들</text><text x="97.2" y="78" text-anchor="middle" class="sm">코인베이스·크라켄 등</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">CME CF 기준 가격</text><text x="285.8" y="78" text-anchor="middle" class="sm">런던 16:00 집계</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">CME BTC 선물</text><text x="474.2" y="78" text-anchor="middle" class="sm">5 BTC · 마이크로 0.1</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">만기 현금정산</text><text x="662.8" y="78" text-anchor="middle" class="sm">매달 마지막 금요일</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '만기일 비트코인 기준 가격'에 대한 약속</text><text x="40" y="190">기준 가격 = 여러 현물 거래소 체결가를 정해진 시간 동안 모아 평균 낸 값</text><text x="40" y="214">만기에는 (기준 가격 − 진입가) × 계약 크기만 달러로 주고받아요</text><text x="40" y="238">비트코인은 24시간 거래되는데 CME는 주말에 쉬어서 '주말 갭'이 생겨요</text></svg></div>
+</section>
+<section id="compare">
+  <span class="eyebrow">2. 선물과 현물의 차이</span>
+  <h2>CME 비트코인 vs 코인 거래소</h2>
+<div class="tbl"><table><thead><tr><th></th><th>CME 비트코인 선물</th><th>코인 거래소 현물</th><th>해외 코인 선물(무기한)</th></tr></thead><tbody><tr><td>규제</td><td class="good">미국 CFTC 규제 거래소</td><td>거래소마다 다름</td><td>대부분 해외 미규제</td></tr><tr><td>보관</td><td class="good">지갑 필요 없음</td><td>지갑·거래소 보관</td><td>거래소 보관</td></tr><tr><td>거래 시간</td><td class="bad">주말 휴장</td><td>24시간 365일</td><td>24시간 365일</td></tr><tr><td>만기</td><td>매달 (롤오버 필요)</td><td>없음</td><td>없음 (펀딩비)</td></tr><tr><td>가격 차이</td><td>보통 현물보다 약간 비쌈 (콘탱고)</td><td>-</td><td>펀딩비로 현물에 맞춤</td></tr><tr><td>IBKR 계좌로</td><td class="good">가능</td><td>-</td><td>-</td></tr></tbody></table></div>
+<p class="note">CME 선물은 보통 현물보다 몇 % 비싸게(연율로 5~15%) 거래돼요. 이 차이를 '베이시스'라고 하는데, 현물 ETF를 사고 CME 선물을 파는 '베이시스 거래'로 헤지펀드들이 이 차이를 먹어요. 그래서 롱을 계속 롤오버하면 비용이 쌓여요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">3. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>암호화폐 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="암호화폐 달력: 매달 마지막 금요일 만기, 연 8회 FOMC, 매달 미국 CPI와 고용, 분기말 대형 만기"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="206"/><line x1="294" y1="38" x2="294" y2="206"/><line x1="438" y1="38" x2="438" y2="206"/><line x1="582" y1="38" x2="582" y2="206"/><line x1="726" y1="38" x2="726" y2="206"/></g><line x1="616" y1="38" x2="616" y2="206" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="222" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">매달 만기</text><circle cx="174" cy="62" r="4" fill="var(--c1)"/><circle cx="222" cy="62" r="4" fill="var(--c1)"/><circle cx="270" cy="62" r="4" fill="var(--c1)"/><circle cx="318" cy="62" r="4" fill="var(--c1)"/><circle cx="366" cy="62" r="4" fill="var(--c1)"/><circle cx="414" cy="62" r="4" fill="var(--c1)"/><circle cx="462" cy="62" r="4" fill="var(--c1)"/><circle cx="510" cy="62" r="4" fill="var(--c1)"/><circle cx="558" cy="62" r="4" fill="var(--c1)"/><circle cx="606" cy="62" r="4" fill="var(--c1)"/><circle cx="654" cy="62" r="4" fill="var(--c1)"/><circle cx="702" cy="62" r="4" fill="var(--c1)"/><text x="16" y="104" class="b">FOMC</text><circle cx="174" cy="100" r="4" fill="var(--c3)"/><circle cx="270" cy="100" r="4" fill="var(--c3)"/><circle cx="318" cy="100" r="4" fill="var(--c3)"/><circle cx="414" cy="100" r="4" fill="var(--c3)"/><circle cx="462" cy="100" r="4" fill="var(--c3)"/><circle cx="558" cy="100" r="4" fill="var(--c3)"/><circle cx="606" cy="100" r="4" fill="var(--c3)"/><circle cx="702" cy="100" r="4" fill="var(--c3)"/><text x="16" y="142" class="b">미국 CPI·고용</text><circle cx="174" cy="138" r="4" fill="var(--c4)"/><circle cx="222" cy="138" r="4" fill="var(--c4)"/><circle cx="270" cy="138" r="4" fill="var(--c4)"/><circle cx="318" cy="138" r="4" fill="var(--c4)"/><circle cx="366" cy="138" r="4" fill="var(--c4)"/><circle cx="414" cy="138" r="4" fill="var(--c4)"/><circle cx="462" cy="138" r="4" fill="var(--c4)"/><circle cx="510" cy="138" r="4" fill="var(--c4)"/><circle cx="558" cy="138" r="4" fill="var(--c4)"/><circle cx="606" cy="138" r="4" fill="var(--c4)"/><circle cx="654" cy="138" r="4" fill="var(--c4)"/><circle cx="702" cy="138" r="4" fill="var(--c4)"/><text x="16" y="180" class="b">분기 대형 만기</text><circle cx="288" cy="176" r="7" fill="var(--c2)"/><text x="300" y="181" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">3월</text><circle cx="430" cy="176" r="7" fill="var(--c2)"/><text x="442" y="181" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">6월</text><circle cx="573" cy="176" r="7" fill="var(--c2)"/><text x="585" y="181" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">9월</text><circle cx="717" cy="176" r="7" fill="var(--c2)"/><text x="705" y="181" text-anchor="end" style="font-size:12px;fill:var(--c2)" class="b">12월</text></svg></div>
+<p class="cap">CME 비트코인은 매달 마지막 금요일 만기라 매달 롤오버가 필요해요. 11월물은 <b>11월 27일</b>, 12월물은 <b>12월 25일이 성탄절이라 그 전 영업일</b>이 만기예요. 계절성은 뚜렷하지 않고, 미국 금리·유동성 이벤트와 ETF 자금 흐름에 크게 반응해요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>비트코인은 유동성 + 수급 + 규제</h2>
+<div class="drivers"><div><div class="k"><h3>미국 금리·유동성</h3><span class="dir up">완화면 ▲</span></div><p>금리 인하·돈 풀기 기대가 커지면 위험자산인 코인이 강해요. 나스닥(NQ)과 같이 움직이는 날이 많아요.</p></div><div><div class="k"><h3>현물 ETF 자금</h3><span class="dir up">유입 ▲면 ▲</span></div><p>미국 비트코인·이더리움 현물 ETF의 하루 자금 유출입이 큰 수급 지표예요.</p></div><div><div class="k"><h3>규제·정책</h3><span class="dir both">우호 ▲ / 규제 ▼</span></div><p>미국 SEC·의회의 법안, 각국 정부의 비트코인 비축 뉴스.</p></div><div><div class="k"><h3>반감기 사이클</h3><span class="dir up">반감기 후 ▲ (과거)</span></div><p>4년마다 채굴 보상이 절반으로. 2024년 4월이 마지막, 다음은 2028년 전후.</p></div><div><div class="k"><h3>레버리지 청산</h3><span class="dir down">연쇄 청산 ▼</span></div><p>해외 무기한 선물의 과도한 레버리지가 터지면 몇 시간 만에 10~20% 급락.</p></div><div><div class="k"><h3>달러·위험심리</h3><span class="dir down">공포면 ▼</span></div><p>주식 급락·지정학 위기 땐 같이 빠지는 경우가 많아요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 CME 코인 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="비트코인 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">채굴 기업</text>
+<text x="110" y="90" text-anchor="middle">"코인값 떨어지면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ BTC 선물 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">기관 투자자</text>
+<text x="550" y="90" text-anchor="middle">"규제된 곳에서 사고 싶다"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ BTC 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">CME BTC</text>
+<text x="330" y="102" text-anchor="middle" class="sm">현금정산</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">현물 ETF + 선물 매도로 베이시스를 먹는 헤지펀드가 큰 비중이에요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>채굴 기업</h3><p>몇 달 뒤 캘 비트코인 가격을 고정해요.</p></div><div><span class="tag t-3">매수</span><h3>기관·자산운용사</h3><p>코인을 직접 보관하지 않고 가격 노출만 원할 때.</p></div><div><span class="tag t-4">베이시스 거래</span><h3>헤지펀드</h3><p>현물(또는 ETF) 매수 + CME 선물 매도로 가격 차이를 먹어요.</p></div><div><span class="tag t-spec">투기</span><h3>개인</h3><p>MBT·MET는 개인 비중이 높아요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>Bitcoin (BTC) · Micro (MBT)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>BTC 크기</dt><dd>5 BTC <span>틱 $5 = $25</span></dd><dt>MBT 크기</dt><dd>0.1 BTC <span>틱 $5 = $0.50</span></dd><dt>$1,000 움직이면</dt><dd>BTC $5,000 · MBT $100</dd><dt>월물</dt><dd>매달 + 분기물</dd><dt>결제</dt><dd>현금정산 <span>CME CF BRR</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>Ether (ETH) · Micro (MET)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>ETH 크기</dt><dd>50 ETH <span>틱 $0.50 = $25</span></dd><dt>MET 크기</dt><dd>0.1 ETH <span>틱 $0.50 = $0.05</span></dd><dt>$100 움직이면</dt><dd>ETH $5,000 · MET $10</dd><dt>월물</dt><dd>매달 + 분기물</dd><dt>결제</dt><dd>현금정산 <span>CME CF ETHUSD RR</span></dd></dl></div></div>
+<p class="note">BTC 1계약은 40만 달러가 넘어 개인에게는 너무 커요. 대부분 <b>MBT(0.1 BTC)</b>를 써요. IBKR에서 이더리움 선물은 기초 지수(ETHUSDRR)로 검색하면 나와요. 증거금률이 주식·지수보다 훨씬 높게(명목가치의 수십 %) 잡혀 있어요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>비트코인 5%면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="83625" data-x="87625">MBT +$4,000</button><button type="button" data-c="0" data-e="83625" data-x="75260">MBT −10%</button><button type="button" data-c="2" data-e="2518.5" data-x="2644.5">MET +5%</button><button type="button" data-c="1" data-e="83625" data-x="81625">BTC −$2,000</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">MBT 마이크로 비트코인 (0.1 BTC)</option><option value="1">BTC 비트코인 (5 BTC)</option><option value="2">MET 마이크로 이더리움 (0.1 ETH)</option><option value="3">ETH 이더리움 (50 ETH)</option></select></label>
+      <label for="in-entry">진입가 ($)<input id="in-entry" type="number" step="any" value="83625" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($)<input id="in-exit" type="number" step="any" value="87625" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 수수료·증거금 제외. 비트코인은 하루 5% 움직임도 드물지 않아요.</p>
+<script>
+(function(){
+  var C = [{"name": "MBT 마이크로 비트코인 (0.1 BTC)", "tick": 5, "tv": 0.5, "mult": 0.1, "dec": 0, "entry": 83625, "exit": 87625}, {"name": "BTC 비트코인 (5 BTC)", "tick": 5, "tv": 25, "mult": 5, "dec": 0, "entry": 83625, "exit": 87625}, {"name": "MET 마이크로 이더리움 (0.1 ETH)", "tick": 0.5, "tv": 0.05, "mult": 0.1, "dec": 1, "entry": 2518.5, "exit": 2644.5}, {"name": "ETH 이더리움 (50 ETH)", "tick": 0.5, "tv": 25, "mult": 50, "dec": 1, "entry": 2518.5, "exit": 2644.5}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>코인은 24시간, CME는 주말 휴장</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 암호화폐 선물 거래 시간. 15:00~다음날 14:00, 집중 06:30~13:00. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="543.2" y="57" width="154.9" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 06:30~13:00 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (하루 1시간 정비)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">미국 주식 정규장과 겹치는 시간</text></svg></div>
+<p class="cap">캘리포니아 기준 일요일 15:00 ~ 금요일 14:00, 평일 14:00~15:00 정비. 비트코인 현물은 주말에도 움직이니까 <b>일요일 오후 3시 개장 때 주말 동안의 움직임이 한꺼번에 반영(CME 갭)</b>돼요. 거래는 미국 증시 시간(캘리 오전 6:30~13:00)에 가장 많아요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>주말 갭</h3><p>토·일에 비트코인이 10% 움직여도 CME는 닫혀 있어요. 금요일 포지션이 일요일 오후 큰 갭으로 시작할 수 있어요.</p></div><div><h3>매달 롤오버</h3><p>만기가 매달이라 롤오버도 매달. 콘탱고가 크면 롤오버할 때마다 비용이 생겨요.</p></div><div><h3>증거금이 높아요</h3><p>변동성 때문에 증거금이 명목가치의 수십 %예요. 가격 급락 땐 증거금 부족 청산이 빨리 와요.</p></div><div><h3>가격제한(서킷)</h3><p>CME 코인 선물은 급변동 때 동적 가격제한으로 잠깐 멈추기도 해요.</p></div><div><h3>먼 월물은 얇아요</h3><p>최근월(지금은 11월물) 외에는 거래가 적어요. 12월물 ETH처럼 하루 거래가 거의 없는 월물도 있어요.</p></div><div><h3>ETH 검색</h3><p>IBKR에서 'ETH'로 바로 안 나오면 기초 지수 ETHUSDRR로 찾아야 해요.</p></div></div>
+</section>
+<section class="fun"><h3>₿ 보너스: 1 사토시는 얼마?</h3><p>비트코인의 가장 작은 단위는 <b>사토시</b>(1억분의 1 BTC)예요. $83,625면 1 사토시는 약 <b class="mono">$0.000836</b>, 원화로 약 <b>1.17원</b>이에요. MBT 1계약(0.1 BTC)은 1,000만 사토시이고, MBT의 최소 틱 $0.50는 약 600 사토시어치 움직임이에요.</p></section>
+</main>
+
+</html>

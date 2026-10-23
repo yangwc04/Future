@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>캐나다달러 선물 (6C)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f6f3f2; --surface:#ffffff; --fg:#20221f; --muted:#665e5c; --line:#e0d8d6; --c1:#b0302c; --c1-soft:#f6dedc; --c2:#2c5f8a; --c2-soft:#dce7f1; --c3:#2f7a52; --c3-soft:#dbeee2; --c4:#8a5a1e; --c4-soft:#f2e6d4; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#161211; --surface:#1f1a19; --fg:#eaebe6; --muted:#a6aaa2; --line:#3a3230; --c1:#f08a84; --c1-soft:#3d1715; --c2:#86b6e2; --c2-soft:#152739; --c3:#80d0a3; --c3-soft:#13301f; --c4:#deae6e; --c4-soft:#352612; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#161211; --surface:#1f1a19; --fg:#eaebe6; --muted:#a6aaa2; --line:#3a3230; --c1:#f08a84; --c1-soft:#3d1715; --c2:#86b6e2; --c2-soft:#152739; --c3:#80d0a3; --c3-soft:#13301f; --c4:#deae6e; --c4-soft:#352612; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">외환 선물 · CME · 6C · MCD</span>
+  <h1>원유와 함께 움직이는 이웃 통화,<br><span class="hl">루니</span></h1>
+  <p class="lead">캐나다달러는 1달러 동전에 새겨진 물새 '룬(loon)' 때문에 '루니'라고 불려요. 캐나다는 미국에 원유를 가장 많이 파는 나라라서, 루니는 유가와 미국 경제를 함께 비추는 통화예요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 6C 1계약은 <b>C$100,000</b>(약 7.1만 달러)이고, 0.00005 움직일 때마다 <b>$5</b>예요.</p><p>뉴스는 'USD/CAD 1.4032(1달러 = 1.40 캐나다달러)'로 말하지만 6C는 그 <b>역수 0.71268</b>이에요. 그래서 뉴스 숫자가 오르면(루니 약세) 6C는 <b>내려가요</b>. 캐나다는 미국과 같은 시간대라 거래도 <b>캘리 아침~점심</b>에 몰려요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>USD/CAD 현물</small><b>1.40315</b><span>뉴스 표기</span></div><div><small>6C 환산</small><b>0.71268</b><span>1 ÷ 1.40315</span></div><div><small>6C 1계약</small><b>$71,268</b><span>C$100,000 × 0.7127</span></div><div><small>틱 가치</small><b>$5.00</b><span>0.00005</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시 20분쯤(캘리포니아 시간). CME 외환 선물 시세는 이 연결에서 바로 조회되지 않아서 같은 시각 IBKR 현물 환율(IDEALPRO)을 선물 표기로 바꿔 보여드려요. 12월물 선물은 두 나라 금리 차이만큼 현물과 조금 달라요.</p>
+  <p class="back"><a href="fx.html">← 외환 선물 개요 (7개 통화 한눈에)</a></p>
+  <nav class="toc" aria-label="목차"><a href="#story">이 통화 이야기</a><a href="#quote">가격 읽는 법</a><a href="#drivers">가격 요인</a><a href="#calendar">1년 달력</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">캘리 시간 · 거래 몰리는 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="story">
+  <span class="eyebrow">1. 이 통화 이야기</span>
+  <h2>수출의 4분의 3이 미국으로 가는 나라</h2>
+<div class="fig"><svg viewBox="0 0 720 238" role="img" aria-label="캐나다 수출 비중: 원유 에너지 28%, 자동차 13%, 기계 전자 10%, 금속 광물 12%, 목재 농산물 11%, 기타 26%"><text x="20" y="22" class="sm">캐나다 수출 비중 (2024년 기준 대략)</text><line x1="170.0" y1="36" x2="170.0" y2="208" stroke="var(--line)"/><text x="170.0" y="230" text-anchor="middle" class="sm">0%</text><line x1="317.7" y1="36" x2="317.7" y2="208" stroke="var(--line)"/><text x="317.7" y="230" text-anchor="middle" class="sm">10%</text><line x1="465.3" y1="36" x2="465.3" y2="208" stroke="var(--line)"/><text x="465.3" y="230" text-anchor="middle" class="sm">20%</text><line x1="613.0" y1="36" x2="613.0" y2="208" stroke="var(--line)"/><text x="613.0" y="230" text-anchor="middle" class="sm">30%</text><text x="20" y="57" class="b" style="fill:var(--c1)">원유·에너지</text><rect class="grow" x="170" y="42" width="413.5" height="20" rx="4" fill="var(--c1)"/><text x="591.5" y="57" class="b" style="fill:var(--c1)">28%</text><text x="626.5" y="57" class="sm">대부분 미국행</text><text x="20" y="85" class="b">자동차·부품</text><rect class="grow" x="170" y="70" width="192.0" height="20" rx="4" fill="var(--c2)"/><text x="370.0" y="85" class="b">13%</text><text x="20" y="113" class="b">기계·전자</text><rect class="grow" x="170" y="98" width="147.7" height="20" rx="4" fill="var(--c2)"/><text x="325.7" y="113" class="b">10%</text><text x="20" y="141" class="b">금속·광물</text><rect class="grow" x="170" y="126" width="177.2" height="20" rx="4" fill="var(--c4)"/><text x="355.2" y="141" class="b">12%</text><text x="20" y="169" class="b">목재·농산물</text><rect class="grow" x="170" y="154" width="162.4" height="20" rx="4" fill="var(--c3)"/><text x="340.4" y="169" class="b">11%</text><text x="20" y="197" class="b">기타</text><rect class="grow" x="170" y="182" width="383.9" height="20" rx="4" fill="var(--line)"/><text x="561.9" y="197" class="b">26%</text></svg></div>
+<p>캐나다 수출의 약 75%가 미국으로 가요. 그래서 루니는 <b>유가</b>, <b>미국 경기</b>, 그리고 <b>미국의 관세 정책</b>에 아주 민감해요. 2025년 관세 뉴스가 나올 때마다 6C가 크게 흔들린 이유예요.</p>
+</section>
+<section id="quote">
+  <span class="eyebrow">2. 가격 읽는 법</span>
+  <h2>뉴스 환율과 거꾸로 움직여요</h2>
+<div class="tbl"><table><thead><tr><th>뉴스 환율</th><th>6C 가격 (1 ÷ 환율)</th><th>의미</th></tr></thead><tbody><tr><td class="num">USD/CAD 1.4500</td><td class="num">0.68966</td><td>루니 약세 (6C 하락)</td></tr><tr><td class="num">USD/CAD 1.4031</td><td class="num">0.71268</td><td>지금 (10/21 저녁)</td></tr><tr><td class="num">USD/CAD 1.3500</td><td class="num">0.74074</td><td>루니 강세 (6C 상승)</td></tr></tbody></table></div>
+<p class="note">CME는 미국 거래소라 모든 통화를 <b>'외화 1단위 = 몇 달러'</b>로 표시해요. 그런데 뉴스는 USD/CAD처럼 '1달러 = 몇 캐나다달러'로 말하죠. 그래서 6C는 뉴스 숫자의 <b>역수</b>이고 방향도 <b>반대</b>예요. 뉴스 숫자가 오르면(캐나다달러 약세) 6C는 내려가요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">3. 가격을 흔드는 것들</span>
+  <h2>유가, 금리, 그리고 미국과의 무역</h2>
+<div class="drivers"><div><div class="k"><h3>원유 가격</h3><span class="dir up">유가 ▲면 루니 ▲</span></div><p>WTI가 오르면 캐나다 수출 대금이 늘어 루니가 강해져요. CL과 같이 보면 좋아요.</p></div><div><div class="k"><h3>캐나다은행(BoC) 금리</h3><span class="dir both">인상 기대면 ▲</span></div><p>결정은 오타와 9:45, 캘리 <b>오전 6:45</b>에 나와요.</p></div><div><div class="k"><h3>미국 관세</h3><span class="dir down">관세 충격이면 ▼</span></div><p>미국이 캐나다산에 관세를 매기면 루니가 바로 약해져요.</p></div><div><div class="k"><h3>고용 지표</h3><span class="dir up">강하면 ▲</span></div><p>캐나다 고용은 미국 고용과 <b>같은 날 같은 시각(캘리 05:30)</b>에 나오는 경우가 많아 두 숫자를 비교하며 움직여요.</p></div><div><div class="k"><h3>미·캐 금리 차이</h3><span class="dir both">캐나다 금리 ▲면 ▲</span></div><p>두 나라 2년 국채 금리 차이와 상관관계가 높아요.</p></div><div><div class="k"><h3>위험 선호</h3><span class="dir up">주가 ▲면 ▲</span></div><p>호주달러만큼은 아니지만 위험 회피 때 약해지는 편이에요.</p></div></div>
+</section>
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>캐나다은행 회의와 분기 만기</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="캐나다달러 달력: 분기 만기(셋째 수요일 전날 마지막 거래), BoC와 FOMC 연 8회, 매달 고용 지표, 여름 유가 시즌"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="618" y1="38" x2="618" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="618" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">분기 만기</text><circle cx="272" cy="62" r="7" fill="var(--c1)"/><text x="284" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">3월</text><circle cx="415" cy="62" r="7" fill="var(--c1)"/><text x="427" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">6월</text><circle cx="557" cy="62" r="7" fill="var(--c1)"/><text x="569" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">9월</text><circle cx="701" cy="62" r="7" fill="var(--c1)"/><text x="689" y="67" text-anchor="end" style="font-size:12px;fill:var(--c1)" class="b">12/15 마지막 거래일</text><text x="16" y="104" class="b">BoC 금리 결정</text><circle cx="174" cy="100" r="4" fill="var(--c1)"/><circle cx="270" cy="100" r="4" fill="var(--c1)"/><circle cx="318" cy="100" r="4" fill="var(--c1)"/><circle cx="414" cy="100" r="4" fill="var(--c1)"/><circle cx="462" cy="100" r="4" fill="var(--c1)"/><circle cx="558" cy="100" r="4" fill="var(--c1)"/><circle cx="606" cy="100" r="4" fill="var(--c1)"/><circle cx="702" cy="100" r="4" fill="var(--c1)"/><text x="16" y="142" class="b">FOMC (미국)</text><circle cx="174" cy="138" r="4" fill="var(--c2)"/><circle cx="270" cy="138" r="4" fill="var(--c2)"/><circle cx="318" cy="138" r="4" fill="var(--c2)"/><circle cx="414" cy="138" r="4" fill="var(--c2)"/><circle cx="462" cy="138" r="4" fill="var(--c2)"/><circle cx="558" cy="138" r="4" fill="var(--c2)"/><circle cx="606" cy="138" r="4" fill="var(--c2)"/><circle cx="702" cy="138" r="4" fill="var(--c2)"/><text x="16" y="180" class="b">캐나다·미국 고용</text><circle cx="174" cy="176" r="4" fill="var(--c3)"/><circle cx="222" cy="176" r="4" fill="var(--c3)"/><circle cx="270" cy="176" r="4" fill="var(--c3)"/><circle cx="318" cy="176" r="4" fill="var(--c3)"/><circle cx="366" cy="176" r="4" fill="var(--c3)"/><circle cx="414" cy="176" r="4" fill="var(--c3)"/><circle cx="462" cy="176" r="4" fill="var(--c3)"/><circle cx="510" cy="176" r="4" fill="var(--c3)"/><circle cx="558" cy="176" r="4" fill="var(--c3)"/><circle cx="606" cy="176" r="4" fill="var(--c3)"/><circle cx="654" cy="176" r="4" fill="var(--c3)"/><circle cx="702" cy="176" r="4" fill="var(--c3)"/><text x="16" y="218" class="b">드라이빙 시즌 (유가)</text><rect x="344" y="202" width="236" height="24" rx="12" fill="var(--c4-soft)" stroke="var(--c4)"/><text x="462" y="219" text-anchor="middle" style="font-size:12px;fill:var(--c4)" class="b">여름 휘발유 수요</text></svg></div>
+<p class="cap">6C는 다른 통화와 달리 <b>셋째 수요일 바로 전 영업일</b>이 마지막 거래일이라 12월물은 <b>12월 15일(화)</b>에 끝나요. BoC는 1년에 8번 회의해요.</p>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 캐나다달러 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="캐나다달러 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">캐나다산 원유를 사는 미국 정유사</text>
+<text x="110" y="90" text-anchor="middle">"루니 오르면 손해"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 6C 매수</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">캐나다에 파는 미국 기업</text>
+<text x="550" y="90" text-anchor="middle">"루니 떨어지면 손해"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 6C 매도</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">6C 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">미래 환율을 고정</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">북미 무역이 워낙 커서 기업 헤지 수요가 많은 통화예요</text></svg></div>
+<div class="cards"><div><span class="tag t-3">매수 헤지</span><h3>수입상·정유사</h3><p>캐나다산 원유·목재·자동차 부품 대금이 오를까 봐.</p></div><div><span class="tag t-2">매도 헤지</span><h3>미국 수출기업</h3><p>캐나다에서 받을 대금의 달러 값을 지켜요.</p></div><div><span class="tag t-4">원유 연계</span><h3>에너지 트레이더</h3><p>원유와 루니를 함께 거래하거나 서로 헤지해요.</p></div><div><span class="tag t-spec">정책 베팅</span><h3>매크로 펀드</h3><p>관세·BoC 결정 같은 이벤트에 베팅해요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>Canadian Dollar (6C)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>IBKR 심볼</dt><dd>CAD <span>(6C) · 예: 12월물</span></dd><dt>계약 크기</dt><dd>C$100,000</dd><dt>가격</dt><dd>1캐나다달러당 달러</dd><dt>최소 틱</dt><dd>0.00005 = $5</dd><dt>월물</dt><dd>3·6·9·12월</dd><dt>결제</dt><dd>실물 인도 <span>셋째 수요일</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>Micro CAD/USD (MCD)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>IBKR 심볼</dt><dd>MCD</dd><dt>계약 크기</dt><dd>C$10,000</dd><dt>최소 틱</dt><dd>0.0001 = $1</dd><dt>월물</dt><dd>3·6·9·12월</dd><dt>결제</dt><dd>현금정산</dd><dt>유동성</dt><dd>얇은 편</dd></dl></div></div>
+<p class="note">IBKR에서는 CAD로 검색하세요. 뉴스 USD/CAD와 방향이 반대라는 점을 꼭 기억하세요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>USD/CAD가 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="0.7127" data-x="0.72465">USD/CAD 1.4032→1.38 (루니 강세)</button><button type="button" data-c="0" data-e="0.7127" data-x="0.6993">1.4032→1.43 (루니 약세)</button><button type="button" data-c="1" data-e="0.7127" data-x="0.7246">MCD 1.4032→1.38</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">6C 캐나다달러 (C$100,000)</option><option value="1">MCD 마이크로 캐나다달러 (C$10,000)</option></select></label>
+      <label for="in-entry">진입가 (달러/캐나다달러)<input id="in-entry" type="number" step="any" value="0.7127" inputmode="decimal"></label>
+      <label for="in-exit">청산가 (달러/캐나다달러)<input id="in-exit" type="number" step="any" value="0.72465" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 현물 환율의 역수예요. 실제 12월물 가격은 IBKR 화면에서 확인해서 넣어 주세요. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "6C 캐나다달러 (C$100,000)", "tick": 5e-05, "tv": 5, "mult": 100000, "dec": 5, "entry": 0.7127, "exit": 0.72465}, {"name": "MCD 마이크로 캐나다달러 (C$10,000)", "tick": 0.0001, "tv": 1, "mult": 10000, "dec": 4, "entry": 0.7127, "exit": 0.7246}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>캘리 아침 5시 반부터 점심까지</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 캐나다달러 선물 거래 시간. 15:00~다음날 14:00, 집중 05:00~11:00. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="507.5" y="57" width="143.0" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 05:00~11:00 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (매일 14:00~15:00 쉬는 시간)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">북미 지표 ~ 원유 정산 = 거래 집중</text></svg></div>
+<p class="cap">CME 거래 시간은 캘리 기준 <b>일요일 15:00 ~ 금요일 14:00</b>, 평일 14:00~15:00 휴식이에요. 캐나다는 미국과 같은 날 서머타임을 바꿔서 지표 시간도 일년 내내 같아요.</p>
+<h3>거래가 몰리는 시간과 그 이유</h3>
+<div class="cards"><div><span class="tag t-1">05:30</span><h3>북미 지표</h3><p>캐나다 고용·물가·GDP는 토론토 8:30, 캘리 05:30에 나와요. 미국 지표와 같은 시각이라 두 나라 숫자가 동시에 반영돼요.</p></div><div><span class="tag t-3">06:45</span><h3>캐나다은행 결정</h3><p>BoC 금리 결정은 캘리 오전 6:45. 7:30엔 기자회견이 이어져요.</p></div><div><span class="tag t-2">06:00~11:30</span><h3>원유 시간</h3><p>WTI가 가장 활발한 시간과 겹쳐요. 수요일 07:30 EIA 원유 재고 때 루니도 같이 움직여요.</p></div><div><span class="tag t-4">17:00~24:00</span><h3>아시아·유럽은 한산</h3><p>캐나다와 관계가 적은 시간이라 호가가 얇아요. 이 시간엔 거래를 피하는 게 좋아요.</p></div></div>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>주문 방향 거꾸로</h3><p>'USD/CAD 상승(루니 약세)'이면 6C는 <b>하락</b>해요.</p></div><div><h3>마지막 거래일이 하루 늦어요</h3><p>6C는 셋째 수요일 바로 전날(12월물은 12월 15일)이 마지막 거래일이에요. IBKR 청산 요구일은 계약 정보에서 확인하세요.</p></div><div><h3>05:30 동시 발표</h3><p>미국과 캐나다 고용이 같은 시각에 나오면 방향이 엇갈려 위아래로 크게 흔들릴 수 있어요.</p></div><div><h3>관세 헤드라인</h3><p>미국 정부 발표·SNS 한 줄에 몇 분 만에 50~100틱이 움직인 적이 있어요.</p></div></div>
+</section>
+<section class="fun"><h3>🍁 보너스: 1달러는 '루니', 2달러는 '투니'</h3><p>캐나다 1달러 동전에는 물새 룬이 새겨져 있어서 '루니(loonie)', 2달러 동전은 거기에 '투(two)'를 붙여 '투니(toonie)'라고 불러요. 6C 1계약 C$100,000은 투니 동전 5만 개, 무게로 약 350kg이에요.</p></section>
+</main>
+
+</html>

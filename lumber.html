@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>목재 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f6f3ee; --surface:#ffffff; --fg:#24201a; --muted:#68615a; --line:#ddd6ca; --c1:#8a5a2a; --c1-soft:#f2e5d8; --c2:#3a6e3a; --c2-soft:#dcecdc; --c3:#3a5a7a; --c3-soft:#dfe6ee; --c4:#9a7a2a; --c4-soft:#f3ecd4; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#14120f; --surface:#1e1b17; --fg:#eee9e0; --muted:#ada695; --line:#3a342c; --c1:#dca476; --c1-soft:#36261a; --c2:#86c486; --c2-soft:#1b301b; --c3:#8eb0d2; --c3-soft:#1a2633; --c4:#dcc072; --c4-soft:#352c14; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#14120f; --surface:#1e1b17; --fg:#eee9e0; --muted:#ada695; --line:#3a342c; --c1:#dca476; --c1-soft:#36261a; --c2:#86c486; --c2-soft:#1b301b; --c3:#8eb0d2; --c3-soft:#1a2633; --c4:#dcc072; --c4-soft:#352c14; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">소프트 선물 · CME 목재 · LBR</span>
+  <h1>목재 선물은 왜<br><span class="hl">트럭 한 대 분량</span>일까?</h1>
+  <p class="lead">IBKR의 목재 선물(LBR) 가격 521.5는 <b>보드피트(board feet) 1,000개당 521.5달러</b>예요. 보드피트는 가로세로 1피트, 두께 1인치짜리 나무판 부피예요. 1계약은 27,500보드피트로, <b>평판 트럭 한 대에 싣는 2×4 각재 양</b>이에요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 미국 주택은 대부분 나무 골조로 지어요. 그 뼈대가 되는 <b>2×4(투바이포) 각재</b>가 가장 많이 팔리는 표준 목재라서 선물의 기준이 됐어요. 2022년에 예전 목재 선물(화차 한 대, 110,000보드피트)이 너무 커서 개인·소형 업체가 쓰기 어렵다는 이유로 <b>트럭 한 대 크기의 새 계약(LBR)</b>으로 바뀌었어요.</p><p>인도 대상은 건조 처리한 침엽수(가문비·소나무·전나무 계열) 2×4로, 생산지 제재소에서 실어주는 방식으로 실물 인도해요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>LBR 2026년 11월물</small><b>$521.5</b><span>/1,000보드피트 · 미결제 5,733</span></div><div><small>LBR 1계약 명목가치</small><b>$14,341</b><span>27.5 × $521.5</span></div><div><small>2021년 5월 고점</small><b>약 $1,700</b><span>코로나 주택 붐 때 (옛 계약)</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. 11월물은 스냅샷 시점 1,524계약 거래됐어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">숲에서 주택까지</a><a href="#world">목재는 어디서</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 숲에서 주택 골조까지</span>
+  <h2>LBR 선물이 넘기는 목재</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="침엽수림에서 벤 나무를 제재소에서 자르고 건조해 2×4 각재로 만들고, LBR 선물은 트럭 한 대 분량 2만7500 보드피트를 넘기며, 목재는 미국 주택 골조로 간다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">침엽수림</text><text x="97.2" y="78" text-anchor="middle" class="sm">캐나다 BC·미국 남부</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">제재소</text><text x="285.8" y="78" text-anchor="middle" class="sm">자르고 건조</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">2×4 각재 트럭 1대</text><text x="474.2" y="78" text-anchor="middle" class="sm">27,500보드피트</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">주택 골조</text><text x="662.8" y="78" text-anchor="middle" class="sm">미국 단독주택</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '제재소에서 실어주는 건조 침엽수 2×4 각재 트럭 한 대분'</text><text x="40" y="190">2×4는 이름과 달리 실제 단면이 1.5×3.5인치예요 (건조·대패 후 크기)</text><text x="40" y="214">보드피트 = 1피트 × 1피트 × 1인치. 길이 8피트 2×4 한 개가 약 5.3보드피트</text><text x="40" y="238">27,500보드피트 ≈ 8피트짜리 2×4 약 5,000개</text></svg></div>
+</section>
+<section id="world">
+  <span class="eyebrow">2. 북미 목재 시장</span>
+  <h2>미국 목재의 4분의 1은 캐나다산</h2>
+<div class="fig"><svg viewBox="0 0 720 120" role="img" aria-label="미국 침엽수 목재 공급원: 미국 남부 40%, 미국 서부 30%, 캐나다 수입 25%, 기타 5%"><text x="20" y="24" class="sm">미국 침엽수 목재 공급원 (대략)</text><rect class="grow" x="20.0" y="40" width="272.0" height="40" fill="var(--c1)"/><text x="156.0" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">미국 남부 40%</text><rect class="grow" x="292.0" y="40" width="204.0" height="40" fill="var(--c2)"/><text x="394.0" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">미국 서부 30%</text><rect class="grow" x="496.0" y="40" width="170.0" height="40" fill="var(--c3)"/><text x="581.0" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">캐나다 수입 25%</text><rect class="grow" x="666.0" y="40" width="34.0" height="40" fill="var(--line)"/><rect x="20" y="96" width="12" height="12" rx="2" fill="var(--line)"/><text x="38" y="107" class="sm">기타 수입 5%</text></svg></div>
+<div class="cards"><div><span class="tag t-3">캐나다 BC·앨버타</span><h3>관세 분쟁의 주인공</h3><p>미국은 40년 넘게 캐나다산 침엽수 목재에 반덤핑·상계 관세를 매겨왔어요. 2025년엔 관세율이 크게 올랐어요.</p></div><div><span class="tag t-1">미국 남부</span><h3>소나무 대규모 조림</h3><p>조지아·앨라배마·미시시피의 남부 황소나무(Southern Yellow Pine)가 공급 비중을 늘리고 있어요.</p></div><div><span class="tag t-4">수요</span><h3>단독주택 착공</h3><p>단독주택 한 채 골조에 목재 약 15,000~19,000보드피트가 들어가요.</p></div></div>
+<p class="cap">비중은 공개 통계 기반의 대략적인 값이에요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">3. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>목재 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="목재 달력: 3~6월 봄 건축 시즌, 6~9월 산불, 11~2월 겨울 비수기, 매달 주택 착공 통계, 홀수달 LBR 월물"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="616" y1="38" x2="616" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">봄 건축 시즌</text><rect x="248" y="50" width="188" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="342" y="67" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">재고 쌓기 · 가격 강세 경향</text><text x="16" y="104" class="b">산불 시즌</text><rect x="392" y="88" width="188" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><text x="486" y="105" text-anchor="middle" style="font-size:12px;fill:var(--alert)" class="b">캐나다 서부·미국 서부</text><text x="16" y="142" class="b">겨울 비수기</text><rect x="632" y="126" width="92" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="678" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c3)" class="b">착공 감소</text><rect x="152" y="126" width="92" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="16" y="180" class="b">주택 착공 통계</text><circle cx="174" cy="176" r="4" fill="var(--c2)"/><circle cx="222" cy="176" r="4" fill="var(--c2)"/><circle cx="270" cy="176" r="4" fill="var(--c2)"/><circle cx="318" cy="176" r="4" fill="var(--c2)"/><circle cx="366" cy="176" r="4" fill="var(--c2)"/><circle cx="414" cy="176" r="4" fill="var(--c2)"/><circle cx="462" cy="176" r="4" fill="var(--c2)"/><circle cx="510" cy="176" r="4" fill="var(--c2)"/><circle cx="558" cy="176" r="4" fill="var(--c2)"/><circle cx="606" cy="176" r="4" fill="var(--c2)"/><circle cx="654" cy="176" r="4" fill="var(--c2)"/><circle cx="702" cy="176" r="4" fill="var(--c2)"/><text x="16" y="218" class="b">LBR 월물</text><circle cx="173" cy="214" r="7" fill="var(--c4)"/><text x="185" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">1월</text><circle cx="269" cy="214" r="7" fill="var(--c4)"/><text x="281" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">3월</text><circle cx="365" cy="214" r="7" fill="var(--c4)"/><text x="377" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">5월</text><circle cx="461" cy="214" r="7" fill="var(--c4)"/><text x="473" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">7월</text><circle cx="557" cy="214" r="7" fill="var(--c4)"/><text x="569" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">9월</text><circle cx="653" cy="214" r="7" fill="var(--c4)"/><text x="641" y="219" text-anchor="end" style="font-size:12px;fill:var(--c4)" class="b">11월</text></svg></div>
+<p class="cap">LBR은 1·3·5·7·9·11월물(F H K N U X)이 있어요. 지금 11월물은 <b>11월 중순</b>이 마지막 거래일이라 곧 1월물로 넘어가요. 매달 중순 미국 주택 착공·허가 통계(캘리 오전 5:30)가 가장 중요한 지표예요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>목재는 주택 경기 그 자체</h2>
+<div class="drivers"><div><div class="k"><h3>주택 착공</h3><span class="dir up">늘면 ▲</span></div><p>단독주택 착공·허가 건수. 목재 수요의 대부분이 신규 주택과 리모델링.</p></div><div><div class="k"><h3>모기지 금리</h3><span class="dir down">오르면 ▼</span></div><p>모기지 금리가 오르면 집 사는 사람이 줄어 착공이 감소해요. 국채 페이지와 연결.</p></div><div><div class="k"><h3>캐나다산 관세</h3><span class="dir up">관세 ▲면 ▲</span></div><p>미국으로 들어오는 캐나다 목재가 비싸지면 미국 가격이 올라요.</p></div><div><div class="k"><h3>제재소 감산</h3><span class="dir up">감산이면 ▲</span></div><p>가격이 낮으면 제재소가 문을 닫거나 감산해서 결국 공급이 줄어요.</p></div><div><div class="k"><h3>산불·기상</h3><span class="dir up">피해면 ▲</span></div><p>캐나다 서부 산불, 철도 운송 차질.</p></div><div><div class="k"><h3>리모델링 수요</h3><span class="dir up">늘면 ▲</span></div><p>코로나 때 집에 머물며 리모델링이 폭증해 2021년 사상 최고가가 나왔어요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 목재 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="목재 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">제재소</text>
+<text x="110" y="90" text-anchor="middle">"목재값 떨어지면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 선물 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">주택 건설사·유통</text>
+<text x="550" y="90" text-anchor="middle">"목재값 오르면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">LBR 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">트럭 1대분</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">시장이 작아서 몇몇 참여자의 주문에도 가격이 크게 움직여요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>제재소</h3><p>웨어하우저·웨스트프레이저 같은 생산자가 판매가를 고정해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>건설사·홈센터</h3><p>주택 분양가를 정할 때 목재 원가를 미리 확보해요.</p></div><div><span class="tag t-4">유통</span><h3>목재 딜러</h3><p>재고 가치를 지키기 위해 선물을 팔아요.</p></div><div><span class="tag t-spec">투기</span><h3>개인·소형 펀드</h3><p>트럭 한 대 크기로 바뀌면서 개인도 접근하기 쉬워졌어요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="spec"><h3><span class="dot"></span>Lumber (LBR)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>IBKR 심볼</dt><dd>LBR <span>예: LBRX6 = 2026년 11월</span></dd><dt>계약 크기</dt><dd>27,500보드피트</dd><dt>가격</dt><dd>$ / 1,000보드피트</dd><dt>최소 틱</dt><dd>$0.50 = $13.75</dd><dt>$10 움직이면</dt><dd>$275</dd><dt>월물</dt><dd>1·3·5·7·9·11월 <span>(F H K N U X)</span></dd><dt>결제</dt><dd>실물 인도 <span>제재소 출하</span></dd></dl></div>
+<p class="note">LBR은 하루 거래량이 수천 계약 수준이라 대형 선물보다 훨씬 얇아요. 하루 가격제한폭이 있어서 제한폭에 걸리면 거래가 멈춰요. 작은 계약은 없어요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>$20 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="521.5" data-x="541.5">LBR +$20</button><button type="button" data-c="0" data-e="521.5" data-x="491.5">LBR −$30</button><button type="button" data-c="0" data-e="521.5" data-x="573.5">LBR +10%</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">LBR 목재 (27,500보드피트)</option></select></label>
+      <label for="in-entry">진입가 ($/1,000보드피트)<input id="in-entry" type="number" step="any" value="521.5" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($/1,000보드피트)<input id="in-exit" type="number" step="any" value="541.5" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 명목가치는 가격 × 27.5. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "LBR 목재 (27,500보드피트)", "tick": 0.5, "tv": 13.75, "mult": 27.5, "dec": 1, "entry": 521.5, "exit": 541.5}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>캘리 업무 시간 그대로</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 목재 선물 거래 시간. 07:00~13:05. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="555.2" y="57" width="145.0" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">집중 07:00~13:05 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="170" y="215" class="sm">CME 목재 거래 시간 (하루 6시간)</text></svg></div>
+<p class="cap">시카고 기준 월~금 09:00~15:05. 캘리포니아 시간 <b>오전 7시에 열려서 오후 1:05에 닫혀요</b>. 다른 CME 상품처럼 24시간 열리지 않아서, 그 밖의 시간엔 주문을 넣어도 다음 개장 때까지 체결되지 않아요. 개장 직후와 마감 전 30분에 거래가 몰려요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>유동성이 얇아요</h3><p>미결제약정 수천 계약 규모의 작은 시장이에요. 시장가 주문은 피하고 지정가로.</p></div><div><h3>장 시간이 짧아요</h3><p>하루 6시간만 열려서 밤사이 뉴스가 다음 날 갭으로 반영돼요.</p></div><div><h3>가격제한폭</h3><p>하루 가격제한폭이 있어요. 큰 뉴스엔 제한폭에 걸려 못 빠져나올 수 있어요.</p></div><div><h3>11월물은 곧 만기</h3><p>11월물은 11월 중순 만기라 지금 새로 들어간다면 1월물(LBRF7)을 쓰세요.</p></div><div><h3>관세 뉴스</h3><p>미국·캐나다 목재 관세 결정이 나오면 크게 움직여요.</p></div><div><h3>실물 인도</h3><p>제재소 출하 인도라 개인은 만기 전에 정리해야 해요.</p></div></div>
+</section>
+<section class="fun"><h3>🏠 보너스: LBR 1계약으로 집 몇 채?</h3><p>미국 단독주택(약 200㎡) 한 채의 나무 골조에는 목재 약 <b class="mono">16,000보드피트</b>가 들어가요. LBR 1계약 27,500보드피트면 약 <b>1.7채</b> 분량이에요. 지금 가격 $521.5로 치면 집 한 채 골조 목재값은 약 <b class="mono">$8,300</b>(약 1,170만 원). 2021년 고점 때는 이게 $27,000을 넘어서, 미국 신축 주택 가격이 몇만 달러씩 올랐어요.</p></section>
+</main>
+
+</html>

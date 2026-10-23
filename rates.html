@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>국채·SOFR 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f3f4f2; --surface:#ffffff; --fg:#20221f; --muted:#5f645d; --line:#d7dad5; --c1:#24537a; --c1-soft:#dce7f0; --c2:#2f7a5a; --c2-soft:#dcefe6; --c3:#8a5a1f; --c3-soft:#f3e7d5; --c4:#6b4f8a; --c4-soft:#e9e1f1; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#121413; --surface:#1b1e1c; --fg:#eaebe6; --muted:#a6aaa2; --line:#343833; --c1:#86b6e0; --c1-soft:#162636; --c2:#80cfa8; --c2-soft:#163026; --c3:#e2b072; --c3-soft:#372713; --c4:#c2a6e0; --c4-soft:#2a2138; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#121413; --surface:#1b1e1c; --fg:#eaebe6; --muted:#a6aaa2; --line:#343833; --c1:#86b6e0; --c1-soft:#162636; --c2:#80cfa8; --c2-soft:#163026; --c3:#e2b072; --c3-soft:#372713; --c4:#c2a6e0; --c4-soft:#2a2138; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">금리 선물 · CBOT 미국 국채 · ZT · ZF · ZN · ZB · CME SOFR</span>
+  <h1>국채 선물은 왜<br><span class="hl">가상의 6% 국채</span>를 거래할까?</h1>
+  <p class="lead">ZN(10년 국채 선물) 화면에 뜨는 105-15.5라는 숫자는 금리가 아니라 <b>국채 가격</b>이에요. 그리고 그 국채는 실제로 존재하지 않는 <b>쿠폰 6%짜리 가상 채권</b>이에요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 미국 국채는 만기·쿠폰이 다른 종목이 수백 개라 하나만 골라 선물을 만들면 금방 만기가 줄어들고 물량도 부족해요. 그래서 <b>조건에 맞는 국채 여러 개를 '인도 가능 바구니'로 묶고</b>, 각 국채를 6% 기준 채권으로 환산(전환계수)해서 아무거나 넘길 수 있게 했어요.</p><p>파는 쪽은 바구니에서 <b>가장 싸게 넘길 수 있는 국채(CTD)</b>를 골라서 실제로 인도해요. 반면 <b>SOFR 선물(SR3)</b>은 넘길 물건이 없는 '3개월 평균 금리'라서 현금정산하고, 가격을 <b>100 − 금리</b>로 표시해요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>ZN 10년 12월물</small><b>105-15.5</b><span>= 105.484 · 미결제 589만</span></div><div><small>ZF 5년 12월물</small><b>104-01</b><span>= 104.031 · 미결제 678만</span></div><div><small>ZB 30년 12월물</small><b>106-11</b><span>= 106.344 · 미결제 184만</span></div><div><small>SR3 2026년 12월물</small><b>95.760</b><span>→ 금리 4.24% · 미결제 160만</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. ZT(2년) 12월물은 101.895(101-28.625), SR3 2027년 3월물은 95.485(금리 4.515%)였어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">인도 구조</a><a href="#curve">만기별 비교</a><a href="#sofr">SOFR 읽는 법</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 실물 인도, 그런데 바구니로</span>
+  <h2>국채 선물이 만기에 넘기는 것</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="재무부가 발행한 국채 중 조건에 맞는 것이 인도 바구니가 되고, ZN 선물은 6% 가상 국채를 거래하며 만기에는 CTD 국채가 실물 인도된다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">미 재무부 발행</text><text x="97.2" y="78" text-anchor="middle" class="sm">2·5·10·30년물…</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">인도 가능 바구니</text><text x="285.8" y="78" text-anchor="middle" class="sm">남은 만기 조건 충족</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">ZN 선물</text><text x="474.2" y="78" text-anchor="middle" class="sm">6% 가상 국채 $10만</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">만기 실물 인도</text><text x="662.8" y="78" text-anchor="middle" class="sm">CTD 국채가 넘어감</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물 가격 × 전환계수 = 실제로 받는 돈</text><text x="40" y="190">ZN 바구니: 남은 만기 6년 6개월~8년인 국채 (10년물 '선물'이지만 실제론 7년 근처)</text><text x="40" y="214">쿠폰이 다른 국채를 공평하게 만들려고 거래소가 종목마다 전환계수를 정해요</text><text x="40" y="238">파는 쪽은 그중 가장 싸게 넘길 수 있는 국채(CTD)를 골라 인도 → 선물은 CTD를 따라 움직임</text></svg></div>
+<div class="tbl"><table><thead><tr><th></th><th>국채 선물 (ZT·ZF·ZN·ZB)</th><th>SOFR 선물 (SR3)</th></tr></thead><tbody><tr><td>거래 대상</td><td>국채 가격</td><td>3개월 평균 금리</td></tr><tr><td>가격 표시</td><td>포인트 + 1/32 (105-15.5)</td><td>100 − 금리 (95.760)</td></tr><tr><td>만기 결제</td><td class="bad">실물 인도 (CTD 국채)</td><td class="good">현금정산</td></tr><tr><td>금리가 오르면</td><td>가격 ▼</td><td>가격 ▼</td></tr><tr><td>주로 반영하는 것</td><td>장기 성장·물가·재정</td><td>앞으로의 연준 기준금리</td></tr></tbody></table></div>
+<p class="note"><b>가격과 금리는 반대로 움직여요.</b> 쿠폰이 고정된 채권은 시장 금리가 오르면 상대적으로 매력이 떨어져서 값이 내려가요. 그래서 '금리 오를 것 같다 = 국채 선물 매도', '경기 침체로 금리 내릴 것 같다 = 매수'가 됩니다.</p>
+</section>
+<section id="curve">
+  <span class="eyebrow">2. 만기가 길수록 더 크게</span>
+  <h2>금리 0.01%p 움직이면 얼마일까</h2>
+<div class="fig"><svg viewBox="0 0 720 238" role="img" aria-label="만기별 국채 선물 DV01: ZT 약 38달러, ZF 약 43달러, ZN 약 63달러, TN 약 82달러, ZB 약 120달러, UB 약 190달러"><text x="20" y="22" class="sm">금리 1bp(0.01%p) 변화 때 1계약 가격 변화 (DV01, 대략)</text><line x1="170.0" y1="36" x2="170.0" y2="208" stroke="var(--line)"/><text x="170.0" y="230" text-anchor="middle" class="sm">$0</text><line x1="271.1" y1="36" x2="271.1" y2="208" stroke="var(--line)"/><text x="271.1" y="230" text-anchor="middle" class="sm">$50</text><line x1="372.2" y1="36" x2="372.2" y2="208" stroke="var(--line)"/><text x="372.2" y="230" text-anchor="middle" class="sm">$100</text><line x1="473.4" y1="36" x2="473.4" y2="208" stroke="var(--line)"/><text x="473.4" y="230" text-anchor="middle" class="sm">$150</text><line x1="574.5" y1="36" x2="574.5" y2="208" stroke="var(--line)"/><text x="574.5" y="230" text-anchor="middle" class="sm">$200</text><text x="20" y="57" class="b">ZT 2년</text><rect class="grow" x="170" y="42" width="76.9" height="20" rx="4" fill="var(--c3)"/><text x="254.9" y="57" class="b">≈ $38</text><text x="307.9" y="57" class="sm">액면 $20만</text><text x="20" y="85" class="b">ZF 5년</text><rect class="grow" x="170" y="70" width="87.0" height="20" rx="4" fill="var(--c3)"/><text x="265.0" y="85" class="b">≈ $43</text><text x="20" y="113" class="b" style="fill:var(--c1)">ZN 10년</text><rect class="grow" x="170" y="98" width="127.4" height="20" rx="4" fill="var(--c1)"/><text x="305.4" y="113" class="b" style="fill:var(--c1)">≈ $63</text><text x="358.4" y="113" class="sm">가장 많이 거래</text><text x="20" y="141" class="b">TN 울트라 10년</text><rect class="grow" x="170" y="126" width="165.8" height="20" rx="4" fill="var(--c3)"/><text x="343.8" y="141" class="b">≈ $82</text><text x="20" y="169" class="b">ZB 30년</text><rect class="grow" x="170" y="154" width="242.7" height="20" rx="4" fill="var(--c3)"/><text x="420.7" y="169" class="b">≈ $120</text><text x="20" y="197" class="b">UB 울트라 30년</text><rect class="grow" x="170" y="182" width="384.3" height="20" rx="4" fill="var(--c4)"/><text x="562.3" y="197" class="b">≈ $190</text></svg></div>
+<p class="cap">같은 1bp라도 만기가 긴 채권일수록 가격이 더 크게 움직여요(듀레이션). ZB 1계약은 ZT 1계약보다 3배쯤 크게 흔들려요. 값은 CTD 국채 기준 대략적인 추정이라 금리 수준과 CTD가 바뀌면 달라져요.</p>
+<div class="cards"><div><span class="tag t-3">단기 · ZT</span><h3>2년 국채</h3><p>연준 기준금리 기대에 가장 민감해요. FOMC 성명 한 줄에 크게 반응.</p></div><div><span class="tag t-1">중기 · ZF·ZN</span><h3>5년·10년 국채</h3><p>모기지 금리·회사채 금리의 기준. 전 세계 금리 트레이더의 중심 시장.</p></div><div><span class="tag t-4">장기 · ZB·UB</span><h3>30년 국채</h3><p>물가 장기 전망, 정부 재정적자·국채 발행량에 민감해요.</p></div></div>
+</section>
+<section id="sofr">
+  <span class="eyebrow">3. SOFR 선물 읽는 법</span>
+  <h2>95.76은 '4.24%'라는 뜻</h2>
+<div class="fig narrow"><svg viewBox="0 0 720 126" role="img" aria-label="SOFR 선물 내재 금리: 12월물 4.24%, 2027년 3월물 4.515%"><text x="20" y="22" class="sm">SR3 가격에 숨은 3개월 평균 금리 (100 − 가격)</text><line x1="170.0" y1="36" x2="170.0" y2="96" stroke="var(--line)"/><text x="170.0" y="118" text-anchor="middle" class="sm">0%</text><line x1="244.3" y1="36" x2="244.3" y2="96" stroke="var(--line)"/><text x="244.3" y="118" text-anchor="middle" class="sm">1%</text><line x1="318.6" y1="36" x2="318.6" y2="96" stroke="var(--line)"/><text x="318.6" y="118" text-anchor="middle" class="sm">2%</text><line x1="392.9" y1="36" x2="392.9" y2="96" stroke="var(--line)"/><text x="392.9" y="118" text-anchor="middle" class="sm">3%</text><line x1="467.2" y1="36" x2="467.2" y2="96" stroke="var(--line)"/><text x="467.2" y="118" text-anchor="middle" class="sm">4%</text><line x1="541.5" y1="36" x2="541.5" y2="96" stroke="var(--line)"/><text x="541.5" y="118" text-anchor="middle" class="sm">5%</text><text x="20" y="57" class="b" style="fill:var(--c1)">2026년 12월물</text><rect class="grow" x="170" y="42" width="315.0" height="20" rx="4" fill="var(--c1)"/><text x="493.0" y="57" class="b" style="fill:var(--c1)">4.240%</text><text x="555.0" y="57" class="sm">12월~3월 평균 예상</text><text x="20" y="85" class="b">2027년 3월물</text><rect class="grow" x="170" y="70" width="335.4" height="20" rx="4" fill="var(--c4)"/><text x="513.4" y="85" class="b">4.515%</text><text x="575.4" y="85" class="sm">3월~6월 평균 예상</text></svg></div>
+<p>SOFR는 미국 은행들이 국채를 담보로 하룻밤 돈을 빌리는 금리예요. SR3 12월물은 <b>2026년 12월 셋째 수요일부터 3개월 동안의 SOFR 평균</b>을 거래해요. 가격 95.760은 시장이 그 기간 평균 금리를 4.24%로 본다는 뜻이고, 만기 뒤 실제 평균이 4.00%였다면 96.00으로 정산돼요.</p>
+<p class="note">오늘 가격으로 보면 3월물 금리(4.515%)가 12월물(4.24%)보다 높아요. 시장이 <b>내년 초 금리가 지금보다 높을 가능성</b>을 반영하고 있다는 뜻이에요. 유가가 $98대까지 오른 상황과 관련 있어 보이지만, 가격이 말해주는 건 기대치일 뿐 확정이 아니에요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>금리 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="금리 달력: 연 8회 FOMC, 매달 CPI와 고용, 매달 국채 입찰, 2·5·8·11월 말 국채선물 롤오버, 3·6·9·12월 SOFR 만기"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="616" y1="38" x2="616" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">FOMC</text><circle cx="174" cy="62" r="4" fill="var(--c1)"/><circle cx="270" cy="62" r="4" fill="var(--c1)"/><circle cx="318" cy="62" r="4" fill="var(--c1)"/><circle cx="414" cy="62" r="4" fill="var(--c1)"/><circle cx="462" cy="62" r="4" fill="var(--c1)"/><circle cx="558" cy="62" r="4" fill="var(--c1)"/><circle cx="606" cy="62" r="4" fill="var(--c1)"/><circle cx="702" cy="62" r="4" fill="var(--c1)"/><text x="16" y="104" class="b">CPI·고용지표</text><circle cx="174" cy="100" r="4" fill="var(--c4)"/><circle cx="222" cy="100" r="4" fill="var(--c4)"/><circle cx="270" cy="100" r="4" fill="var(--c4)"/><circle cx="318" cy="100" r="4" fill="var(--c4)"/><circle cx="366" cy="100" r="4" fill="var(--c4)"/><circle cx="414" cy="100" r="4" fill="var(--c4)"/><circle cx="462" cy="100" r="4" fill="var(--c4)"/><circle cx="510" cy="100" r="4" fill="var(--c4)"/><circle cx="558" cy="100" r="4" fill="var(--c4)"/><circle cx="606" cy="100" r="4" fill="var(--c4)"/><circle cx="654" cy="100" r="4" fill="var(--c4)"/><circle cx="702" cy="100" r="4" fill="var(--c4)"/><text x="16" y="142" class="b">국채 입찰</text><circle cx="174" cy="138" r="4" fill="var(--c3)"/><circle cx="222" cy="138" r="4" fill="var(--c3)"/><circle cx="270" cy="138" r="4" fill="var(--c3)"/><circle cx="318" cy="138" r="4" fill="var(--c3)"/><circle cx="366" cy="138" r="4" fill="var(--c3)"/><circle cx="414" cy="138" r="4" fill="var(--c3)"/><circle cx="462" cy="138" r="4" fill="var(--c3)"/><circle cx="510" cy="138" r="4" fill="var(--c3)"/><circle cx="558" cy="138" r="4" fill="var(--c3)"/><circle cx="606" cy="138" r="4" fill="var(--c3)"/><circle cx="654" cy="138" r="4" fill="var(--c3)"/><circle cx="702" cy="138" r="4" fill="var(--c3)"/><text x="16" y="180" class="b">국채선물 롤오버</text><rect x="200" y="164" width="44" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="222" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">2월 말</text><rect x="344" y="164" width="44" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="366" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">5월 말</text><rect x="488" y="164" width="44" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="510" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">8월 말</text><rect x="632" y="164" width="44" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="682" y="181" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">11월 말</text><text x="16" y="218" class="b">SR3 만기</text><circle cx="274" cy="214" r="7" fill="var(--c3)"/><text x="286" y="219" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b">3월</text><circle cx="416" cy="214" r="7" fill="var(--c3)"/><text x="428" y="219" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b">6월</text><circle cx="559" cy="214" r="7" fill="var(--c3)"/><text x="571" y="219" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b">9월</text><circle cx="703" cy="214" r="7" fill="var(--c3)"/><text x="691" y="219" text-anchor="end" style="font-size:12px;fill:var(--c3)" class="b">12월</text></svg></div>
+<p class="cap">국채 선물은 <b>인도월 직전 달 말</b>에 롤오버가 몰려요. 12월물(Z6)은 11월 마지막 주에 3월물(H7)로 넘어가요. 고용·CPI는 캘리포니아 시간 <b>오전 5:30</b>, FOMC는 <b>오전 11시</b>에 나와요. 10년·30년 국채 입찰 결과가 나오는 <b>오전 10시</b>에도 크게 움직일 수 있어요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>국채는 물가와 연준의 상품</h2>
+<div class="drivers"><div><div class="k"><h3>물가 (CPI·PCE)</h3><span class="dir down">높으면 가격 ▼</span></div><p>물가가 예상보다 높으면 연준이 금리를 못 내리거나 올려야 해서 금리 ▲, 국채 선물 가격 ▼.</p></div><div><div class="k"><h3>연준 (FOMC)</h3><span class="dir both">매파 ▼ / 비둘기 ▲</span></div><p>기준금리 결정과 점도표, 의장 기자회견. 단기물(ZT·SR3)이 가장 크게 반응해요.</p></div><div><div class="k"><h3>고용지표</h3><span class="dir down">강하면 가격 ▼</span></div><p>일자리가 예상보다 많이 늘면 경기 과열 → 금리 ▲. 매달 첫 금요일.</p></div><div><div class="k"><h3>유가</h3><span class="dir down">급등하면 가격 ▼</span></div><p>에너지 가격이 물가로 이어져요. 지금 같은 고유가 구간에선 특히 중요해요.</p></div><div><div class="k"><h3>재정적자·국채 발행</h3><span class="dir down">늘면 가격 ▼</span></div><p>정부가 국채를 많이 찍을수록 장기물에 부담. 분기 국채 발행 계획(리펀딩) 발표가 이벤트예요.</p></div><div><div class="k"><h3>위기·안전자산 수요</h3><span class="dir up">공포 땐 가격 ▲</span></div><p>주식이 폭락하거나 지정학 위기가 오면 돈이 국채로 몰려 가격이 올라요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 금리 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="국채 선물의 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">은행·모기지 업체</text>
+<text x="110" y="90" text-anchor="middle">"금리 오르면 손실"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 국채 선물 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">연기금·보험사</text>
+<text x="550" y="90" text-anchor="middle">"금리 내리면 손실"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 국채 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">ZN 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">금리 위험을 사고팔기</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">헤지펀드의 베이시스 거래(현물 국채 매수 + 선물 매도)도 아주 큰 비중이에요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>은행·딜러</h3><p>입찰에서 산 국채, 고정금리 대출 같은 '금리 오르면 손해' 자산을 선물 매도로 상쇄해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>연기금·보험사</h3><p>수십 년 뒤 지급할 연금은 금리가 내려가면 부담이 커져요. 그래서 장기물 선물을 사서 듀레이션을 늘려요.</p></div><div><span class="tag t-4">차익거래</span><h3>베이시스 트레이더</h3><p>현물 국채를 사고 선물을 팔아 작은 가격 차이를 레버리지로 먹어요. 시장 규모가 수천억 달러.</p></div><div><span class="tag t-spec">방향성</span><h3>매크로 펀드·CTA</h3><p>연준 정책·경기 전망에 베팅. SR3로 '몇 번 인하할지'를 거래하기도 해요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>10-Year T-Note (ZN)</h3><dl><dt>거래소</dt><dd>CBOT <span>(CME 그룹)</span></dd><dt>IBKR 심볼</dt><dd>ZN <span>예: ZNZ6 = 2026년 12월</span></dd><dt>액면</dt><dd>$100,000</dd><dt>가격</dt><dd>포인트 + 1/32 <span>105-15.5 = 105 + 15.5/32</span></dd><dt>최소 틱</dt><dd>1/64 = $15.625</dd><dt>1포인트</dt><dd>$1,000</dd><dt>월물</dt><dd>3·6·9·12월</dd><dt>결제</dt><dd>실물 인도 <span>CTD 국채</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>Three-Month SOFR (SR3)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>IBKR 심볼</dt><dd>SR3 <span>(IBKR 기초 SOFR3)</span></dd><dt>크기</dt><dd>1bp = $25</dd><dt>가격</dt><dd>100 − 금리</dd><dt>최소 틱</dt><dd>0.005 = $12.50 <span>최근월 0.0025 = $6.25</span></dd><dt>월물</dt><dd>분기 + 가까운 월물들 <span>몇 년치 상장</span></dd><dt>결제</dt><dd>현금정산</dd></dl></div></div>
+<div class="tbl"><table><thead><tr><th>심볼</th><th>대상</th><th>액면</th><th>최소 틱</th><th>틱 가치</th><th>유동성</th></tr></thead><tbody><tr><td>ZT</td><td>2년 국채</td><td class="num">$200,000</td><td class="num">1/256</td><td class="num">$7.8125</td><td class="good">매우 좋음</td></tr><tr><td>ZF</td><td>5년 국채</td><td class="num">$100,000</td><td class="num">1/128</td><td class="num">$7.8125</td><td class="good">매우 좋음</td></tr><tr><td>ZN</td><td>10년 국채</td><td class="num">$100,000</td><td class="num">1/64</td><td class="num">$15.625</td><td class="good">최상</td></tr><tr><td>TN</td><td>울트라 10년</td><td class="num">$100,000</td><td class="num">1/64</td><td class="num">$15.625</td><td>보통</td></tr><tr><td>ZB</td><td>30년 국채</td><td class="num">$100,000</td><td class="num">1/32</td><td class="num">$31.25</td><td class="good">좋음</td></tr><tr><td>UB</td><td>울트라 30년</td><td class="num">$100,000</td><td class="num">1/32</td><td class="num">$31.25</td><td>보통</td></tr><tr><td>SR3</td><td>3개월 SOFR</td><td class="num">1bp=$25</td><td class="num">0.005</td><td class="num">$12.50</td><td class="good">매우 좋음</td></tr><tr><td>10Y 등</td><td>마이크로 국채 금리</td><td class="num">1bp=$10</td><td class="num">0.001%p</td><td class="num">$1.00</td><td class="bad">얇음</td></tr></tbody></table></div>
+<p class="note">국채 선물에는 '마이크로 ZN' 같은 1/10 계약이 없어요. 작게 하고 싶다면 CME <b>마이크로 국채 금리 선물</b>(2YY·5YY·10Y·30Y)이 있는데, 이건 가격이 아니라 <b>금리 자체</b>(예: 4.150)로 표시되고 현금정산해요. 거래량이 적으니 지정가로만 다루세요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>1포인트 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="105.484375" data-x="106.484375">ZN +1포인트</button><button type="button" data-c="0" data-e="105.484375" data-x="104.984375">ZN −16/32</button><button type="button" data-c="3" data-e="106.34375" data-x="108.34375">ZB +2포인트</button><button type="button" data-c="4" data-e="95.76" data-x="96.01">SR3 금리 0.25%p 인하 반영</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">ZN 10년 (1/64 = $15.625)</option><option value="1">ZF 5년 (1/128 = $7.8125)</option><option value="2">ZT 2년 (1/256 = $7.8125)</option><option value="3">ZB 30년 (1/32 = $31.25)</option><option value="4">SR3 12월물 (0.005 = $12.50)</option></select></label>
+      <label for="in-entry">진입가 (소수 가격)<input id="in-entry" type="number" step="any" value="105.484375" inputmode="decimal"></label>
+      <label for="in-exit">청산가 (소수 가격)<input id="in-exit" type="number" step="any" value="106.484375" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">국채 가격은 소수로 입력하세요. 105-15.5는 105 + 15.5/32 = 105.484375예요. 결과 줄에 32분의 1 표기를 같이 보여줘요. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "ZN 10년 (1/64 = $15.625)", "tick": 0.015625, "tv": 15.625, "mult": 1000, "dec": 6, "f32": true, "entry": 105.484375, "exit": 106.484375}, {"name": "ZF 5년 (1/128 = $7.8125)", "tick": 0.0078125, "tv": 7.8125, "mult": 1000, "dec": 6, "f32": true, "entry": 104.03125, "exit": 104.53125}, {"name": "ZT 2년 (1/256 = $7.8125)", "tick": 0.00390625, "tv": 7.8125, "mult": 2000, "dec": 6, "f32": true, "entry": 101.89453125, "exit": 102.14453125}, {"name": "ZB 30년 (1/32 = $31.25)", "tick": 0.03125, "tv": 31.25, "mult": 1000, "dec": 5, "f32": true, "entry": 106.34375, "exit": 108.34375}, {"name": "SR3 12월물 (0.005 = $12.50)", "tick": 0.005, "tv": 12.5, "mult": 2500, "dec": 3, "entry": 95.76, "exit": 96.01}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>오전 5시 반이 가장 뜨거운 시간</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 금리 선물 거래 시간. 15:00~다음날 14:00, 집중 05:20~12:00. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="515.4" y="57" width="158.9" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 05:20~12:00 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (하루 1시간 정비)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">미국 주간 = 지표 발표·거래량 집중</text></svg></div>
+<p class="cap">시카고 기준 일요일 17:00 ~ 금요일 16:00, 매일 16:00~17:00 정비. 캘리포니아 시간으로는 일요일 15:00에 열려 금요일 14:00에 닫히고, 평일 14:00~15:00만 쉬어요. 가장 크게 움직이는 순간은 미국 지표가 나오는 <b>오전 5:30</b>이에요. 도쿄 시간(캘리 저녁)에도 ZN은 꾸준히 거래되지만 변동은 작아요. 이 시간은 서머타임과 상관없이 일년 내내 같아요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>12월물은 11월 말에 정리</h3><p>국채 선물은 실물 인도라서 첫 포지션일(11월 마지막 영업일 전후) 전에 IBKR이 청산을 요구하거나 자동 청산할 수 있어요. 11월 넷째 주쯤 3월물(H7)로 갈아타세요.</p></div><div><h3>1/32 표기 헷갈림</h3><p>105-15.5는 105.155가 아니라 105.484예요. 주문 넣을 때 소수와 32분의 1을 혼동하면 엉뚱한 가격에 체결돼요.</p></div><div><h3>가격과 금리는 반대</h3><p>'금리 상승에 베팅'은 국채 선물 <b>매도</b>예요. SR3도 마찬가지로 '금리 인하 베팅 = 매수'.</p></div><div><h3>지표 발표 순간</h3><p>고용·CPI 발표 직후 몇 초 동안 호가가 비고 수십 틱이 한 번에 움직여요. 스톱이 크게 미끄러질 수 있어요.</p></div><div><h3>TN·UB는 덜 붐벼요</h3><p>ZN·ZF·ZB보다 거래가 적어 캘리 저녁~새벽에는 스프레드가 넓어요.</p></div><div><h3>SR3 틱 크기 차이</h3><p>가장 가까운 만기 월물만 0.0025($6.25) 틱이고 나머지는 0.005($12.50)예요.</p></div></div>
+</section>
+<section class="fun"><h3>🏦 보너스: ZN 1포인트는 금리로 몇 %p?</h3><p>ZN의 DV01이 약 $63이니까 1포인트($1,000) 움직이려면 금리가 약 <b class="mono">0.16%p</b>(16bp) 움직여야 해요. 미국 10년물 금리가 하루에 10bp 움직이면 '큰 날'로 치는데, 그때 ZN은 약 20/32, 1계약에 <b class="mono">$630</b>쯤 움직여요. 주가지수와 비교하면 아주 잔잔해 보이지만, 그래서 기관들은 레버리지를 크게 써요. 2023년 미국 지역은행(SVB) 사태도 결국 이 '잔잔한' 국채 가격 하락이 쌓여서 생긴 일이에요.</p></section>
+</main>
+
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>옥수수·귀리 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f5f4ec; --surface:#ffffff; --fg:#24251c; --muted:#67685a; --line:#dddbcd; --c1:#b08a0e; --c1-soft:#f6eecf; --c2:#4b7a2a; --c2-soft:#e2edd7; --c3:#2f6f8f; --c3-soft:#dcebf2; --c4:#8a5a34; --c4-soft:#f0e3d7; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#151510; --surface:#1e1f18; --fg:#ecebdf; --muted:#abab98; --line:#38392c; --c1:#e8c454; --c1-soft:#3a3011; --c2:#9ccc6e; --c2-soft:#22311a; --c3:#6ab3d6; --c3-soft:#132d3a; --c4:#d3a174; --c4-soft:#36271b; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#151510; --surface:#1e1f18; --fg:#ecebdf; --muted:#abab98; --line:#38392c; --c1:#e8c454; --c1-soft:#3a3011; --c2:#9ccc6e; --c2-soft:#22311a; --c3:#6ab3d6; --c3-soft:#132d3a; --c4:#d3a174; --c4-soft:#36271b; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">곡물 선물 · CBOT 옥수수 ZC · 미니 XC · 귀리 ZO</span>
+  <h1>옥수수 선물은 왜<br><span class="hl">무게가 아니라 부셸</span>로 셀까?</h1>
+  <p class="lead">IBKR의 옥수수(ZC) 가격 463.75는 <b>'1부셸에 463.75센트(4.64달러)'</b>라는 뜻이에요. 부셸(bushel)은 원래 곡식을 담던 <b>통의 부피</b>예요. 지금은 옥수수 1부셸 = 56파운드(약 25.4kg)로 무게를 정해서 써요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 미국 곡물 거래는 1800년대 시카고에서 통(부셸)으로 곡식을 재던 관습에서 시작했어요. 지금도 농부·엘리베이터(곡물 창고)·수출상 모두 부셸로 말해서 선물도 그대로 남았어요. 1계약은 <b>5,000부셸 ≈ 127톤</b>, 트럭 5~6대 분량이에요.</p><p>선물이 넘기는 건 <b>2등급 황색 옥수수</b>의 <b>선적 증서(shipping certificate)</b>예요. 일리노이강을 따라 있는 지정 창고에서 옥수수를 바지선에 실어주겠다는 약속이에요. 옥수수 알갱이는 말려두면 1년 넘게 보관할 수 있어서 실물 인도가 가능해요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>ZC 2026년 12월물</small><b>463.75¢</b><span>= $4.6375/부셸 · 미결제 79.9만</span></div><div><small>ZC 1계약 명목가치</small><b>$23,188</b><span>5,000부셸 × $4.6375</span></div><div><small>ZO 귀리 12월물</small><b>381.25¢</b><span>미결제 3,120 · 거래 9계약</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. 옥수수 12월물은 스냅샷 시점 1.1만 계약 거래됐어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">밭에서 바지선까지</a><a href="#world">세계 옥수수</a><a href="#use">어디에 쓰나</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 아이오와 밭에서 일리노이강까지</span>
+  <h2>ZC 선물이 넘기는 옥수수</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="콘벨트 농가에서 수확한 옥수수가 엘리베이터를 거쳐 일리노이강 지정 창고에 모이고, ZC 선물은 그 선적 증서를 넘기며, 옥수수는 사료와 에탄올과 수출로 간다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">콘벨트 농가</text><text x="97.2" y="78" text-anchor="middle" class="sm">아이오와·일리노이</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">시골 엘리베이터</text><text x="285.8" y="78" text-anchor="middle" class="sm">말리고 모으기</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">일리노이강 창고</text><text x="474.2" y="78" text-anchor="middle" class="sm">선적 증서 5,000부셸</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">사료·에탄올·수출</text><text x="662.8" y="78" text-anchor="middle" class="sm">멕시코만으로</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '일리노이강 지정 창고의 2등급 황색 옥수수 선적 증서'</text><text x="40" y="190">가격 단위는 부셸당 센트. 1/4센트(0.25)가 1틱 = $12.50</text><text x="40" y="214">증서를 가진 사람은 창고에 바지선 선적을 요구할 수 있어요</text><text x="40" y="238">개인은 받을 수 없어서 첫 통지일(인도월 직전 달 말) 전에 정리해요</text></svg></div>
+<p class="note"><b>센트 표기 주의:</b> 463.75는 $463.75가 아니라 <b>$4.6375</b>예요. 끝자리는 0, 25, 50, 75만 나와요(1/4센트 단위). 일부 화면은 463'6처럼 1/8 단위로 표시하기도 해요.</p>
+</section>
+<section id="world">
+  <span class="eyebrow">2. 세계 옥수수 시장</span>
+  <h2>미국이 세계 옥수수의 3분의 1</h2>
+<div class="fig"><svg viewBox="0 0 720 266" role="img" aria-label="나라별 옥수수 생산 비중: 미국 31%, 중국 23%, 브라질 10%, EU 5%, 아르헨티나 4%, 우크라이나 2.5%, 기타 24.5%"><text x="20" y="22" class="sm">나라별 옥수수 생산 비중 (대략)</text><line x1="170.0" y1="36" x2="170.0" y2="236" stroke="var(--line)"/><text x="170.0" y="258" text-anchor="middle" class="sm">0%</text><line x1="300.1" y1="36" x2="300.1" y2="236" stroke="var(--line)"/><text x="300.1" y="258" text-anchor="middle" class="sm">10%</text><line x1="430.2" y1="36" x2="430.2" y2="236" stroke="var(--line)"/><text x="430.2" y="258" text-anchor="middle" class="sm">20%</text><line x1="560.2" y1="36" x2="560.2" y2="236" stroke="var(--line)"/><text x="560.2" y="258" text-anchor="middle" class="sm">30%</text><text x="20" y="57" class="b" style="fill:var(--c1)">미국</text><rect class="grow" x="170" y="42" width="403.3" height="20" rx="4" fill="var(--c1)"/><text x="581.3" y="57" class="b" style="fill:var(--c1)">31%</text><text x="616.3" y="57" class="sm">세계 1위</text><text x="20" y="85" class="b">중국</text><rect class="grow" x="170" y="70" width="299.2" height="20" rx="4" fill="var(--c3)"/><text x="477.2" y="85" class="b">23%</text><text x="512.2" y="85" class="sm">거의 자국 소비</text><text x="20" y="113" class="b">브라질</text><rect class="grow" x="170" y="98" width="130.1" height="20" rx="4" fill="var(--c2)"/><text x="308.1" y="113" class="b">10%</text><text x="343.1" y="113" class="sm">수출 강자</text><text x="20" y="141" class="b">EU</text><rect class="grow" x="170" y="126" width="65.0" height="20" rx="4" fill="var(--c3)"/><text x="243.0" y="141" class="b">5%</text><text x="20" y="169" class="b">아르헨티나</text><rect class="grow" x="170" y="154" width="52.0" height="20" rx="4" fill="var(--c2)"/><text x="230.0" y="169" class="b">4%</text><text x="20" y="197" class="b">우크라이나</text><rect class="grow" x="170" y="182" width="32.5" height="20" rx="4" fill="var(--c2)"/><text x="210.5" y="197" class="b">2.5%</text><text x="20" y="225" class="b">기타</text><rect class="grow" x="170" y="210" width="318.7" height="20" rx="4" fill="var(--line)"/><text x="496.7" y="225" class="b">24.5%</text></svg></div>
+<p class="cap">수출 시장에선 미국·브라질·아르헨티나·우크라이나가 4강이에요. 한국은 세계 5위권 옥수수 수입국이라(대부분 사료용) ZC 가격이 국내 사룟값·고깃값에 영향을 줘요. 비중은 USDA 통계 기반 대략적인 값이에요.</p>
+<div class="fig narrow"><svg viewBox="0 0 720 210" role="img" aria-label="미국 주별 옥수수 생산: 아이오와 17%, 일리노이 15%, 네브래스카 11%, 미네소타 9%, 기타 48%"><text x="20" y="22" class="sm">미국 주별 옥수수 생산 비중 (대략)</text><line x1="210.0" y1="36" x2="210.0" y2="180" stroke="var(--line)"/><text x="210.0" y="202" text-anchor="middle" class="sm">0%</text><line x1="304.0" y1="36" x2="304.0" y2="180" stroke="var(--line)"/><text x="304.0" y="202" text-anchor="middle" class="sm">10%</text><line x1="398.0" y1="36" x2="398.0" y2="180" stroke="var(--line)"/><text x="398.0" y="202" text-anchor="middle" class="sm">20%</text><line x1="492.0" y1="36" x2="492.0" y2="180" stroke="var(--line)"/><text x="492.0" y="202" text-anchor="middle" class="sm">30%</text><line x1="586.0" y1="36" x2="586.0" y2="180" stroke="var(--line)"/><text x="586.0" y="202" text-anchor="middle" class="sm">40%</text><line x1="680.0" y1="36" x2="680.0" y2="180" stroke="var(--line)"/><text x="680.0" y="202" text-anchor="middle" class="sm">50%</text><text x="20" y="57" class="b" style="fill:var(--c1)">아이오와</text><rect class="grow" x="210" y="42" width="159.8" height="20" rx="4" fill="var(--c1)"/><text x="377.8" y="57" class="b" style="fill:var(--c1)">17%</text><text x="20" y="85" class="b" style="fill:var(--c1)">일리노이</text><rect class="grow" x="210" y="70" width="141.0" height="20" rx="4" fill="var(--c1)"/><text x="359.0" y="85" class="b" style="fill:var(--c1)">15%</text><text x="20" y="113" class="b" style="fill:var(--c1)">네브래스카</text><rect class="grow" x="210" y="98" width="103.4" height="20" rx="4" fill="var(--c1)"/><text x="321.4" y="113" class="b" style="fill:var(--c1)">11%</text><text x="20" y="141" class="b" style="fill:var(--c1)">미네소타</text><rect class="grow" x="210" y="126" width="84.6" height="20" rx="4" fill="var(--c1)"/><text x="302.6" y="141" class="b" style="fill:var(--c1)">9%</text><text x="20" y="169" class="b">인디애나·사우스다코타 등</text><rect class="grow" x="210" y="154" width="451.2" height="20" rx="4" fill="var(--line)"/><text x="669.2" y="169" class="b">48%</text></svg></div>
+</section>
+<section id="use">
+  <span class="eyebrow">3. 쓰임새</span>
+  <h2>미국 옥수수는 어디로 가나</h2>
+<div class="fig"><svg viewBox="0 0 720 120" role="img" aria-label="미국 옥수수 사용처: 가축 사료 37%, 에탄올 35%, 수출 15%, 식품 10%, 기타 3%"><text x="20" y="24" class="sm">미국 옥수수 사용처 (대략)</text><rect class="grow" x="20.0" y="40" width="251.6" height="40" fill="var(--c1)"/><text x="145.8" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">가축 사료 37%</text><rect class="grow" x="271.6" y="40" width="238.0" height="40" fill="var(--c2)"/><text x="390.6" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">에탄올 연료 35%</text><rect class="grow" x="509.6" y="40" width="102.0" height="40" fill="var(--c3)"/><text x="560.6" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">수출 15%</text><rect class="grow" x="611.6" y="40" width="68.0" height="40" fill="var(--c4)"/><rect class="grow" x="679.6" y="40" width="20.4" height="40" fill="var(--line)"/><rect x="20" y="96" width="12" height="12" rx="2" fill="var(--c4)"/><text x="38" y="107" class="sm">식품·전분·시럽 10%</text><rect x="156" y="96" width="12" height="12" rx="2" fill="var(--line)"/><text x="174" y="107" class="sm">기타 3%</text></svg></div>
+<div class="cards"><div><span class="tag t-2">에탄올</span><h3>옥수수의 3분의 1이 연료</h3><p>미국 휘발유에 섞는 에탄올 10%가 대부분 옥수수로 만들어져요. 그래서 유가가 오르면 옥수수도 끌려 올라가요.</p></div><div><span class="tag t-1">사료</span><h3>소·돼지·닭의 밥</h3><p>축산 경기와 연결돼요. 옥수수가 비싸지면 고기 생산 원가가 올라요.</p></div><div><span class="tag t-4">귀리 (ZO)</span><h3>작고 오래된 시장</h3><p>캐나다·북유럽이 주산지인 귀리 선물도 CBOT에 있어요. 하지만 하루 거래가 수십 계약 수준이라 개인이 거래하기엔 너무 얇아요.</p></div></div>
+</section>
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>옥수수 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 302" role="img" aria-label="옥수수 달력: 4~5월 파종, 7월 수분기, 9~11월 수확, 6~8월 브라질 사프리냐 수확, 3월 말과 6월 말 USDA 면적 보고서, 매달 WASDE"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="282"/><line x1="294" y1="38" x2="294" y2="282"/><line x1="438" y1="38" x2="438" y2="282"/><line x1="582" y1="38" x2="582" y2="282"/><line x1="726" y1="38" x2="726" y2="282"/></g><line x1="616" y1="38" x2="616" y2="282" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="298" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">미국 파종</text><rect x="296" y="50" width="92" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="342" y="67" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">4~5월</text><text x="16" y="104" class="b">수분기 (가장 중요)</text><rect x="440" y="88" width="44" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><text x="490" y="105" text-anchor="start" style="font-size:12px;fill:var(--alert)" class="b">7월 · 날씨 장세</text><text x="16" y="142" class="b">미국 수확</text><rect x="536" y="126" width="140" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="606" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">9~11월 · 공급 쏟아짐</text><text x="16" y="180" class="b">브라질 사프리냐 수확</text><rect x="392" y="164" width="140" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="462" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c3)" class="b">2모작 옥수수</text><text x="16" y="218" class="b">USDA 면적 보고서</text><circle cx="294" cy="214" r="7" fill="var(--c4)"/><text x="306" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">3/31 파종의향</text><circle cx="436" cy="214" r="7" fill="var(--c4)"/><text x="448" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">6/30 실제 면적</text><text x="16" y="256" class="b">WASDE</text><circle cx="174" cy="252" r="4" fill="var(--c3)"/><circle cx="222" cy="252" r="4" fill="var(--c3)"/><circle cx="270" cy="252" r="4" fill="var(--c3)"/><circle cx="318" cy="252" r="4" fill="var(--c3)"/><circle cx="366" cy="252" r="4" fill="var(--c3)"/><circle cx="414" cy="252" r="4" fill="var(--c3)"/><circle cx="462" cy="252" r="4" fill="var(--c3)"/><circle cx="510" cy="252" r="4" fill="var(--c3)"/><circle cx="558" cy="252" r="4" fill="var(--c3)"/><circle cx="606" cy="252" r="4" fill="var(--c3)"/><circle cx="654" cy="252" r="4" fill="var(--c3)"/><circle cx="702" cy="252" r="4" fill="var(--c3)"/></svg></div>
+<p class="cap">지금(10월 말)은 <b>미국 수확이 한창</b>이라 계절적으로 가격이 약한 시기예요. 12월물(ZCZ6)이 '올해 수확 옥수수' 기준 월물이고, 첫 통지일은 <b>11월 30일</b>이라 11월 하순에 3월물(H7)로 넘어가요. 매주 월요일 작황 보고서(Crop Progress)도 나와요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>옥수수는 날씨 + 면적 + 에너지</h2>
+<div class="drivers"><div><div class="k"><h3>여름 날씨</h3><span class="dir up">가뭄·폭염 ▲</span></div><p>7월 수분기에 덥고 비가 안 오면 수확량이 크게 줄어요. 2012년 가뭄 때 $8 넘게 갔어요.</p></div><div><div class="k"><h3>USDA 보고서</h3><span class="dir both">숫자 따라 ▲▼</span></div><p>면적·수확량·재고 추정치가 예상과 다르면 하루 제한폭까지 움직이기도 해요.</p></div><div><div class="k"><h3>유가·에탄올</h3><span class="dir up">유가 ▲면 ▲</span></div><p>에탄올 수요와 연결. 지금 고유가는 옥수수에도 지지 요인.</p></div><div><div class="k"><h3>수출 수요</h3><span class="dir up">늘면 ▲</span></div><p>멕시코·일본·한국·중국·콜롬비아. 매주 목요일 수출 판매 보고서.</p></div><div><div class="k"><h3>남미 작황</h3><span class="dir down">풍작이면 ▼</span></div><p>브라질 2모작 옥수수가 미국 수출과 경쟁해요.</p></div><div><div class="k"><h3>달러</h3><span class="dir down">강세면 ▼</span></div><p>미국 옥수수가 해외에서 비싸져 수출이 줄어요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 옥수수 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="옥수수 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">콘벨트 농가</text>
+<text x="110" y="90" text-anchor="middle">"수확 때 값 떨어지면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 12월물 미리 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">사료·에탄올 공장</text>
+<text x="550" y="90" text-anchor="middle">"옥수수값 오르면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">ZC 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">5,000부셸</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">곡물 중 가장 유동성이 좋아서 펀드·CTA 자금도 크게 들어와요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>농가·엘리베이터</h3><p>봄에 가을 판매가를 미리 잠가요. 엘리베이터는 사들인 재고를 선물로 헤지해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>사료·에탄올·식품</h3><p>원료 옥수수 가격을 미리 고정해요. 육계·양돈 회사도 참여.</p></div><div><span class="tag t-4">곡물 메이저</span><h3>ADM·번지·카길</h3><p>현물과 선물의 차이(베이시스)를 관리하며 전 세계로 곡물을 옮겨요.</p></div><div><span class="tag t-spec">투기</span><h3>펀드·CTA·개인</h3><p>옥수수는 원자재 지수 펀드에 꼭 들어가는 대표 곡물이에요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>Corn (ZC)</h3><dl><dt>거래소</dt><dd>CBOT <span>(CME 그룹, 시카고)</span></dd><dt>IBKR 심볼</dt><dd>ZC <span>예: ZCZ6 = 2026년 12월</span></dd><dt>계약 크기</dt><dd>5,000부셸 <span>≈ 127톤</span></dd><dt>가격</dt><dd>센트 / 부셸</dd><dt>최소 틱</dt><dd>¼센트 = $12.50</dd><dt>1센트 움직이면</dt><dd>$50</dd><dt>월물</dt><dd>3·5·7·9·12월 <span>(H K N U Z)</span></dd><dt>결제</dt><dd>실물 인도 <span>선적 증서</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>작은 계약 · 귀리</h3><dl><dt>XC 미니 옥수수</dt><dd>1,000부셸 <span>IBKR 심볼 YC · ⅛센트 = $1.25</span></dd><dt>XC 유동성</dt><dd>얇음</dd><dt>ZO 귀리</dt><dd>5,000부셸 <span>¼센트 = $12.50</span></dd><dt>ZO 유동성</dt><dd><span>하루 수십 계약 · 매우 얇음</span></dd></dl></div></div>
+<p class="note">곡물은 가격이 '센트'라 계산이 헷갈려요. ZC가 10센트(463.75 → 473.75) 오르면 1계약 $500, 1달러면 $5,000이에요. 옥수수는 하루 가격제한폭이 있고 주기적으로 다시 정해져요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>10센트 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="463.75" data-x="473.75">ZC +10센트</button><button type="button" data-c="0" data-e="463.75" data-x="438.75">ZC −25센트 (풍작)</button><button type="button" data-c="1" data-e="463.75" data-x="473.75">XC +10센트</button><button type="button" data-c="2" data-e="381.25" data-x="391.25">ZO +10센트</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">ZC 옥수수 (5,000부셸)</option><option value="1">XC 미니 옥수수 (1,000부셸)</option><option value="2">ZO 귀리 (5,000부셸)</option></select></label>
+      <label for="in-entry">진입가 (센트/부셸)<input id="in-entry" type="number" step="any" value="463.75" inputmode="decimal"></label>
+      <label for="in-exit">청산가 (센트/부셸)<input id="in-exit" type="number" step="any" value="473.75" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">가격은 센트로 넣으세요(463.75 = $4.6375). 명목가치는 센트 가격 × 50으로 계산해요. 진입가 기본값은 위 IBKR 시세, 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "ZC 옥수수 (5,000부셸)", "tick": 0.25, "tv": 12.5, "mult": 50, "dec": 2, "entry": 463.75, "exit": 473.75}, {"name": "XC 미니 옥수수 (1,000부셸)", "tick": 0.125, "tv": 1.25, "mult": 10, "dec": 3, "entry": 463.75, "exit": 473.75}, {"name": "ZO 귀리 (5,000부셸)", "tick": 0.25, "tv": 12.5, "mult": 50, "dec": 2, "entry": 381.25, "exit": 391.25}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>하루 두 번 열리는 시장</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 옥수수 선물 거래 시간. 17:00~05:45와 06:30~11:20. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="221.5" y="54" width="303.9" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="543.2" y="57" width="115.2" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">17:00~05:45  ·  집중 06:30~11:20 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">야간(전자) 세션 = 열려 있지만 한산</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">미국 주간 세션 = 거래량 대부분</text></svg></div>
+<p class="cap">캘리포니아 시간으로는 <b>저녁 5시에 열려서 새벽 5:45까지</b>, 45분 쉬고 <b>오전 6:30~11:20</b> 주간 세션이 열려요(일요일 저녁부터 금요일 오전까지). 거래가 진짜 몰리는 건 주간 세션, 특히 개장 직후와 마감 전 11:00~11:20이에요. USDA 보고서는 대부분 캘리 <b>오전 9시</b>(동부 12:00)에 나와요. 서머타임과 상관없이 일년 내내 같은 시간이에요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>12월물은 11월 말 전에</h3><p>ZC 12월물 첫 통지일은 11월 30일. IBKR은 그 전에 청산을 요구하거나 자동 청산할 수 있어요. 11월 하순에 3월물로.</p></div><div><h3>센트와 달러</h3><p>463.75는 $4.6375예요. 계산기에 넣을 때도 센트 단위를 그대로 쓰세요.</p></div><div><h3>USDA 보고서 날</h3><p>캘리 오전 9시 발표 직후 몇 분 만에 하루 제한폭 근처까지 움직이기도 해요.</p></div><div><h3>가격제한폭</h3><p>곡물은 하루 가격제한폭이 있어서 제한에 걸리면 그날 빠져나오지 못할 수 있어요.</p></div><div><h3>귀리·미니는 너무 얇아요</h3><p>ZO는 하루 수십 계약, XC도 거래가 적어요. 시장가 주문은 피하고, 연습은 ZC 소량으로.</p></div><div><h3>저녁 세션은 한산</h3><p>캘리 저녁 5시~새벽 5:45 세션은 열려 있어도 거래가 적어요. 오전 6:30~11:20 주간 세션에 거래하세요.</p></div></div>
+</section>
+<section class="fun"><h3>🌽 보너스: 옥수수 1kg은 얼마?</h3><p>1부셸 = 25.4kg이니까 $4.6375 ÷ 25.4 = 옥수수 1kg에 약 <b class="mono">$0.183</b>, 1,400원 환율로 약 <b>256원</b>이에요. 그리고 옥수수 1부셸로 에탄올 약 <b class="mono">2.9갤런</b>(11리터)을 만들 수 있어서, ZC 1계약이면 에탄올 약 14,500갤런, 승용차 주유 약 1,000번 분량의 에탄올이 나와요.</p></section>
+</main>
+
+</html>

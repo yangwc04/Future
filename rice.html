@@ -1,0 +1,501 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>쌀 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column; each section follows the grain from a flooded Arkansas field to the CBOT screen */
+:root{
+  --bg:#f4f3ec; --surface:#ffffff; --fg:#23251d; --muted:#666a5c; --line:#dcdccf;
+  --paddy:#a77d12; --paddy-soft:#f6ecd0;
+  --field:#4d7a2e; --field-soft:#e2ecd6;
+  --water:#2f6f8f; --water-soft:#dcebf2;
+  --husk:#8a5a34; --husk-soft:#f0e3d7;
+  --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --white-rice:#f2efe4;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141611; --surface:#1d2019; --fg:#ebeadf; --muted:#a9ab9a; --line:#353a2e;
+  --paddy:#e6bb4f; --paddy-soft:#3a3013;
+  --field:#93c46a; --field-soft:#22311a;
+  --water:#6ab3d6; --water-soft:#132d3a;
+  --husk:#d3a174; --husk-soft:#36271b;
+  --alert:#ff8576; --alert-soft:#3d1d19;
+  --white-rice:#d9d5c6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141611; --surface:#1d2019; --fg:#ebeadf; --muted:#a9ab9a; --line:#353a2e;
+  --paddy:#e6bb4f; --paddy-soft:#3a3013;
+  --field:#93c46a; --field-soft:#22311a;
+  --water:#6ab3d6; --water-soft:#132d3a;
+  --husk:#d3a174; --husk-soft:#36271b;
+  --alert:#ff8576; --alert-soft:#3d1d19;
+  --white-rice:#d9d5c6; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)}
+h2{font-size:1.75rem}
+h3{font-size:1.15rem}
+p{margin:0}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--paddy)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.answer{background:var(--paddy-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--paddy)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--paddy);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:0}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.bad{color:var(--alert)} td.good{color:var(--field);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-long{background:var(--paddy-soft);color:var(--paddy)}
+.t-med{background:var(--water-soft);color:var(--water)}
+.t-sell{background:var(--field-soft);color:var(--field)}
+.t-buy{background:var(--water-soft);color:var(--water)}
+.t-mid{background:var(--husk-soft);color:var(--husk)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.big{font-family:var(--mono);font-size:1.05rem;color:var(--muted)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--field)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--paddy-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--paddy)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--water);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--paddy)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500}
+.pos{color:var(--field)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--paddy);background:var(--paddy-soft)}
+.fun{background:var(--surface);border:1px dashed var(--paddy);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--paddy) 88%,#000);--hero-b:color-mix(in srgb,var(--field) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--paddy) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--field) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--paddy) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--field) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{display:flex;flex-direction:column;background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow,main>header h1 span{color:#ffe3a3!important}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8);font-size:.85rem;text-decoration:none}
+section>.eyebrow{align-self:flex-start;background:var(--paddy-soft);color:var(--paddy);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+.fig,.calc,.spec,.quote>div,.warn>div,.who>div,.risks>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.who>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.who>div:hover{transform:translateY(-2px);border-color:var(--paddy)}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))!important}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--paddy-soft),var(--surface) 70%)}
+.note{border-left-color:var(--paddy)}
+.ptnote{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:.92rem;box-shadow:var(--shadow)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+</style>
+
+<main>
+
+<header>
+  <a class="back" href="index.html">← 미국 선물 한눈에 보기</a>
+  <span class="eyebrow">원자재 선물 · ROUGH RICE · CBOT ZR</span>
+  <h1>쌀 선물은 왜<br><span style="color:var(--paddy)">껍질 붙은 벼</span>를 거래할까?</h1>
+  <p class="lead">IBKR에서 보이는 쌀 선물(ZR)의 정식 이름은 <b>Rough Rice</b>, 우리말로 하면 <b>왕겨를 벗기기 전 "벼"</b>예요. 커피가 볶기 전 생두를 거래하는 것과 같은 논리입니다.</p>
+  <div class="answer">
+    <p><strong>한 줄 정답:</strong> 백미는 도정 상태·싸라기 비율·품종마다 제각각이고 오래 두면 맛과 품질이 떨어지지만, <b>벼는 왕겨가 쌀알을 감싸서 1년 넘게 창고에 보관</b>할 수 있어요.</p>
+    <p>그리고 농부가 수확해서 정미소에 파는 것 자체가 벼예요. 벼 한 무더기를 시험 도정해 보면 <b>"백미가 몇 %, 온전한 쌀알이 몇 %"</b>가 숫자로 나와서 품질을 표준화하기도 좋아요. 그래서 선물은 벼를 기준으로 만들어졌습니다.</p>
+  </div>
+  <div class="quote" aria-label="IBKR 시세">
+    <div><small>ZR 2026년 11월물</small><b>$17.285</b><span>/cwt · 미결제 4,518</span></div>
+    <div><small>ZR 2027년 1월물</small><b>$17.760</b><span>/cwt · 미결제 9,387</span></div>
+    <div><small>1계약 명목가치 (11월물)</small><b>$34,570</b><span>2,000 cwt × $17.285</span></div>
+  </div>
+  <p class="cap">IBKR 시세, 2026-10-21 오후 6:18(캘리포니아 시간) 마지막 체결 기준. 장 마감 후 고정된(frozen) 값이라 지금 화면과 조금 다를 수 있어요. 미결제약정은 1월물이 11월물보다 2배 많아요. 이유는 <a href="#cautions">주의점</a>에 있어요.</p>
+  <nav class="toc" aria-label="목차">
+    <a href="#process">벼가 백미가 되기까지</a><a href="#world">세계 쌀 시장</a><a href="#usa">미국 산지</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a>
+  </nav>
+</header>
+
+<section id="process">
+  <span class="eyebrow">1. 벼에서 밥상까지</span>
+  <h2>벼 100kg을 도정하면 무엇이 남을까</h2>
+  <div class="fig">
+    <svg viewBox="0 0 760 300" role="img" aria-label="벼 100kg을 도정하면 왕겨 약 20kg, 쌀겨 약 10kg, 온전한 백미 약 55kg, 싸라기 약 15kg이 나온다">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+      <!-- stage 1: paddy grain with husk -->
+      <g transform="translate(70 70)">
+        <ellipse cx="0" cy="0" rx="16" ry="34" fill="var(--paddy)" />
+        <path d="M0 -34 Q-6 0 0 34" stroke="var(--husk)" stroke-width="2" fill="none"/>
+        <line x1="0" y1="-34" x2="4" y2="-48" stroke="var(--husk)" stroke-width="2"/>
+      </g>
+      <text x="70" y="140" text-anchor="middle" class="b">벼 (Rough rice)</text>
+      <text x="70" y="160" text-anchor="middle" class="sm">왕겨가 감싼 상태</text>
+      <line x1="110" y1="70" x2="170" y2="70" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="140" y="58" text-anchor="middle" class="sm">왕겨 벗기기</text>
+      <!-- stage 2: brown rice -->
+      <g transform="translate(225 70)">
+        <ellipse cx="0" cy="0" rx="13" ry="28" fill="var(--husk)" />
+        <ellipse cx="-3" cy="-6" rx="4" ry="9" fill="var(--surface)" opacity=".25"/>
+      </g>
+      <text x="225" y="140" text-anchor="middle" class="b">현미</text>
+      <text x="225" y="160" text-anchor="middle" class="sm">쌀겨층이 남아 있음</text>
+      <line x1="262" y1="70" x2="322" y2="70" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="292" y="58" text-anchor="middle" class="sm">깎기(도정)</text>
+      <!-- stage 3: white rice whole + broken -->
+      <g transform="translate(375 70)">
+        <ellipse cx="-12" cy="0" rx="11" ry="25" fill="var(--white-rice)" stroke="var(--muted)" stroke-width="1"/>
+        <ellipse cx="14" cy="-6" rx="9" ry="12" fill="var(--white-rice)" stroke="var(--muted)" stroke-width="1"/>
+        <ellipse cx="16" cy="18" rx="7" ry="8" fill="var(--white-rice)" stroke="var(--muted)" stroke-width="1"/>
+      </g>
+      <text x="375" y="140" text-anchor="middle" class="b">백미</text>
+      <text x="375" y="160" text-anchor="middle" class="sm">온전한 쌀 + 싸라기</text>
+      <!-- right side: storage box -->
+      <rect x="470" y="30" width="270" height="110" rx="12" fill="var(--paddy-soft)"/>
+      <text x="605" y="58" text-anchor="middle" class="b" style="fill:var(--paddy)">선물이 거래하는 건 맨 왼쪽, 벼</text>
+      <text x="605" y="84" text-anchor="middle" class="sm">왕겨 = 천연 포장재 → 1년 이상 보관</text>
+      <text x="605" y="106" text-anchor="middle" class="sm">시험 도정으로 수율을 재서 등급 결정</text>
+      <text x="605" y="128" text-anchor="middle" class="sm">농가 → 정미소로 실제 팔리는 형태</text>
+      <!-- stacked bar of 100kg -->
+      <text x="20" y="200" class="b">벼 100kg을 도정하면 (대략)</text>
+      <!-- x 20..740 = 720px for 100% → 7.2px per % -->
+      <rect class="grow" x="20" y="214" width="144" height="36" fill="var(--husk)"/>
+      <rect class="grow" x="164" y="214" width="72" height="36" fill="var(--husk-soft)" stroke="var(--husk)"/>
+      <rect class="grow" x="236" y="214" width="396" height="36" fill="var(--white-rice)" stroke="var(--paddy)"/>
+      <rect class="grow" x="632" y="214" width="108" height="36" fill="var(--paddy-soft)" stroke="var(--paddy)"/>
+      <text x="92" y="237" text-anchor="middle" class="b" style="fill:var(--surface)">왕겨 20</text>
+      <text x="200" y="237" text-anchor="middle" class="b" style="fill:var(--husk)">쌀겨 10</text>
+      <text x="434" y="237" text-anchor="middle" class="b" style="fill:#23251d">온전한 백미(정미) 55</text>
+      <text x="686" y="237" text-anchor="middle" class="b" style="fill:var(--paddy)">싸라기 15</text>
+      <line x1="236" y1="262" x2="740" y2="262" stroke="var(--paddy)" stroke-width="2"/>
+      <text x="488" y="284" text-anchor="middle" class="sm">백미 합계 약 70kg = 거래소 기준 "총 도정수율 70%, 정미 55%"</text>
+    </svg>
+  </div>
+  <p class="cap">CBOT 계약 기준이 바로 이 숫자예요. <b>정미(head rice) 55%, 총 백미 70%</b>를 기준으로 하고, 인도된 벼가 이보다 잘 나오면 웃돈, 못 나오면 할인을 받습니다. 싸라기는 값이 훨씬 싸서 온전한 쌀알 비율이 품질의 핵심이에요.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>백미 (Milled rice)</th><th>벼 (Rough rice)</th></tr></thead>
+    <tbody>
+      <tr><td>보관</td><td class="bad">산화·벌레·흡습에 약함</td><td class="good">왕겨 덕분에 1년 이상</td></tr>
+      <tr><td>품질 통일</td><td class="bad">도정도·싸라기 비율·포장 제각각</td><td class="good">시험 도정 수율로 숫자 등급화</td></tr>
+      <tr><td>실제 거래 단계</td><td>정미소 → 유통·수출</td><td class="good">농가 → 정미소 (가장 큰 원물 시장)</td></tr>
+      <tr><td>인도 방식</td><td>포대 단위</td><td class="good">지정 창고의 창고증권(2,000 cwt)</td></tr>
+      <tr><td>선물로 적합?</td><td class="bad">✗</td><td class="good">✓</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="world">
+  <span class="eyebrow">2. 세계 쌀 시장 맥락</span>
+  <h2>쌀은 "자기 나라에서 먹는" 곡물</h2>
+  <p>쌀은 세계에서 생산되는 양 중 <b>약 10%만 국경을 넘어요</b>. 밀(약 25%)이나 대두(약 40%)보다 훨씬 적죠. 대부분 아시아에서 키워서 그 나라 안에서 먹기 때문입니다. 그래서 쌀값은 정부 정책(수출 금지, 비축)에 아주 크게 흔들려요.</p>
+  <div class="fig">
+    <svg viewBox="0 0 720 300" role="img" aria-label="국가별 세계 쌀 생산 비중 막대 그래프. 중국 약 27%, 인도 약 27%, 방글라데시 약 7%, 인도네시아 약 7%, 베트남 약 5%, 태국 약 4%, 미국 약 1.3%, 기타 약 22%">
+      <text x="20" y="24" class="sm">국가별 세계 쌀 생산 비중 (대략, 최근 시즌, 백미 기준)</text>
+      <!-- scale 0..30% → x 170..650 (16px per %) -->
+      <g stroke="var(--line)"><line x1="170" y1="36" x2="170" y2="268"/><line x1="330" y1="36" x2="330" y2="268"/><line x1="490" y1="36" x2="490" y2="268"/><line x1="650" y1="36" x2="650" y2="268"/></g>
+      <g class="sm" text-anchor="middle"><text x="170" y="288">0%</text><text x="330" y="288">10%</text><text x="490" y="288">20%</text><text x="650" y="288">30%</text></g>
+      <text x="20" y="58" class="b">중국</text><rect class="grow" x="170" y="42" width="432" height="22" rx="4" fill="var(--field)"/><text x="610" y="58" class="b">27%</text>
+      <text x="20" y="86" class="b">인도</text><rect class="grow" x="170" y="70" width="432" height="22" rx="4" fill="var(--field)"/><text x="610" y="86" class="b">27%</text>
+      <text x="20" y="114" class="b">방글라데시</text><rect class="grow" x="170" y="98" width="112" height="22" rx="4" fill="var(--field)"/><text x="290" y="114" class="b">7%</text>
+      <text x="20" y="142" class="b">인도네시아</text><rect class="grow" x="170" y="126" width="112" height="22" rx="4" fill="var(--field)"/><text x="290" y="142" class="b">7%</text>
+      <text x="20" y="170" class="b">베트남</text><rect class="grow" x="170" y="154" width="80" height="22" rx="4" fill="var(--field)"/><text x="258" y="170" class="b">5%</text>
+      <text x="20" y="198" class="b">태국</text><rect class="grow" x="170" y="182" width="64" height="22" rx="4" fill="var(--field)"/><text x="242" y="198" class="b">4%</text>
+      <text x="20" y="226" class="b" style="fill:var(--paddy)">미국 ← ZR</text><rect class="grow" x="170" y="210" width="21" height="22" rx="4" fill="var(--paddy)"/><text x="199" y="226" class="b" style="fill:var(--paddy)">약 1.3%</text>
+      <text x="20" y="254" class="b">기타</text><rect class="grow" x="170" y="238" width="352" height="22" rx="4" fill="var(--line)"/><text x="530" y="254" class="b">22%</text>
+    </svg>
+  </div>
+  <div class="fig">
+    <svg viewBox="0 0 720 150" role="img" aria-label="세계 쌀 수출 비중: 인도 약 40%, 태국 약 18%, 베트남 약 15%, 파키스탄 약 10%, 미국 약 5%, 기타 약 12%">
+      <text x="20" y="24" class="sm">그런데 수출 시장에서는? 세계 쌀 수출 비중 (대략)</text>
+      <!-- 20..700 = 680px for 100% → 6.8px per % -->
+      <rect class="grow" x="20" y="40" width="272" height="40" fill="var(--field)"/>
+      <rect class="grow" x="292" y="40" width="122" height="40" fill="var(--water)"/>
+      <rect class="grow" x="414" y="40" width="102" height="40" fill="var(--husk)"/>
+      <rect class="grow" x="516" y="40" width="68" height="40" fill="var(--field-soft)" stroke="var(--field)"/>
+      <rect class="grow" x="584" y="40" width="34" height="40" fill="var(--paddy)"/>
+      <rect class="grow" x="618" y="40" width="82" height="40" fill="var(--line)"/>
+      <text x="156" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">인도 40%</text>
+      <text x="353" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">태국 18%</text>
+      <text x="465" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">베트남 15%</text>
+      <text x="550" y="65" text-anchor="middle" class="b" style="font-size:12px;fill:var(--field)">파키스탄</text>
+      <text x="659" y="65" text-anchor="middle" class="sm">기타</text>
+      <line x1="601" y1="84" x2="601" y2="104" stroke="var(--paddy)" stroke-width="2"/>
+      <text x="601" y="122" text-anchor="middle" class="b" style="fill:var(--paddy)">미국 약 5%</text>
+      <text x="601" y="140" text-anchor="middle" class="sm">생산은 1%대인데 수출은 5%</text>
+    </svg>
+  </div>
+  <p class="note">핵심: <b>ZR은 "세계 쌀값"이 아니라 "미국 장립종 벼 값"</b>이에요. 아시아 쌀값(태국·베트남 수출가)과 같은 방향으로 움직일 때도 있지만, 미국 작황·재고만으로 따로 노는 일이 많아요. 미국 장립종의 주요 고객은 멕시코·중남미·아이티, 그리고 이라크 같은 중동 입찰 수요예요. 비중은 USDA 등 공개 통계 기반의 대략적인 값이고 해마다 몇 %씩 바뀝니다.</p>
+</section>
+
+<section id="usa">
+  <span class="eyebrow">3. 미국 어디서 나나</span>
+  <h2>미국 쌀의 절반은 아칸소</h2>
+  <div class="fig narrow">
+    <svg viewBox="0 0 660 230" role="img" aria-label="미국 쌀 재배 주 비중: 아칸소 약 45%, 캘리포니아 약 20%, 루이지애나 약 12%, 미주리 약 9%, 텍사스 약 6%, 미시시피 약 5%. 캘리포니아는 중단립종이라 ZR 기준이 아님">
+      <text x="20" y="22" class="sm">주별 미국 쌀 생산 비중 (대략)</text>
+      <!-- 0..50% → x 150..600 (9px per %) -->
+      <text x="20" y="50" class="b">아칸소</text><rect class="grow" x="150" y="36" width="405" height="20" rx="4" fill="var(--paddy)"/><text x="563" y="51" class="b">45%</text>
+      <text x="20" y="80" class="b">캘리포니아</text><rect class="grow" x="150" y="66" width="180" height="20" rx="4" fill="var(--water)"/><text x="338" y="81" class="b">20%</text><text x="378" y="81" class="sm">중단립종 (Calrose) · ZR 아님</text>
+      <text x="20" y="110" class="b">루이지애나</text><rect class="grow" x="150" y="96" width="108" height="20" rx="4" fill="var(--paddy)"/><text x="266" y="111" class="b">12%</text>
+      <text x="20" y="140" class="b">미주리</text><rect class="grow" x="150" y="126" width="81" height="20" rx="4" fill="var(--paddy)"/><text x="239" y="141" class="b">9%</text>
+      <text x="20" y="170" class="b">텍사스</text><rect class="grow" x="150" y="156" width="54" height="20" rx="4" fill="var(--paddy)"/><text x="212" y="171" class="b">6%</text>
+      <text x="20" y="200" class="b">미시시피</text><rect class="grow" x="150" y="186" width="45" height="20" rx="4" fill="var(--paddy)"/><text x="203" y="201" class="b">5%</text>
+      <rect x="420" y="150" width="12" height="12" rx="2" fill="var(--paddy)"/><text x="438" y="161" class="sm">주로 장립종 → ZR 가격 결정</text>
+      <rect x="420" y="174" width="12" height="12" rx="2" fill="var(--water)"/><text x="438" y="185" class="sm">중단립종 → 별도 시장</text>
+    </svg>
+  </div>
+  <div class="cards">
+    <div><span class="tag t-long">장립종 · ZR의 주인공</span><h3>남부 "델타" 지역</h3><p>아칸소·루이지애나·미주리·미시시피·텍사스. 미시시피강 유역 평야에 물을 대서 키워요. CBOT 인도 창고도 이 지역에 있어요.</p></div>
+    <div><span class="tag t-med">중단립종</span><h3>캘리포니아</h3><p>한국·일본 밥맛에 가까운 찰기 있는 쌀(Calrose). ZR 인도 대상이 아니라서 가격도 따로 움직여요. 가뭄 때 물 배분 문제가 가격 변수.</p></div>
+    <div><span class="tag t-mid">한국과의 연결</span><h3>우리 식탁의 미국 쌀</h3><p>한국은 쌀 관세화 이후 저율관세할당(TRQ) 약 40.9만 톤을 수입하고, 그중 미국 몫이 약 13만 톤이에요. 주로 캘리포니아 중립종이라 ZR과는 직접 관계가 적어요.</p></div>
+  </div>
+</section>
+
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>쌀 트레이더의 달력</h2>
+  <div class="fig">
+    <svg viewBox="0 0 740 270" role="img" aria-label="월별 달력: 미국 파종 3~5월, 생육과 이삭 7~8월, 수확 8~10월, 3월 말 파종의향 보고서, 6월 말 실제 파종면적 보고서, 매달 WASDE, 인도 주수확 10~12월">
+      <g class="sm" text-anchor="middle">
+        <text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text>
+      </g>
+      <g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="250"/><line x1="294" y1="38" x2="294" y2="250"/><line x1="438" y1="38" x2="438" y2="250"/><line x1="582" y1="38" x2="582" y2="250"/><line x1="726" y1="38" x2="726" y2="250"/></g>
+      <!-- today marker: Oct 22 ≈ 582 + 48*0.7 -->
+      <line x1="616" y1="38" x2="616" y2="250" stroke="var(--alert)" stroke-dasharray="3 3"/>
+      <text x="616" y="266" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text>
+      <text x="16" y="66" class="b">미국 파종</text>
+      <rect x="246" y="50" width="144" height="24" rx="12" fill="var(--field-soft)" stroke="var(--field)"/>
+      <text x="318" y="67" text-anchor="middle" style="font-size:12px;fill:var(--field)" class="b">3~5월 · 물 대고 씨뿌림</text>
+      <text x="16" y="104" class="b">생육·이삭 패기</text>
+      <rect x="438" y="88" width="96" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/>
+      <text x="486" y="105" text-anchor="middle" style="font-size:12px;fill:var(--alert)" class="b">7~8월 · 폭염 주의</text>
+      <text x="16" y="142" class="b">미국 수확</text>
+      <rect x="486" y="126" width="144" height="24" rx="12" fill="var(--paddy-soft)" stroke="var(--paddy)"/>
+      <text x="558" y="143" text-anchor="middle" style="font-size:12px;fill:var(--paddy)" class="b">8~10월 · 공급 쏟아짐</text>
+      <text x="16" y="180" class="b">USDA 면적 보고서</text>
+      <circle cx="290" cy="172" r="7" fill="var(--water)"/><text x="302" y="177" style="font-size:12px;fill:var(--water)" class="b">3/31 파종의향</text>
+      <circle cx="434" cy="172" r="7" fill="var(--water)"/><text x="446" y="177" style="font-size:12px;fill:var(--water)" class="b">6/30 실제 면적</text>
+      <text x="16" y="218" class="b">인도 주수확</text>
+      <rect x="582" y="202" width="144" height="24" rx="12" fill="var(--field-soft)" stroke="var(--field)"/>
+      <text x="654" y="219" text-anchor="middle" style="font-size:12px;fill:var(--field)" class="b">10~12월 · 수출 정책</text>
+      <text x="16" y="246" class="b">WASDE</text>
+      <g fill="var(--water)"><circle cx="186" cy="241" r="3"/><circle cx="234" cy="241" r="3"/><circle cx="282" cy="241" r="3"/><circle cx="330" cy="241" r="3"/><circle cx="378" cy="241" r="3"/><circle cx="426" cy="241" r="3"/><circle cx="474" cy="241" r="3"/><circle cx="522" cy="241" r="3"/><circle cx="570" cy="241" r="3"/><circle cx="618" cy="241" r="3"/><circle cx="666" cy="241" r="3"/><circle cx="714" cy="241" r="3"/></g>
+    </svg>
+  </div>
+  <p class="cap">지금(10월 말)은 미국 수확이 거의 끝나서 "올해 실제로 얼마나 나왔나"가 WASDE 숫자로 확정되어 가는 시기예요. 인도 새 쌀이 시장에 나오고 수출 정책 뉴스가 나오는 때이기도 합니다. WASDE는 보통 매달 10~12일쯤, 캘리포니아 시간 오전 9시에 나와요(장중이라 바로 반영돼요).</p>
+</section>
+
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>쌀은 면적 + 날씨 + 정책 상품</h2>
+  <div class="drivers">
+    <div><div class="k"><h3>미국 파종 면적</h3><span class="dir up">줄면 ▲</span></div><p>아칸소 농부는 매년 쌀·대두·옥수수 중 고민해요. 대두 값이 좋으면 쌀 면적이 줄어 ZR이 오르기 쉽습니다. 3월·6월 USDA 면적 보고서가 큰 이벤트.</p></div>
+    <div><div class="k"><h3>여름 폭염·홍수</h3><span class="dir up">피해 나면 ▲</span></div><p>이삭 팰 때 밤 기온이 너무 높으면 쌀알이 깨지기 쉬워 정미 수율이 떨어져요. 봄 홍수는 파종을 늦춥니다.</p></div>
+    <div><div class="k"><h3>인도 수출 정책</h3><span class="dir up">막으면 ▲</span></div><p>세계 수출 40%를 가진 인도가 2023년 7월 일반 백미 수출을 금지하자 아시아 쌀값이 15년 만의 최고로 뛰었어요. 2024년 가을 풀리면서 다시 내려왔죠.</p></div>
+    <div><div class="k"><h3>USDA 재고 (WASDE)</h3><span class="dir up">재고 줄면 ▲</span></div><p>매달 발표되는 미국 쌀 수급표의 "기말 재고"가 가장 많이 보는 숫자예요. 장립종 재고가 따로 나와요.</p></div>
+    <div><div class="k"><h3>수출 수요·달러</h3><span class="dir down">달러 강세면 ▼</span></div><p>달러가 비싸지면 미국 쌀이 태국·베트남산보다 비싸져 멕시코·중남미·이라크 입찰을 놓쳐요.</p></div>
+    <div><div class="k"><h3>아시아 수출가</h3><span class="dir up">같이 ▲ (느슨하게)</span></div><p>태국 5% 싸라기 백미, 베트남 5% 백미 가격이 세계 기준가예요. 차이가 너무 벌어지면 수입국이 갈아타서 결국 서로 끌어당깁니다.</p></div>
+  </div>
+  <p class="note">역사적으로 ZR은 2008년 세계 식량위기 때 cwt당 $25 근처까지 치솟은 적이 있어요. 평소에는 $12~20 범위에서 움직이는 경우가 많았고, 지금(약 $17.3)은 그 중간쯤입니다.</p>
+</section>
+
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 쌀 선물을 거래할까</h2>
+  <div class="fig narrow">
+    <svg viewBox="0 0 660 200" role="img" aria-label="벼 농가는 가격 하락이 걱정이라 선물을 팔고, 정미소와 수출상은 원료값 상승이 걱정이라 선물을 사며, 그 사이 투기자가 유동성을 공급한다">
+      <rect x="10" y="30" width="190" height="112" rx="14" fill="var(--field-soft)"/>
+      <text x="105" y="62" text-anchor="middle" class="b" style="fill:var(--field)">아칸소 벼 농가·조합</text>
+      <text x="105" y="90" text-anchor="middle">"가을에 값 떨어지면?"</text>
+      <text x="105" y="116" text-anchor="middle" class="sm">→ 선물을 미리 팔아둠</text>
+      <rect x="460" y="30" width="190" height="112" rx="14" fill="var(--water-soft)"/>
+      <text x="555" y="62" text-anchor="middle" class="b" style="fill:var(--water)">정미소·수출상</text>
+      <text x="555" y="90" text-anchor="middle">"벼값 오르면?"</text>
+      <text x="555" y="116" text-anchor="middle" class="sm">→ 선물을 미리 사둠</text>
+      <circle cx="330" cy="86" r="54" fill="var(--paddy-soft)" stroke="var(--paddy)" stroke-width="2"/>
+      <text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--paddy)">ZR 선물</text>
+      <text x="330" y="102" text-anchor="middle" class="sm">가격을 미리 고정</text>
+      <line x1="205" y1="86" x2="272" y2="86" stroke="var(--field)" stroke-width="3"/>
+      <line x1="388" y1="86" x2="455" y2="86" stroke="var(--water)" stroke-width="3"/>
+      <text x="330" y="180" text-anchor="middle" class="sm">참여자가 적어서 투기 자금 비중이 작고, 그만큼 호가가 얇아요</text>
+    </svg>
+  </div>
+  <div class="cards">
+    <div><span class="tag t-sell">매도 헤지</span><h3>벼 농가·협동조합</h3><p>파종 무렵 가을 판매 가격을 미리 잠가둬요. 아칸소의 대형 협동조합(Riceland 같은 곳)도 대표적인 참여자예요.</p></div>
+    <div><span class="tag t-mid">양방향</span><h3>정미소·곡물상</h3><p>벼를 사서 재고로 들고 있는 동안 가격 위험을 선물로 상쇄해요. 실물 거래는 "ZR + 지역 웃돈(베이시스)"으로 정하는 경우가 많아요.</p></div>
+    <div><span class="tag t-buy">매수 헤지</span><h3>수출상·식품회사</h3><p>중남미·중동에 몇 달 뒤 인도하기로 계약했다면 원료값 상승에 대비해 선물을 미리 사둡니다.</p></div>
+    <div><span class="tag t-spec">투기</span><h3>펀드·개인</h3><p>옥수수·대두보다 훨씬 적어요. 대형 펀드는 유동성이 부족해서 잘 안 들어오고, 그래서 가격이 한 번 쏠리면 크게 움직이기도 해요.</p></div>
+  </div>
+</section>
+
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+  <div class="spec">
+    <h3><span class="dot"></span>Rough Rice Futures</h3>
+    <dl>
+      <dt>거래소</dt><dd>CBOT <span>(CME 그룹, 시카고)</span></dd>
+      <dt>IBKR 심볼</dt><dd>ZR <span>월물 예: ZRF7 = 2027년 1월물</span></dd>
+      <dt>계약 크기</dt><dd>2,000 cwt <span>= 200,000 lbs ≈ 90.7톤 (벼 기준)</span></dd>
+      <dt>가격 단위</dt><dd>$ / cwt <span>cwt = hundredweight = 100파운드 ≈ 45.36kg</span></dd>
+      <dt>최소 틱</dt><dd>$0.005 = $10</dd>
+      <dt>$0.10 움직이면</dt><dd>$200</dd>
+      <dt>$1.00 움직이면</dt><dd>$2,000</dd>
+      <dt>월물</dt><dd>1·3·5·7·9·11월 <span>(F H K N U X)</span></dd>
+      <dt>인도 대상</dt><dd>US No.2 이상 장립종 벼 <span>정미 55% · 총 70% 기준, 아칸소 등 지정 창고</span></dd>
+      <dt>결제</dt><dd>실물 인도 <span>(창고증권)</span></dd>
+    </dl>
+  </div>
+  <p class="note">화면 가격 <span class="mono">17.285</span>는 "벼 100파운드에 17달러 28.5센트"라는 뜻이에요. 곡물(ZC·ZS)이 부셸당 센트로 표시되는 것과 달리 쌀은 <b>달러/cwt</b>라서 처음엔 헷갈리기 쉬워요. 틱이 0.005달러(반 센트)라 가격 끝자리가 0 또는 5로 끝납니다.</p>
+</section>
+
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>한 계약에 얼마가 움직일까</h2>
+  <div class="calc">
+    <div class="presets">빠른 입력:
+      <button type="button" data-e="17.285" data-x="17.785">11월물 기준 +$0.50</button>
+      <button type="button" data-e="17.760" data-x="17.260">1월물 기준 −$0.50</button>
+      <button type="button" data-e="17.285" data-x="17.315">호가 스프레드 1번 (6틱)</button>
+    </div>
+    <div class="inputs">
+      <label for="in-entry">진입가 ($/cwt)<input id="in-entry" type="number" step="0.005" value="17.285" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($/cwt)<input id="in-exit" type="number" step="0.005" value="17.785" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 수수료와 증거금은 빠져 있고, 실제 증거금은 IBKR 주문 화면에서 확인하세요.</p>
+</section>
+
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>저녁에 열리고, 아침에 진짜 거래가 붙어요</h2>
+  <div class="fig">
+    <svg viewBox="0 0 740 190" role="img" aria-label="캘리포니아 시간 기준 ZR 거래 시간. 야간(전자) 세션 오후 5:00~다음날 오전 5:45, 주간 세션 오전 6:30~11:20. 일년 내내 같음">
+      <!-- axis 15:00 → 12:00 next day (21h), x 150..720, 27.14px/h -->
+      <g class="sm" text-anchor="middle"><text x="150" y="28">15시</text><text x="231" y="28">18시</text><text x="313" y="28">21시</text><text x="394" y="28">00시</text><text x="476" y="28">03시</text><text x="557" y="28">06시</text><text x="639" y="28">09시</text><text x="720" y="28">12시</text></g>
+      <g stroke="var(--line)"><line x1="150" y1="36" x2="150" y2="130"/><line x1="231" y1="36" x2="231" y2="130"/><line x1="313" y1="36" x2="313" y2="130"/><line x1="394" y1="36" x2="394" y2="130"/><line x1="476" y1="36" x2="476" y2="130"/><line x1="557" y1="36" x2="557" y2="130"/><line x1="639" y1="36" x2="639" y2="130"/><line x1="720" y1="36" x2="720" y2="130"/></g>
+      <text x="16" y="70" class="b" style="fill:var(--paddy)">ZR (일년 내내)</text>
+      <rect x="204" y="54" width="346" height="24" rx="12" fill="var(--paddy-soft)" stroke="var(--paddy)"/>
+      <text x="377" y="71" text-anchor="middle" style="font-size:12px;fill:var(--paddy)" class="b">17:00 ~ 05:45 · 야간(전자) 세션</text>
+      <rect x="571" y="54" width="131" height="24" rx="12" fill="var(--paddy)"/>
+      <text x="636" y="71" text-anchor="middle" style="font-size:12px;fill:var(--surface)" class="b">06:30 ~ 11:20</text>
+      <line x1="625" y1="40" x2="625" y2="100" stroke="var(--water)" stroke-dasharray="3 3"/>
+      <text x="625" y="114" text-anchor="middle" class="sm" style="fill:var(--water)">09:00 USDA 보고서</text>
+      <text x="377" y="104" text-anchor="middle" class="sm">캘리 저녁·밤 = 열려 있지만 호가가 아주 얇음</text>
+      <text x="636" y="150" text-anchor="middle" class="sm">진한 칸 = 주간 세션</text>
+      <text x="636" y="166" text-anchor="middle" class="sm">거래량 대부분이 여기</text>
+    </svg>
+  </div>
+  <p class="cap">현지(시카고) 시간: 일~금 19:00~다음날 07:45, 월~금 08:30~13:20. 캘리포니아는 시카고보다 항상 2시간 늦어서, 서머타임이 끝나도(11월 1일) <b>캘리 시간은 바뀌지 않아요</b>. 일요일 오후 5시에 한 주가 시작되고, 금요일 오전 11:20에 끝나요. 정확한 세션은 IBKR 계약 정보(Contract Info)에서 다시 확인하세요.</p>
+</section>
+
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+  <div class="warn">
+    <div class="hot"><h3>11월물은 곧 끝나요</h3><p>11월물(ZRX6)은 실물 인도 상품이라 첫 인도 통지일(10월 말) 전에 IBKR이 청산을 요구하거나 자동 청산할 수 있어요. 지금 새로 들어간다면 사실상 <b>1월물(ZRF7)</b>이 기준이에요. 미결제약정이 1월물에 더 많은 것도 이미 롤오버가 진행 중이라서예요.</p></div>
+    <div><h3>유동성이 아주 얇아요</h3><p>위 스냅샷 기준 거래량은 월물당 하루 수십~수백 계약 수준이에요. 옥수수(ZC)가 하루 수십만 계약인 것과 비교하면 천 분의 일 수준이죠. 호가 차이도 보통 3~6틱($30~60)씩 벌어져 있어요.</p></div>
+    <div><h3>지정가 주문 필수</h3><p>시장가로 넣으면 호가 몇 칸을 건너뛰고 체결될 수 있어요. 특히 캘리포니아 저녁~새벽(야간 세션)에는 호가가 거의 비어 있으니 주간 세션(오전 6:30~11:20)에 지정가로 거래하는 게 안전해요.</p></div>
+    <div><h3>손절이 미끄러질 수 있어요</h3><p>USDA 보고서(WASDE, 3월·6월 면적)나 인도 정책 뉴스가 나오면 얇은 호가를 순식간에 뚫고 지나가요. 스톱 주문이 예상보다 훨씬 나쁜 가격에 체결될 수 있습니다.</p></div>
+    <div><h3>가격제한폭이 있어요</h3><p>CBOT 곡물처럼 하루 가격제한폭이 있고, 주기적으로 다시 정해져요. 제한폭에 걸리면 그날은 빠져나오지 못할 수도 있어요. 현재 폭은 CME 웹사이트나 IBKR에서 확인하세요.</p></div>
+    <div><h3>시장 데이터 구독</h3><p>ZR은 CBOT 상품이라 IBKR에서 CBOT(또는 CME 번들) 시세 구독이 있어야 실시간으로 보여요. 구독이 없으면 지연 시세만 나올 수 있어요.</p></div>
+  </div>
+</section>
+
+<section class="fun">
+  <h3>🍚 보너스: 선물 가격을 쌀 1kg 값으로 바꿔보면?</h3>
+  <p>$17.285/cwt를 kg으로 나누면 벼 1kg에 약 <b class="mono">$0.38</b>. 벼에서 백미가 70% 나오니까 백미 1kg으로 치면 약 <b class="mono">$0.54</b>, 환율 1,400원으로 계산하면 <b>약 760원</b>이에요(도정·운송비 제외). 한국 마트 쌀 20kg 한 포대가 보통 5~6만 원대, 즉 kg당 2,500~3,000원 정도니까 미국 장립종 벼 값은 한국 쌀값의 4분의 1 정도예요. 한국 쌀은 품종도 다르고 높은 관세로 보호되고 있어서 두 가격이 따로 노는 거예요.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var TICK = 0.005, PER_TICK = 10, MULT = 2000;
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v){var s=Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});return (v<0?'−$':'$')+s};
+  var krw = function(v){var s=Math.abs(Math.round(v)).toLocaleString('ko-KR');return (v<0?'−':'')+s+'원'};
+  function calc(){
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // price is $/cwt; one contract = 2,000 cwt, so $1 = $2,000 and one $0.005 tick = $10
+    var ticks = Math.round((x - e) / TICK);
+    var pnl = ticks * PER_TICK * q * side;
+    $('o-notional').textContent = usd(e * MULT);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var k = $('o-krw'); var pct = (x-e)/e*100*side; k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%'; k.className = p.className;
+    $('o-explain').textContent = '$' + e.toFixed(3) + ' → $' + x.toFixed(3) + ' : ' + Math.abs(ticks) + '틱 × $10 × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl);
+  }
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-entry').value = b.dataset.e; $('in-exit').value = b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+
+</body></html>

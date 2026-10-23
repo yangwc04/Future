@@ -1,0 +1,286 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>오렌지주스 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gothic+A1:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column, each section a "station" on the trip from orange grove to futures screen */
+:root{
+  --bg:#f2f6f7; --surface:#ffffff; --fg:#1d2a2e; --muted:#5b6b70; --line:#d5e0e3;
+  --orange:#e8740c; --orange-soft:#fde9d4; --leaf:#2f7d4f; --leaf-soft:#dcefe2;
+  --frost:#2d6c8c; --frost-soft:#dcecf4; --danger:#b8352b; --danger-soft:#f8e0dd;
+  --display:"Do Hyeon","Gothic A1",system-ui,sans-serif;
+  --body:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a1d; --surface:#1a2529; --fg:#e6eef0; --muted:#9db0b5; --line:#2c3c41;
+  --orange:#ff9a3d; --orange-soft:#3a2614; --leaf:#62c08a; --leaf-soft:#15301f;
+  --frost:#6db6d9; --frost-soft:#14303d; --danger:#ff7a6e; --danger-soft:#3a1b18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a1d; --surface:#1a2529; --fg:#e6eef0; --muted:#9db0b5; --line:#2c3c41;
+  --orange:#ff9a3d; --orange-soft:#3a2614; --leaf:#62c08a; --leaf-soft:#15301f;
+  --frost:#6db6d9; --frost-soft:#14303d; --danger:#ff7a6e; --danger-soft:#3a1b18; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:760px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.2rem)}
+h2{font-size:1.75rem}
+h3{font-size:1.2rem}
+p{margin:0}
+section{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--orange)}
+.lead{font-size:1.1rem;color:var(--muted)}
+.answer{background:var(--orange-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.answer strong{color:var(--orange)}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:560px}
+.fig.narrow svg{min-width:0}
+.cap{font-size:.85rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg)}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tbl{overflow-x:auto}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.bad{color:var(--danger)} td.good{color:var(--leaf);font-weight:600}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.who>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-sell{background:var(--leaf-soft);color:var(--leaf)}
+.t-buy{background:var(--frost-soft);color:var(--frost)}
+.t-spec{background:var(--orange-soft);color:var(--orange)}
+.risks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.risks>div{border-top:3px solid var(--danger);background:var(--surface);border-radius:0 0 12px 12px;padding:14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.risks .when{font-size:.8rem;color:var(--muted)}
+.spec{display:grid;grid-template-columns:auto 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.spec dt,.spec dd{margin:0;padding:10px 14px;border-bottom:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.9rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.92rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.85rem}
+.spec dt:nth-last-of-type(1),.spec dd:nth-last-of-type(1){border-bottom:0}
+.calc{background:var(--frost-soft);border-radius:14px;padding:16px 18px;font-variant-numeric:tabular-nums}
+.calc code{font-family:var(--mono)}
+.note{font-size:.9rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.fun{background:var(--surface);border:1px dashed var(--orange);border-radius:14px;padding:18px}
+
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--orange) 88%,#000);--hero-b:color-mix(in srgb,var(--leaf) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--orange) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--leaf) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--orange) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--leaf) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{display:flex;flex-direction:column;background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow,main>header h1 span{color:#ffe3a3!important}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8);font-size:.85rem;text-decoration:none}
+section>.eyebrow{align-self:flex-start;background:var(--orange-soft);color:var(--orange);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+.fig,.calc,.spec,.quote>div,.warn>div,.who>div,.risks>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.who>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.who>div:hover{transform:translateY(-2px);border-color:var(--orange)}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))!important}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--orange-soft),var(--surface) 70%)}
+.note{border-left-color:var(--orange)}
+.ptnote{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:.92rem;box-shadow:var(--shadow)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+</style>
+
+<main>
+
+<header>
+  <a class="back" href="index.html">← 미국 선물 한눈에 보기</a>
+  <span class="eyebrow">원자재 선물 · OJ</span>
+  <h1>오렌지면 오렌지지,<br>왜 오렌지 <span style="color:var(--orange)">주스</span>야?</h1>
+  <p class="lead">IBKR에서 보이는 OJ 선물은 생 오렌지가 아니라 <b>냉동 농축 오렌지주스(FCOJ)</b>를 거래합니다. 이유는 간단해요.</p>
+  <div class="answer">
+    <p><strong>한 줄 정답:</strong> 생 오렌지는 몇 주면 썩고 크기·맛이 다 달라서 "똑같은 물건"으로 사고팔 수가 없어요.</p>
+    <p>주스로 짜서 물을 빼고 얼리면 <b>몇 년을 보관</b>할 수 있고, <b>당도를 숫자로 재서 품질을 통일</b>할 수 있고, <b>드럼통에 담아 배로 세계 어디든</b> 보낼 수 있습니다. 게다가 플로리다 오렌지는 원래 90% 가까이가 주스용이에요. 시장의 진짜 거래 대상이 주스인 셈이죠.</p>
+  </div>
+</header>
+
+<section>
+  <span class="eyebrow">1. 오렌지가 선물이 되는 과정</span>
+  <h2>나무에서 드럼통까지</h2>
+  <div class="fig">
+    <svg viewBox="0 0 720 230" role="img" aria-label="오렌지 수확, 착즙, 수분 증발, 냉동 보관, 출하 과정">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+      <!-- step 1 tree -->
+      <rect x="54" y="88" width="12" height="44" fill="var(--muted)"/>
+      <circle cx="60" cy="70" r="38" fill="var(--leaf)"/>
+      <circle cx="44" cy="62" r="8" fill="var(--orange)"/><circle cx="72" cy="56" r="8" fill="var(--orange)"/><circle cx="62" cy="84" r="8" fill="var(--orange)"/>
+      <text x="60" y="160" text-anchor="middle" class="b">수확</text>
+      <text x="60" y="180" text-anchor="middle" class="sm">플로리다·브라질</text>
+      <line x1="112" y1="80" x2="150" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- step 2 squeeze -->
+      <path d="M170 50h60l-10 70h-40z" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="2"/>
+      <path d="M176 80h48l-6 40h-36z" fill="var(--orange)"/>
+      <text x="200" y="160" text-anchor="middle" class="b">착즙</text>
+      <text x="200" y="180" text-anchor="middle" class="sm">짜서 주스로</text>
+      <line x1="250" y1="80" x2="288" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- step 3 evaporate -->
+      <rect x="305" y="60" width="70" height="60" rx="8" fill="var(--surface)" stroke="var(--frost)" stroke-width="2"/>
+      <rect x="305" y="98" width="70" height="22" rx="0" fill="var(--orange)"/>
+      <path d="M322 50c-6-8 6-12 0-20M340 50c-6-8 6-12 0-20M358 50c-6-8 6-12 0-20" stroke="var(--frost)" stroke-width="2" fill="none"/>
+      <text x="340" y="160" text-anchor="middle" class="b">물 빼기</text>
+      <text x="340" y="180" text-anchor="middle" class="sm">부피 약 1/6로 농축</text>
+      <line x1="392" y1="80" x2="430" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- step 4 freeze -->
+      <rect x="448" y="44" width="64" height="80" rx="10" fill="var(--frost-soft)" stroke="var(--frost)" stroke-width="2"/>
+      <path d="M480 62v44M461 73l38 22M499 73l-38 22" stroke="var(--frost)" stroke-width="3" stroke-linecap="round"/>
+      <text x="480" y="160" text-anchor="middle" class="b">냉동 보관</text>
+      <text x="480" y="180" text-anchor="middle" class="sm">수년간 OK</text>
+      <line x1="530" y1="80" x2="568" y2="80" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+      <!-- step 5 drums -->
+      <rect x="585" y="58" width="36" height="66" rx="5" fill="var(--orange)"/><rect x="627" y="58" width="36" height="66" rx="5" fill="var(--orange)"/>
+      <line x1="585" y1="80" x2="621" y2="80" stroke="var(--surface)" stroke-width="2"/><line x1="627" y1="80" x2="663" y2="80" stroke="var(--surface)" stroke-width="2"/>
+      <line x1="585" y1="102" x2="621" y2="102" stroke="var(--surface)" stroke-width="2"/><line x1="627" y1="102" x2="663" y2="102" stroke="var(--surface)" stroke-width="2"/>
+      <text x="624" y="160" text-anchor="middle" class="b">창고 → 출하</text>
+      <text x="624" y="180" text-anchor="middle" class="sm">물 다시 타서 판매</text>
+      <rect x="440" y="196" width="240" height="26" rx="13" fill="var(--orange-soft)"/>
+      <text x="560" y="214" text-anchor="middle" style="font-size:13px;fill:var(--orange)" class="b">선물은 여기 있는 이 통을 거래</text>
+    </svg>
+  </div>
+  <p class="cap">마트에서 파는 "농축환원" 주스가 바로 이 농축액에 물을 다시 탄 거예요.</p>
+</section>
+
+<section>
+  <span class="eyebrow">2. 비교해 보면 바로 보임</span>
+  <h2>생 오렌지 vs 냉동 농축 주스</h2>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>🍊 생 오렌지</th><th>🧊 냉동 농축액 (FCOJ)</th></tr></thead>
+    <tbody>
+      <tr><td>보관 기간</td><td class="bad">몇 주면 상함</td><td class="good">냉동 상태로 수년</td></tr>
+      <tr><td>품질 통일</td><td class="bad">크기·당도·흠집 제각각</td><td class="good">당도(브릭스)를 숫자로 측정</td></tr>
+      <tr><td>운송</td><td class="bad">부피 크고 무르기 쉬움</td><td class="good">물 빼서 작고, 탱크·드럼으로 대량 운송</td></tr>
+      <tr><td>실제 수요</td><td>생과 시장은 작은 편</td><td>플로리다 오렌지 대부분이 주스행</td></tr>
+      <tr><td>선물로 적합?</td><td class="bad">✗</td><td class="good">✓</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">선물은 "언제 받아도 똑같은 물건"이어야 만들 수 있어요. 금은 금이고 원유는 원유인데, 생 오렌지는 그게 안 됩니다.</p>
+</section>
+
+<section>
+  <span class="eyebrow">3. 이 시장은 왜 존재하나</span>
+  <h2>누가 이걸 거래할까</h2>
+  <div class="fig narrow">
+    <svg viewBox="0 0 640 190" role="img" aria-label="농가는 가격 하락이 걱정이고 음료회사는 가격 상승이 걱정이라 선물로 가격을 미리 고정한다">
+      <rect x="10" y="30" width="190" height="110" rx="14" fill="var(--leaf-soft)"/>
+      <text x="105" y="62" text-anchor="middle" class="b" style="fill:var(--leaf)">농가·가공업체</text>
+      <text x="105" y="88" text-anchor="middle">"가격 떨어지면 망해"</text>
+      <text x="105" y="114" text-anchor="middle" class="sm">→ 선물을 미리 팔아둠</text>
+      <rect x="440" y="30" width="190" height="110" rx="14" fill="var(--frost-soft)"/>
+      <text x="535" y="62" text-anchor="middle" class="b" style="fill:var(--frost)">음료회사</text>
+      <text x="535" y="88" text-anchor="middle">"가격 오르면 망해"</text>
+      <text x="535" y="114" text-anchor="middle" class="sm">→ 선물을 미리 사둠</text>
+      <circle cx="320" cy="85" r="50" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="2"/>
+      <text x="320" y="80" text-anchor="middle" class="b" style="fill:var(--orange)">OJ 선물</text>
+      <text x="320" y="100" text-anchor="middle" class="sm">가격을 미리 고정</text>
+      <line x1="205" y1="85" x2="266" y2="85" stroke="var(--leaf)" stroke-width="3"/>
+      <line x1="374" y1="85" x2="435" y2="85" stroke="var(--frost)" stroke-width="3"/>
+      <text x="320" y="170" text-anchor="middle" class="sm">그 사이에서 날씨에 베팅하는 투기자가 유동성을 공급</text>
+    </svg>
+  </div>
+  <div class="who">
+    <div><span class="tag t-sell">매도 헤지</span><h3>재배 농가·주스 공장</h3><p>수확 전에 미리 선물을 팔아두면, 나중에 가격이 폭락해도 손실을 선물 수익으로 메꿀 수 있어요.</p></div>
+    <div><span class="tag t-buy">매수 헤지</span><h3>음료·식품 회사</h3><p>내년에 쓸 원료값을 지금 가격으로 잠가둬요. 원료가 폭등해도 주스 가격을 안정적으로 유지할 수 있죠.</p></div>
+    <div><span class="tag t-spec">투기</span><h3>트레이더</h3><p>허리케인·한파·작황 뉴스에 베팅합니다. 개인 트레이더가 보는 OJ가 바로 이 자리예요.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>OJ는 날씨와 병충해 상품</h2>
+  <div class="fig">
+    <svg viewBox="0 0 700 260" role="img" aria-label="미국 플로리다와 브라질 상파울루 지역 위치와 주요 위험">
+      <!-- stylized Americas -->
+      <path d="M80 20 Q160 10 230 30 L260 70 Q245 95 230 100 L248 118 Q240 128 226 122 L200 110 Q160 115 140 95 Q100 70 80 20z" fill="var(--line)"/>
+      <path d="M238 104 L252 120 L246 138 L236 120z" fill="var(--orange)"/>
+      <path d="M300 140 Q350 130 400 150 Q440 170 430 205 Q405 245 370 250 Q345 245 335 215 Q310 180 300 140z" fill="var(--line)"/>
+      <circle cx="388" cy="205" r="12" fill="var(--orange)"/>
+      <!-- hurricane icon near Florida -->
+      <g transform="translate(290 112)">
+        <circle r="16" fill="none" stroke="var(--danger)" stroke-width="3" stroke-dasharray="20 8"/>
+        <circle r="4" fill="var(--danger)"/>
+      </g>
+      <line x1="252" y1="128" x2="470" y2="58" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="400" y1="205" x2="470" y2="180" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="476" y="46" class="b" style="fill:var(--orange)">미국 플로리다</text>
+      <text x="476" y="68">허리케인·한파·그린닝병</text>
+      <text x="476" y="88" class="sm">생산량이 수십 년째 급감</text>
+      <text x="476" y="170" class="b" style="fill:var(--orange)">브라질 상파울루</text>
+      <text x="476" y="192">세계 최대 생산국</text>
+      <text x="476" y="212" class="sm">세계 오렌지주스 수출의 대부분</text>
+    </svg>
+  </div>
+  <div class="risks">
+    <div><h3>허리케인</h3><span class="when">6~11월 (특히 8~10월)</span><p>나무에 달린 열매를 떨어뜨리고 과수원을 망가뜨려요.</p></div>
+    <div><h3>한파</h3><span class="when">12~2월 플로리다</span><p>영하로 몇 시간만 떨어져도 열매가 얼어 못 쓰게 돼요.</p></div>
+    <div><h3>그린닝병 (HLB)</h3><span class="when">상시, 치료법 없음</span><p>벌레가 옮기는 세균병. 플로리다 생산이 무너진 가장 큰 원인이에요.</p></div>
+    <div><h3>브라질 작황·환율</h3><span class="when">브라질 수확 7월경부터</span><p>세계 공급의 핵심이라 브라질 날씨와 헤알화가 가격에 직결돼요.</p></div>
+  </div>
+  <p class="note">플로리다 오렌지 생산은 1990년대 후반 연 2억 상자 넘던 수준에서 최근엔 몇천만 상자도 안 되는 수준으로 줄었어요. 그래서 2024년 OJ 가격은 사상 최고치를 찍었고, 이후 수요 감소와 브라질 공급 회복 기대로 크게 떨어지는 등 변동이 아주 큰 상품입니다. (수치는 대략적인 규모예요.)</p>
+</section>
+
+<section>
+  <span class="eyebrow">5. 트레이딩할 때 알아야 할 것</span>
+  <h2>계약 기본 정보</h2>
+  <dl class="spec">
+    <dt>거래소</dt><dd>ICE Futures U.S. <span>(옛 뉴욕 NYBOT)</span></dd>
+    <dt>정식 이름</dt><dd>FCOJ-A <span>냉동 농축 오렌지주스</span></dd>
+    <dt>IBKR 심볼</dt><dd>OJ <span>(거래소 NYBOT로 표시되기도 함)</span></dd>
+    <dt>계약 크기</dt><dd>15,000 lbs <span>오렌지 고형분 기준 (물 뺀 순수 성분 무게)</span></dd>
+    <dt>가격 단위</dt><dd>¢ / lb <span>파운드당 센트</span></dd>
+    <dt>최소 틱</dt><dd>0.05¢ = $7.50</dd>
+    <dt>1센트 움직이면</dt><dd>$150</dd>
+    <dt>월물</dt><dd>1·3·5·7·9·11월 <span>(F H K N U X)</span></dd>
+  </dl>
+  <div class="calc">
+    <p><b>계산 예시.</b> 가격이 <code>250.00¢</code> (파운드당 $2.50)라면</p>
+    <p><code>15,000 lbs × $2.50 = $37,500</code> 가 1계약 명목가치예요.</p>
+    <p>여기서 가격이 10센트 오르면 <code>10 × $150 = +$1,500</code>.</p>
+  </div>
+  <p class="note">주의할 점: 거래량이 적은 편이라 호가가 벌어지기 쉽고, 날씨 뉴스 하나에 하루 만에 크게 움직여요. 일일 가격 제한폭도 있어서 급등락 땐 리밋에 걸려 청산이 안 될 수도 있습니다. 증거금은 IBKR 화면에서 실시간 확인하세요.</p>
+</section>
+
+<section id="hours">
+  <span class="eyebrow">6. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>오전 5시부터 11시까지, 딱 6시간</h2>
+  <div class="fig">
+    <svg viewBox="0 0 740 150" role="img" aria-label="캘리포니아 시간 기준 OJ 거래 시간 오전 5:00~11:00, 일년 내내 같음. 매달 둘째 주 오전 9시 USDA 보고서">
+      <!-- axis 03:00 -> 13:00 (10h), x 150..720, 57px/h -->
+      <g class="sm" text-anchor="middle"><text x="150" y="28">03시</text><text x="264" y="28">05시</text><text x="378" y="28">07시</text><text x="492" y="28">09시</text><text x="606" y="28">11시</text><text x="720" y="28">13시</text></g>
+      <g stroke="var(--line)"><line x1="150" y1="36" x2="150" y2="100"/><line x1="264" y1="36" x2="264" y2="100"/><line x1="378" y1="36" x2="378" y2="100"/><line x1="492" y1="36" x2="492" y2="100"/><line x1="606" y1="36" x2="606" y2="100"/><line x1="720" y1="36" x2="720" y2="100"/></g>
+      <text x="16" y="66" class="b" style="fill:var(--orange)">OJ (일년 내내)</text>
+      <rect x="264" y="50" width="342" height="24" rx="12" fill="var(--orange)"/>
+      <text x="435" y="67" text-anchor="middle" style="font-size:12px;fill:var(--surface)" class="b">05:00 ~ 11:00</text>
+      <line x1="492" y1="40" x2="492" y2="100" stroke="var(--frost)" stroke-dasharray="3 3"/>
+      <text x="492" y="118" text-anchor="middle" class="sm" style="fill:var(--frost)">09:00 USDA 작황 보고서</text>
+      <text x="300" y="118" text-anchor="middle" class="sm">개장 직후 30분 = 밤새 나온 날씨 뉴스 반영</text>
+    </svg>
+  </div>
+  <p class="cap">현지(뉴욕) 시간 08:00~14:00. 캘리포니아는 뉴욕보다 항상 3시간 늦어서 서머타임이 끝나도 <b>캘리 시간은 그대로</b>예요. 야간 세션이 없어서 밤사이 허리케인·한파 뉴스는 다음 날 오전 5시 개장 때 한 번에 반영되고, 큰 갭이 자주 생겨요. 정확한 세션은 IBKR 계약 정보(Contract Info)에서 다시 확인하세요.</p>
+</section>
+
+<section class="fun">
+  <h3>🎬 보너스: 영화 '대역전'</h3>
+  <p>1983년 영화 <i>Trading Places</i>(에디 머피 주연)의 클라이맥스가 바로 OJ 선물 거래장이에요. 오렌지 작황 보고서를 미리 빼돌린 악당 형제를 주인공들이 역으로 털어버리죠. OJ가 날씨 보고서 한 장에 얼마나 출렁이는지 보여주는 유명한 장면입니다.</p>
+</section>
+
+</main>
+
+</body></html>

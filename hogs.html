@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>돼지 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f7f3f4; --surface:#ffffff; --fg:#20221f; --muted:#695e62; --line:#ded5d8; --c1:#b04a6a; --c1-soft:#f6e0e7; --c2:#4a7a3a; --c2-soft:#e0eddb; --c3:#3a5a8a; --c3-soft:#dfe6f2; --c4:#9a7a2a; --c4-soft:#f3ecd4; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#161213; --surface:#201b1d; --fg:#eaebe6; --muted:#a6aaa2; --line:#3b3236; --c1:#ec96b2; --c1-soft:#3b1c27; --c2:#9ccc86; --c2-soft:#20311a; --c3:#8eb0e6; --c3-soft:#18253a; --c4:#dcc072; --c4-soft:#352c14; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#161213; --surface:#201b1d; --fg:#eaebe6; --muted:#a6aaa2; --line:#3b3236; --c1:#ec96b2; --c1-soft:#3b1c27; --c2:#9ccc86; --c2-soft:#20311a; --c3:#8eb0e6; --c3-soft:#18253a; --c4:#dcc072; --c4-soft:#352c14; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">축산 선물 · CME 돈육 · HE</span>
+  <h1>돼지 선물은 왜<br><span class="hl">살코기 지수</span>로 정산할까?</h1>
+  <p class="lead">IBKR의 돈육(Lean Hogs, HE) 선물은 살아 있는 돼지가 아니라 <b>도축 후 지방을 뺀 '살코기 기준' 돼지 가격 지수</b>를 거래해요. 가격 65.75는 <b>도체(지육) 1파운드당 65.75센트</b>예요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 예전에는 살아 있는 돼지를 실물 인도했어요(Live Hogs). 그런데 지금 미국 돼지는 대부분 <b>대형 육가공 회사와 계약으로 거래</b>돼서, 공개 시장에서 돼지를 넘길 일이 거의 없어졌어요. 그래서 1997년부터 매일 USDA가 집계하는 실제 도축 돼지 가격으로 만든 <b>CME 린 호그 지수</b>로 현금정산해요.</p><p>'Lean'은 지방 대신 살코기 비율이 높은 돼지를 기준으로 한다는 뜻이에요. 지육(머리·내장 뺀 몸통) 무게로 가격을 매기니까, 살아 있는 체중 기준인 소(LE)보다 숫자가 다르게 보여요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>HE 2026년 12월물</small><b>65.75¢</b><span>/파운드 · 미결제 15.2만</span></div><div><small>HE 1계약 명목가치</small><b>$26,300</b><span>40,000파운드 × $0.6575</span></div><div><small>스냅샷 거래량</small><b>2.5만</b><span>직전 미국 장 기준</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 정규장 마감 값이에요. 돼지 선물은 캘리 오전 6:30~11:05에만 열려요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">돼지가 지수가 되기까지</a><a href="#world">세계 돼지고기</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 농장에서 지수까지</span>
+  <h2>HE 선물이 따라가는 숫자</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="양돈 농장에서 키운 돼지가 도축장에 출하되면 USDA가 실제 거래가를 집계하고, CME 린 호그 지수가 되며, HE 선물은 그 지수로 현금정산된다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">양돈 농장</text><text x="97.2" y="78" text-anchor="middle" class="sm">약 6개월 키움</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">도축장 출하</text><text x="285.8" y="78" text-anchor="middle" class="sm">약 280파운드</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="474.2" y="54" text-anchor="middle" class="b">USDA 가격 집계</text><text x="474.2" y="78" text-anchor="middle" class="sm">매일 실제 거래가</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="662.8" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">CME 린 호그 지수</text><text x="662.8" y="78" text-anchor="middle" class="sm">HE 현금정산</text><line x1="662.8" y1="106" x2="662.8" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '2영업일 동안 실제 도축된 돼지의 평균 지육 가격' 지수</text><text x="40" y="190">살아 있는 돼지 약 280파운드 → 지육(도체) 약 210파운드 (약 75%)</text><text x="40" y="214">만기일에 HE 가격은 그날의 CME 린 호그 지수로 강제로 맞춰져요</text><text x="40" y="238">실물이 오가지 않아서 개인도 만기까지 들고 갈 수 있어요 (현금정산)</text></svg></div>
+<p class="note">돼지고기는 부위별 가격(삼겹·등심·햄·어깨 등)을 합친 <b>'포크 컷아웃'</b> 가격도 매일 나와요. 도축장 마진은 컷아웃 − 돼지값이에요. 삼겹살(벨리) 가격이 여름 베이컨 수요로 오르면 컷아웃이 올라가고 돼지값도 따라가요.</p>
+</section>
+<section id="world">
+  <span class="eyebrow">2. 세계 돼지고기 시장</span>
+  <h2>중국이 세계 돼지의 절반</h2>
+<div class="fig"><svg viewBox="0 0 720 238" role="img" aria-label="나라별 돼지고기 생산 비중: 중국 47%, EU 18%, 미국 11%, 브라질 4%, 러시아 4%, 기타 16%"><text x="20" y="22" class="sm">나라별 돼지고기 생산 비중 (대략)</text><line x1="170.0" y1="36" x2="170.0" y2="208" stroke="var(--line)"/><text x="170.0" y="230" text-anchor="middle" class="sm">0%</text><line x1="260.3" y1="36" x2="260.3" y2="208" stroke="var(--line)"/><text x="260.3" y="230" text-anchor="middle" class="sm">10%</text><line x1="350.6" y1="36" x2="350.6" y2="208" stroke="var(--line)"/><text x="350.6" y="230" text-anchor="middle" class="sm">20%</text><line x1="441.0" y1="36" x2="441.0" y2="208" stroke="var(--line)"/><text x="441.0" y="230" text-anchor="middle" class="sm">30%</text><line x1="531.3" y1="36" x2="531.3" y2="208" stroke="var(--line)"/><text x="531.3" y="230" text-anchor="middle" class="sm">40%</text><line x1="621.6" y1="36" x2="621.6" y2="208" stroke="var(--line)"/><text x="621.6" y="230" text-anchor="middle" class="sm">50%</text><text x="20" y="57" class="b">중국</text><rect class="grow" x="170" y="42" width="424.5" height="20" rx="4" fill="var(--c3)"/><text x="602.5" y="57" class="b">47%</text><text x="637.5" y="57" class="sm">최대 소비국</text><text x="20" y="85" class="b">EU</text><rect class="grow" x="170" y="70" width="162.6" height="20" rx="4" fill="var(--c3)"/><text x="340.6" y="85" class="b">18%</text><text x="20" y="113" class="b" style="fill:var(--c1)">미국</text><rect class="grow" x="170" y="98" width="99.4" height="20" rx="4" fill="var(--c1)"/><text x="277.4" y="113" class="b" style="fill:var(--c1)">11%</text><text x="312.4" y="113" class="sm">수출 강자</text><text x="20" y="141" class="b">브라질</text><rect class="grow" x="170" y="126" width="36.1" height="20" rx="4" fill="var(--c2)"/><text x="214.1" y="141" class="b">4%</text><text x="20" y="169" class="b">러시아</text><rect class="grow" x="170" y="154" width="36.1" height="20" rx="4" fill="var(--c3)"/><text x="214.1" y="169" class="b">4%</text><text x="20" y="197" class="b">기타</text><rect class="grow" x="170" y="182" width="144.5" height="20" rx="4" fill="var(--line)"/><text x="322.5" y="197" class="b">16%</text></svg></div>
+<div class="cards"><div><span class="tag t-1">미국 주산지</span><h3>아이오와·미네소타·노스캐롤라이나</h3><p>옥수수·대두 사료가 싼 콘벨트에 몰려 있어요. 미국 돼지의 약 3분의 1이 아이오와.</p></div><div><span class="tag t-3">수출</span><h3>생산의 약 25%</h3><p>멕시코가 최대 고객이고 일본·한국·중국이 뒤를 이어요. 한국은 미국산 돼지고기 주요 수입국이에요.</p></div><div><span class="tag t-4">아프리카돼지열병</span><h3>ASF</h3><p>2018년 중국에서 퍼져 돼지가 수억 마리 줄었어요. 미국에 들어오면 수출이 막혀 가격 급락 위험.</p></div></div>
+<p class="cap">비중은 USDA 통계 기반의 대략적인 값이에요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">3. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>돼지 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="돼지 달력: 5~7월 여름 고점 경향, 10~12월 저점 경향, 분기 돼지 사육 보고서, HE 월물 2·4·5·6·7·8·10·12월, 매주 수출 판매"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="616" y1="38" x2="616" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">여름 고점 경향</text><rect x="344" y="50" width="140" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="414" y="67" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">바비큐·베이컨 · 출하 적음</text><text x="16" y="104" class="b">가을·겨울 저점 경향</text><rect x="584" y="88" width="140" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="654" y="105" text-anchor="middle" style="font-size:12px;fill:var(--c3)" class="b">출하 많음</text><text x="16" y="142" class="b">분기 돼지 사육 보고서</text><circle cx="288" cy="138" r="7" fill="var(--c2)"/><text x="300" y="143" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">3월</text><circle cx="430" cy="138" r="7" fill="var(--c2)"/><text x="442" y="143" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">6월</text><circle cx="573" cy="138" r="7" fill="var(--c2)"/><text x="585" y="143" text-anchor="start" style="font-size:12px;fill:var(--c2)" class="b">9월</text><circle cx="712" cy="138" r="7" fill="var(--c2)"/><text x="700" y="143" text-anchor="end" style="font-size:12px;fill:var(--c2)" class="b">12월</text><text x="16" y="180" class="b">HE 월물</text><circle cx="218" cy="176" r="7" fill="var(--c4)"/><text x="230" y="181" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">2월</text><circle cx="316" cy="176" r="7" fill="var(--c4)"/><text x="328" y="181" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">4월</text><circle cx="409" cy="176" r="7" fill="var(--c4)"/><text x="421" y="181" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">6월</text><circle cx="508" cy="176" r="7" fill="var(--c4)"/><text x="520" y="181" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">8월</text><circle cx="604" cy="176" r="7" fill="var(--c4)"/><text x="592" y="181" text-anchor="end" style="font-size:12px;fill:var(--c4)" class="b"></text><circle cx="700" cy="176" r="7" fill="var(--c4)"/><text x="688" y="181" text-anchor="end" style="font-size:12px;fill:var(--c4)" class="b">12월</text><text x="16" y="218" class="b">주간 수출 판매</text><circle cx="174" cy="214" r="4" fill="var(--alert)"/><circle cx="222" cy="214" r="4" fill="var(--alert)"/><circle cx="270" cy="214" r="4" fill="var(--alert)"/><circle cx="318" cy="214" r="4" fill="var(--alert)"/><circle cx="366" cy="214" r="4" fill="var(--alert)"/><circle cx="414" cy="214" r="4" fill="var(--alert)"/><circle cx="462" cy="214" r="4" fill="var(--alert)"/><circle cx="510" cy="214" r="4" fill="var(--alert)"/><circle cx="558" cy="214" r="4" fill="var(--alert)"/><circle cx="606" cy="214" r="4" fill="var(--alert)"/><circle cx="654" cy="214" r="4" fill="var(--alert)"/><circle cx="702" cy="214" r="4" fill="var(--alert)"/></svg></div>
+<p class="cap">돼지는 계절성이 아주 뚜렷해요. 봄에 덜 태어난 돼지가 여름에 출하되고 바비큐 수요가 겹쳐 <b>여름 월물(6·7월)이 겨울 월물보다 훨씬 비싸요</b>. 지금 12월물은 계절적으로 약한 시기예요. HE는 인도월 10번째 영업일에 만기돼요(12월물은 12월 14일쯤).</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>돼지는 계절 + 사료 + 수출</h2>
+<div class="drivers"><div><div class="k"><h3>계절 출하량</h3><span class="dir down">많으면 ▼</span></div><p>가을~겨울 출하가 늘면 가격 하락, 여름엔 공급이 줄어 상승.</p></div><div><div class="k"><h3>사육 두수 (분기 보고서)</h3><span class="dir down">많으면 ▼</span></div><p>분기마다 나오는 Hogs and Pigs 보고서가 몇 달 뒤 공급을 알려줘요.</p></div><div><div class="k"><h3>수출 (멕시코·아시아)</h3><span class="dir up">늘면 ▲</span></div><p>생산의 4분의 1이 수출이라 관세·무역 분쟁에 민감해요.</p></div><div><div class="k"><h3>사료비 (옥수수·대두박)</h3><span class="dir both">비싸면 장기 ▲</span></div><p>사료비가 오르면 농가가 사육을 줄여 나중에 가격이 올라요.</p></div><div><div class="k"><h3>질병</h3><span class="dir both">해외 발생 ▲ / 미국 발생 ▼</span></div><p>중국 ASF는 미국 수출 기회(상승), 미국 발생은 수출 금지(급락).</p></div><div><div class="k"><h3>포크 컷아웃·삼겹살</h3><span class="dir up">강하면 ▲</span></div><p>부위별 도매가. 여름 베이컨 시즌 삼겹살 가격이 중요해요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 돼지 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="돼지 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">양돈 농가</text>
+<text x="110" y="90" text-anchor="middle">"출하 때 값 떨어지면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ HE 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">육가공·햄 회사</text>
+<text x="550" y="90" text-anchor="middle">"돼지값 오르면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ HE 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">HE 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">린 호그 지수</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">농가는 돼지 + 옥수수 + 대두박을 한 번에 헤지하는 '호그 크러시'를 쓰기도 해요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>양돈 농가</h3><p>6개월 뒤 출하할 돼지 가격을 고정해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>햄·소시지·외식</h3><p>원료 돈육 가격을 미리 확보해요.</p></div><div><span class="tag t-4">육가공 대기업</span><h3>스미스필드·타이슨·JBS</h3><p>농장과 계약한 돼지 값이 지수에 연동돼서 지수 변동을 선물로 관리해요.</p></div><div><span class="tag t-spec">투기</span><h3>펀드·CTA</h3><p>계절 스프레드(여름물 − 겨울물) 거래가 인기예요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="spec"><h3><span class="dot"></span>Lean Hogs (HE)</h3><dl><dt>거래소</dt><dd>CME</dd><dt>IBKR 심볼</dt><dd>HE <span>예: HEZ6 = 2026년 12월</span></dd><dt>계약 크기</dt><dd>40,000파운드</dd><dt>가격</dt><dd>센트 / 파운드 (지육)</dd><dt>최소 틱</dt><dd>0.025센트 = $10</dd><dt>1센트 움직이면</dt><dd>$400</dd><dt>월물</dt><dd>2·4·5·6·7·8·10·12월 <span>(G J K M N Q V Z)</span></dd><dt>결제</dt><dd>현금정산 <span>CME 린 호그 지수</span></dd></dl></div>
+<p class="note">작은 계약은 없어요. 현금정산이라 만기까지 들고 갈 수 있다는 게 소(LE)와 달라요. 하루 가격제한폭이 있어요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>2센트 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="65.75" data-x="67.75">HE +2센트</button><button type="button" data-c="0" data-e="65.75" data-x="62.75">HE −3센트</button><button type="button" data-c="0" data-e="65.75" data-x="72.325">HE +10% (여름물처럼)</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">HE 돈육 (40,000파운드)</option></select></label>
+      <label for="in-entry">진입가 (센트/파운드)<input id="in-entry" type="number" step="any" value="65.75" inputmode="decimal"></label>
+      <label for="in-exit">청산가 (센트/파운드)<input id="in-exit" type="number" step="any" value="67.75" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 명목가치는 센트 가격 × 400. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "HE 돈육 (40,000파운드)", "tick": 0.025, "tv": 10, "mult": 400, "dec": 3, "entry": 65.75, "exit": 67.75}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>캘리 오전 4시간 반만</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 돼지 선물 거래 시간. 06:30~11:05. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="543.2" y="57" width="109.2" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">집중 06:30~11:05 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="170" y="215" class="sm">CME 축산 거래 시간 (하루 한 번)</text></svg></div>
+<p class="cap">소와 같아요. 시카고 기준 월~금 08:30~13:05, 캘리포니아 시간 <b>오전 6:30 ~ 11:05</b>. 분기별 돼지 재고 보고서는 캘리 낮 12시(장 마감 후)에 나와요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>월물마다 가격이 크게 달라요</h3><p>여름물과 겨울물 차이가 20센트 넘게 나기도 해요. 롤오버할 때 가격이 계단처럼 바뀌는 걸 손익으로 착각하지 마세요.</p></div><div><h3>가격제한폭</h3><p>하루 제한폭에 걸리면 그날 빠져나올 수 없어요. 질병·무역 뉴스 때 자주 걸려요.</p></div><div><h3>분기 보고서 갭</h3><p>Hogs and Pigs 보고서는 장 마감 후 발표라 다음 날 갭이 생겨요.</p></div><div><h3>장 시간이 짧아요</h3><p>하루 4시간 반만 열려요.</p></div><div><h3>현금정산 만기</h3><p>만기일 가격은 지수로 맞춰져요. 지수와 선물 차이가 크면 만기 직전 급하게 수렴해요.</p></div><div><h3>무역 뉴스</h3><p>멕시코·중국 관세 뉴스에 민감해요.</p></div></div>
+</section>
+<section class="fun"><h3>🥓 보너스: 삼겹살 한 근 속 돼지값은?</h3><p>지육 1파운드 65.75센트를 kg으로 바꾸면 약 <b class="mono">$1.45</b>, 1,400원 환율로 약 <b>2,029원</b>이에요. 삼겹살 한 근(600g)으로 치면 지육값은 1,200원 정도인데, 실제로는 부위마다 값이 달라서 삼겹살은 평균보다 훨씬 비싸요. 돼지 한 마리(지육 210파운드)의 값은 지금 가격으로 약 <b class="mono">$138</b>예요.</p></section>
+</main>
+
+</html>

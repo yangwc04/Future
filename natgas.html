@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>천연가스 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f2f4f7; --surface:#ffffff; --fg:#20221f; --muted:#5b6370; --line:#d6dbe3; --c1:#2453a6; --c1-soft:#dde6f6; --c2:#2f7a5a; --c2-soft:#dcefe6; --c3:#c0601a; --c3-soft:#f8e5d6; --c4:#5a6a7a; --c4-soft:#e3e8ed; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#10131a; --surface:#191d26; --fg:#eaebe6; --muted:#a6aaa2; --line:#303746; --c1:#86aef0; --c1-soft:#16233d; --c2:#80cfa8; --c2-soft:#163026; --c3:#f2a066; --c3-soft:#3b2412; --c4:#a8b6c4; --c4-soft:#232a31; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#10131a; --surface:#191d26; --fg:#eaebe6; --muted:#a6aaa2; --line:#303746; --c1:#86aef0; --c1-soft:#16233d; --c2:#80cfa8; --c2-soft:#163026; --c3:#f2a066; --c3-soft:#3b2412; --c4:#a8b6c4; --c4-soft:#232a31; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">에너지 선물 · NYMEX 천연가스 · NG · QG · MNG</span>
+  <h1>천연가스 선물은 왜<br><span class="hl">부피가 아니라 열량</span>으로 거래할까?</h1>
+  <p class="lead">IBKR의 천연가스(NG) 가격 3.178은 '1 MMBtu당 3.178달러'라는 뜻이에요. MMBtu는 리터나 세제곱미터 같은 부피가 아니라 <b>열량 단위</b>예요. 그리고 배달 장소는 루이지애나의 <b>헨리 허브(Henry Hub)</b>라는 파이프라인 교차점이에요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 가스는 압력·온도에 따라 부피가 크게 바뀌고, 가스전마다 성분(메탄 비율)이 달라 같은 부피라도 태웠을 때 나오는 열이 달라요. 사는 사람이 진짜 원하는 건 <b>열</b>이니까 열량(100만 BTU)으로 표준화했어요.</p><p>가스는 탱크에 담아 옮기기 어려워 <b>파이프라인으로만</b> 오가요. 헨리 허브는 미국 주요 파이프라인 10여 개와 지하 저장시설이 만나는 곳이라 인도 장소가 됐어요. 인도는 한 번에 넘기는 게 아니라 <b>인도월 한 달 내내 매일 같은 양</b>을 파이프로 흘려보내는 방식이에요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>NG 2026년 12월물</small><b>$3.178</b><span>/MMBtu · 미결제 28.6만</span></div><div><small>NG 1계약 명목가치</small><b>$31,780</b><span>10,000 MMBtu × $3.178</span></div><div><small>11월물 마지막 거래일</small><b>10월 28일</b><span>지금은 사실상 12월물로 이동 중</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. 12월물은 스냅샷 시점 2,834계약 거래됐어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">가스전에서 헨리 허브까지</a><a href="#use">미국 가스는 어디로</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 파이프라인의 교차로</span>
+  <h2>NG 선물이 넘기는 가스는 어디에</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="셰일가스전에서 파이프라인으로 헨리 허브까지 가스가 오고, NG 선물은 헨리 허브에서 한 달 동안 흘려보내는 1만 MMBtu를 거래하며, 그 가스는 발전소와 가정, LNG 수출로 간다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">셰일가스전</text><text x="97.2" y="78" text-anchor="middle" class="sm">헤인즈빌·마셀러스</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">파이프라인</text><text x="285.8" y="78" text-anchor="middle" class="sm">고압 수송</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">헨리 허브</text><text x="474.2" y="78" text-anchor="middle" class="sm">루이지애나 교차점</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">발전소·가정·LNG</text><text x="662.8" y="78" text-anchor="middle" class="sm">태워서 열·전기</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '헨리 허브에서 한 달 동안 흘려보내는 가스 10,000 MMBtu'</text><text x="40" y="190">10,000 MMBtu ÷ 인도월 일수 만큼 매일 파이프라인으로 넘겨요</text><text x="40" y="214">가스는 저장탱크 대신 지하 암염 동굴·폐가스전에 저장해요 (봄~가을 주입, 겨울 인출)</text><text x="40" y="238">개인은 받을 수 없어서 만기(인도월 3영업일 전) 전에 청산하거나 롤오버해요</text></svg></div>
+<p class="note"><b>MMBtu</b>는 Million British thermal units, 100만 BTU예요. 1 BTU는 물 1파운드를 화씨 1도 올리는 열량이고, 1 MMBtu는 대략 천연가스 28세제곱미터(㎥)를 태운 열과 비슷해요. 한국 가정이 한 달에 쓰는 도시가스가 계절에 따라 대략 1~4 MMBtu 정도예요.</p>
+</section>
+<section id="use">
+  <span class="eyebrow">2. 미국 가스 시장</span>
+  <h2>미국 천연가스는 어디에 쓰일까</h2>
+<div class="fig"><svg viewBox="0 0 720 120" role="img" aria-label="미국 천연가스 수요 비중: 발전 35%, 산업 22%, 주거·상업 22%, LNG 수출 14%, 멕시코 파이프라인 수출 7%"><text x="20" y="24" class="sm">미국 천연가스 수요 비중 (대략, 수출 포함)</text><rect class="grow" x="20.0" y="40" width="238.0" height="40" fill="var(--c1)"/><text x="139.0" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">발전 35%</text><rect class="grow" x="258.0" y="40" width="149.6" height="40" fill="var(--c4)"/><text x="332.8" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">산업 22%</text><rect class="grow" x="407.6" y="40" width="149.6" height="40" fill="var(--c3)"/><text x="482.4" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">주거·상업 난방 22%</text><rect class="grow" x="557.2" y="40" width="95.2" height="40" fill="var(--c2)"/><rect class="grow" x="652.4" y="40" width="47.6" height="40" fill="var(--c2-soft)"/><rect x="20" y="96" width="12" height="12" rx="2" fill="var(--c2)"/><text x="38" y="107" class="sm">LNG 수출 14%</text><rect x="140" y="96" width="12" height="12" rx="2" fill="var(--c2-soft)"/><text x="158" y="107" class="sm">멕시코 수출 7%</text></svg></div>
+<p class="cap">미국은 세계 최대 가스 생산국이자 최대 LNG 수출국이에요. 비중은 계절·연도마다 바뀌는 대략적인 값이에요.</p>
+<div class="cards"><div><span class="tag t-1">발전</span><h3>여름 냉방 + AI 데이터센터</h3><p>석탄을 대신해 가스 발전이 늘었어요. 폭염이면 에어컨 전력 수요 때문에 여름에도 가격이 올라요.</p></div><div><span class="tag t-3">난방</span><h3>겨울이 진짜 승부</h3><p>미국 북동부·중서부 한파가 가장 큰 가격 변수. 겨울 가격이 여름보다 비싸게 거래돼요.</p></div><div><span class="tag t-2">LNG 수출</span><h3>새로운 수요처</h3><p>가스를 영하 162도로 얼려 유럽·아시아(한국 포함)로 수출. 수출 터미널 가동률이 매일 뉴스가 돼요.</p></div><div><span class="tag t-4">생산지</span><h3>셰일 혁명</h3><p>루이지애나·텍사스의 헤인즈빌, 펜실베이니아의 마셀러스, 텍사스 퍼미안(원유 시추 때 같이 나오는 가스).</p></div></div>
+</section>
+<section id="calendar">
+  <span class="eyebrow">3. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>천연가스 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 302" role="img" aria-label="천연가스 달력: 4~10월 저장 주입, 11~3월 인출, 12~2월 한파 위험, 7~8월 폭염, 6~11월 허리케인, 매주 목요일 EIA 저장 보고서"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="282"/><line x1="294" y1="38" x2="294" y2="282"/><line x1="438" y1="38" x2="438" y2="282"/><line x1="582" y1="38" x2="582" y2="282"/><line x1="726" y1="38" x2="726" y2="282"/></g><line x1="616" y1="38" x2="616" y2="282" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="298" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">저장 주입 시즌</text><rect x="296" y="50" width="332" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="462" y="67" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">4~10월 · 재고 쌓기</text><text x="16" y="104" class="b">저장 인출 시즌</text><rect x="632" y="88" width="92" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><rect x="152" y="88" width="140" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="222" y="105" text-anchor="middle" style="font-size:12px;fill:var(--c3)" class="b">11~3월 · 재고 꺼내 쓰기</text><text x="16" y="142" class="b">한파 위험</text><rect x="680" y="126" width="44" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><rect x="152" y="126" width="92" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><text x="250" y="143" text-anchor="start" style="font-size:12px;fill:var(--alert)" class="b">12~2월 · 가격 급등 구간</text><text x="16" y="180" class="b">여름 폭염</text><rect x="440" y="164" width="92" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="486" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">냉방 전력</text><text x="16" y="218" class="b">허리케인</text><rect x="392" y="202" width="284" height="24" rx="12" fill="var(--c4-soft)" stroke="var(--c4)"/><text x="534" y="219" text-anchor="middle" style="font-size:12px;fill:var(--c4)" class="b">생산·LNG 터미널 차질</text><text x="16" y="256" class="b">EIA 저장 보고서</text><rect x="152" y="240" width="572" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="438" y="257" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">매주 목요일 오전 7:30 (캘리)</text></svg></div>
+<p class="cap">지금(10월 말)은 <b>주입 시즌이 끝나고 인출 시즌이 막 시작되는 전환점</b>이에요. 겨울을 앞두고 저장량이 5년 평균보다 많은지 적은지가 가장 중요한 숫자예요. 11월물(NGX6)은 10월 28일, 12월물은 11월 25일쯤이 마지막 거래일이라 롤오버도 이 시기에 몰려요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>천연가스는 날씨 상품</h2>
+<div class="drivers"><div><div class="k"><h3>날씨 예보</h3><span class="dir up">추우면/더우면 ▲</span></div><p>기상 모델(미국 GFS·유럽 ECMWF)이 하루 4번 업데이트될 때마다 가격이 출렁여요. 난방도일(HDD)·냉방도일(CDD) 숫자를 봐요.</p></div><div><div class="k"><h3>저장 재고 (EIA)</h3><span class="dir down">재고 많으면 ▼</span></div><p>매주 목요일 발표. 예상보다 많이 주입되거나 적게 인출되면 하락.</p></div><div><div class="k"><h3>LNG 수출</h3><span class="dir up">수출 ▲면 ▲</span></div><p>수출 터미널로 들어가는 가스(feedgas)가 늘면 미국 내 공급이 줄어 가격 상승. 터미널 고장은 하락 요인.</p></div><div><div class="k"><h3>생산량</h3><span class="dir down">생산 ▲면 ▼</span></div><p>셰일 생산이 하루 1,000억 입방피트를 넘어요. 생산 기록 경신 뉴스는 하락 요인.</p></div><div><div class="k"><h3>허리케인</h3><span class="dir both">생산 차질 ▲ / LNG 차질 ▼</span></div><p>멕시코만 생산이 멈추면 오르지만, LNG 수출 터미널이 멈추면 오히려 내려요.</p></div><div><div class="k"><h3>유럽·아시아 가스값</h3><span class="dir up">해외 ▲면 ▲</span></div><p>유럽(TTF)·아시아(JKM) 가격이 오르면 미국 LNG 수출이 늘어나요. 지금은 중동 리스크로 해외 가스값도 민감해요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 천연가스 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="천연가스 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">가스 생산업체</text>
+<text x="110" y="90" text-anchor="middle">"겨울 따뜻하면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 향후 생산분 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">전력·가스 회사</text>
+<text x="550" y="90" text-anchor="middle">"한파 오면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 겨울 월물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">NG 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">10,000 MMBtu</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">변동성이 아주 커서 에너지 전문 헤지펀드와 개인 단타도 많이 몰려요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>EQT 같은 생산업체</h3><p>가스 가격이 생산비 아래로 떨어질 위험을 막으려고 1~2년치를 미리 팔아요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>유틸리티·발전사</h3><p>겨울에 고객에게 가스를 공급해야 하니 한파로 가격이 튈 위험을 막아요.</p></div><div><span class="tag t-4">LNG 수출사</span><h3>셰니에르 등</h3><p>미국에서 사서 해외에 파는 가격 차이를 지키려고 헨리 허브 선물을 사요.</p></div><div><span class="tag t-spec">투기</span><h3>헤지펀드·개인</h3><p>날씨 예보에 베팅. '과부 제조기(widowmaker)'라 불리는 3월물·4월물 스프레드가 유명해요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>Henry Hub Natural Gas (NG)</h3><dl><dt>거래소</dt><dd>NYMEX <span>(CME 그룹)</span></dd><dt>IBKR 심볼</dt><dd>NG <span>예: NGZ6 = 2026년 12월</span></dd><dt>계약 크기</dt><dd>10,000 MMBtu</dd><dt>가격</dt><dd>$ / MMBtu</dd><dt>최소 틱</dt><dd>$0.001 = $10</dd><dt>$0.10 움직이면</dt><dd>$1,000</dd><dt>월물</dt><dd>매달</dd><dt>결제</dt><dd>실물 인도 <span>헨리 허브, 한 달간</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>작은 계약</h3><dl><dt>QG (E-mini)</dt><dd>2,500 MMBtu <span>틱 $0.005 = $12.50 · 현금정산</span></dd><dt>MNG (마이크로)</dt><dd>1,000 MMBtu <span>틱 $0.001 = $1 · 현금정산</span></dd><dt>유동성</dt><dd>둘 다 NG보다 훨씬 얇음</dd><dt>추천</dt><dd>연습용으로는 MNG</dd></dl></div></div>
+<p class="note">가격 $3.178에서 마지막 자리 0.001이 1틱 = $10이에요. $0.10(10센트) 움직이면 $1,000, $1 움직이면 $10,000. 천연가스는 하루에 5~10% 움직이는 날이 흔해서, $3대 가격에서 하루 20~30센트(1계약 $2,000~3,000) 변동이 이상하지 않아요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>10센트 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="3.178" data-x="3.378">NG +20센트 (한파 예보)</button><button type="button" data-c="0" data-e="3.178" data-x="2.86">NG −10% (따뜻한 겨울)</button><button type="button" data-c="2" data-e="3.178" data-x="3.278">MNG +10센트</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">NG (10,000 MMBtu)</option><option value="1">QG E-mini (2,500 MMBtu)</option><option value="2">MNG 마이크로 (1,000 MMBtu)</option></select></label>
+      <label for="in-entry">진입가 ($/MMBtu)<input id="in-entry" type="number" step="any" value="3.178" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($/MMBtu)<input id="in-exit" type="number" step="any" value="3.378" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "NG (10,000 MMBtu)", "tick": 0.001, "tv": 10, "mult": 10000, "dec": 3, "entry": 3.178, "exit": 3.378}, {"name": "QG E-mini (2,500 MMBtu)", "tick": 0.005, "tv": 12.5, "mult": 2500, "dec": 3, "entry": 3.18, "exit": 3.38}, {"name": "MNG 마이크로 (1,000 MMBtu)", "tick": 0.001, "tv": 1, "mult": 1000, "dec": 3, "entry": 3.178, "exit": 3.378}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>목요일 오전 7시 반을 조심</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 천연가스 선물 거래 시간. 15:00~다음날 14:00, 집중 06:00~11:30. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="531.3" y="57" width="131.1" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 06:00~11:30 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (하루 1시간 정비)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">뉴욕 주간 = 거래량·변동 집중</text></svg></div>
+<p class="cap">CME 에너지와 같은 시간이에요. 캘리 저녁~새벽에도 열려 있지만 호가가 얇고, 미국·유럽 기상 모델 업데이트(캘리 새벽과 오전)에 맞춰 갑자기 움직이기도 해요. 정산은 캘리 오전 11:28~11:30.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>가장 변동성이 큰 선물 중 하나</h3><p>연간 변동성이 50~80%에 달할 때가 많아요. 주가지수의 3~5배예요. 처음이라면 MNG나 아주 작은 크기로.</p></div><div><h3>만기가 빨라요</h3><p>인도월 시작 3영업일 전에 끝나요. 11월물은 10월 28일, 12월물은 11월 말. IBKR은 그보다 먼저 청산을 요구할 수 있어요.</p></div><div><h3>롤오버 비용 (콘탱고)</h3><p>겨울물이 여름물보다, 먼 월물이 가까운 월물보다 비싼 경우가 많아 롱을 계속 롤오버하면 손해가 쌓여요.</p></div><div><h3>목요일 저장 보고서</h3><p>매주 목요일 캘리 오전 7:30 발표 순간 몇 초 만에 3~5% 움직이기도 해요.</p></div><div><h3>월물마다 다른 가격</h3><p>1월물과 4월물은 계절이 달라서 완전히 다른 상품처럼 움직여요. '천연가스 가격'을 볼 때 어느 월물인지 꼭 확인.</p></div><div><h3>QG·MNG는 얇아요</h3><p>작은 계약은 거래가 적어 스프레드가 넓어요. 지정가 주문을 쓰세요.</p></div></div>
+</section>
+<section class="fun"><h3>🔥 보너스: 미국 가스가 한국에 오면 왜 비싸질까?</h3><p>헨리 허브 가스가 MMBtu당 <b class="mono">$3.18</b>이라도, 영하 162도로 얼리는 액화 비용(약 $2.5~3.5), 배로 태평양을 건너는 운송비(약 $1~3), 다시 기체로 바꾸는 비용이 붙어요. 그래서 아시아 LNG 가격(JKM)은 보통 미국 가격의 <b>3~4배</b>쯤에서 거래돼요. 한국 가스공사가 들여오는 LNG 중 미국산 비중이 늘고 있어서, 헨리 허브 가격은 우리 도시가스 요금과도 멀리서 연결돼 있어요.</p></section>
+</main>
+
+</html>

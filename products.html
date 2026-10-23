@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>휘발유·경유 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f5f3f1; --surface:#ffffff; --fg:#20221f; --muted:#665f5b; --line:#ddd7d3; --c1:#b2402a; --c1-soft:#f7e1db; --c2:#2f6f5a; --c2-soft:#dcede6; --c3:#2d5b8a; --c3-soft:#dce6f2; --c4:#a07a12; --c4-soft:#f4ebd0; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#151211; --surface:#1f1b1a; --fg:#eaebe6; --muted:#a6aaa2; --line:#3a3331; --c1:#f2907a; --c1-soft:#3c1d16; --c2:#80c9ae; --c2-soft:#162f28; --c3:#88b4e6; --c3-soft:#16263a; --c4:#e3c062; --c4-soft:#362c10; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#151211; --surface:#1f1b1a; --fg:#eaebe6; --muted:#a6aaa2; --line:#3a3331; --c1:#f2907a; --c1-soft:#3c1d16; --c2:#80c9ae; --c2-soft:#162f28; --c3:#88b4e6; --c3-soft:#16263a; --c4:#e3c062; --c4-soft:#362c10; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">에너지 선물 · NYMEX 정제유 · RBOB 휘발유 RB · 초저유황 경유 HO</span>
+  <h1>휘발유 선물은 왜<br><span class="hl">에탄올을 섞기 전</span> 휘발유일까?</h1>
+  <p class="lead">IBKR의 휘발유 선물 이름은 <b>RBOB Gasoline</b>이에요. Reformulated Blendstock for Oxygenate Blending, 풀어 말하면 <b>'에탄올을 섞기 직전의 휘발유 원료'</b>예요. 그리고 '난방유(HO)'라는 이름의 선물은 사실 지금은 <b>경유(디젤)</b>를 거래해요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 미국 휘발유는 주유소에 가기 직전 터미널에서 <b>에탄올을 10% 섞어요</b>. 에탄올은 물을 잘 빨아들여서 파이프라인으로 같이 보낼 수 없거든요. 그래서 정유공장에서 파이프라인·바지선으로 오가는 표준 상품은 '섞기 전 휘발유'예요.</p><p>HO는 원래 뉴욕항 <b>난방유</b> 선물이었는데, 2013년부터 기준을 <b>초저유황 경유(ULSD)</b>로 바꿨어요. 트럭·기차·선박이 쓰는 경유와 난방유는 거의 같은 기름이라 이름만 그대로 남았어요. 둘 다 <b>뉴욕항(New York Harbor)</b>에서 실물 인도해요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>RB 2026년 12월물</small><b>$3.0730</b><span>/갤런 · 미결제 10.7만</span></div><div><small>HO 2026년 12월물</small><b>$4.6324</b><span>/갤런 · 미결제 6.8만</span></div><div><small>3:2:1 크랙 스프레드</small><b>$52.5</b><span>/배럴 · 정유 마진 (아래 설명)</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. 크랙 스프레드는 CL 12월물 $98.43과 같은 시각 RB·HO 가격으로 계산했어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">원유가 기름이 되기까지</a><a href="#barrel">1배럴에서 나오는 것</a><a href="#crack">크랙 스프레드</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 정유공장에서 주유소까지</span>
+  <h2>RB·HO 선물이 넘기는 기름</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="원유가 정유공장에서 휘발유와 경유가 되고, RB와 HO 선물은 뉴욕항에서 4만2천 갤런을 인도하며, 그 기름은 터미널에서 에탄올을 섞어 주유소로 간다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">원유</text><text x="97.2" y="78" text-anchor="middle" class="sm">CL · 배럴 단위</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">정유공장</text><text x="285.8" y="78" text-anchor="middle" class="sm">증류·분해</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">뉴욕항 인도</text><text x="474.2" y="78" text-anchor="middle" class="sm">RBOB · ULSD</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">터미널·주유소</text><text x="662.8" y="78" text-anchor="middle" class="sm">에탄올 10% 혼합</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '뉴욕항 바지선·탱크의 RBOB 또는 ULSD 42,000갤런'</text><text x="40" y="190">42,000갤런 = 1,000배럴 (1배럴 = 42갤런). 원유 선물 1계약과 같은 부피예요</text><text x="40" y="214">가격은 갤런당 달러: RB 3.0730 → 1계약 약 12.9만 달러</text><text x="40" y="238">인도월 직전 달 마지막 영업일에 만기 → 개인은 그 전에 롤오버해요</text></svg></div>
+<div class="tbl"><table><thead><tr><th></th><th>RB (RBOB 휘발유)</th><th>HO (초저유황 경유)</th></tr></thead><tbody><tr><td>실제로 쓰는 곳</td><td>승용차</td><td>트럭·기차·선박·농기계·난방</td></tr><tr><td>수요가 큰 계절</td><td class="good">여름 (드라이빙 시즌)</td><td class="good">겨울 (난방) + 수확기</td></tr><tr><td>특이점</td><td>봄에 '여름용' 규격으로 바뀜</td><td>세계 경기·물류에 민감</td></tr><tr><td>IBKR 유동성</td><td>보통</td><td>보통</td></tr></tbody></table></div>
+</section>
+<section id="barrel">
+  <span class="eyebrow">2. 원유 1배럴을 정제하면</span>
+  <h2>42갤런에서 무엇이 나올까</h2>
+<div class="fig narrow"><svg viewBox="0 0 720 182" role="img" aria-label="원유 1배럴 정제 결과: 휘발유 19.4갤런, 경유·난방유 12.3갤런, 항공유 4.2갤런, 기타 9.1갤런"><text x="20" y="22" class="sm">미국 정유공장에서 원유 1배럴(42갤런)로 만드는 제품 (대략, 갤런)</text><line x1="190.0" y1="36" x2="190.0" y2="152" stroke="var(--line)"/><text x="190.0" y="174" text-anchor="middle" class="sm">0갤런</text><line x1="288.0" y1="36" x2="288.0" y2="152" stroke="var(--line)"/><text x="288.0" y="174" text-anchor="middle" class="sm">5갤런</text><line x1="386.0" y1="36" x2="386.0" y2="152" stroke="var(--line)"/><text x="386.0" y="174" text-anchor="middle" class="sm">10갤런</text><line x1="484.0" y1="36" x2="484.0" y2="152" stroke="var(--line)"/><text x="484.0" y="174" text-anchor="middle" class="sm">15갤런</text><line x1="582.0" y1="36" x2="582.0" y2="152" stroke="var(--line)"/><text x="582.0" y="174" text-anchor="middle" class="sm">20갤런</text><line x1="680.0" y1="36" x2="680.0" y2="152" stroke="var(--line)"/><text x="680.0" y="174" text-anchor="middle" class="sm">25갤런</text><text x="20" y="57" class="b" style="fill:var(--c1)">휘발유 · RB</text><rect class="grow" x="190" y="42" width="380.2" height="20" rx="4" fill="var(--c1)"/><text x="578.2" y="57" class="b" style="fill:var(--c1)">19.4</text><text x="622.2" y="57" class="sm">약 45%</text><text x="20" y="85" class="b">경유·난방유 · HO</text><rect class="grow" x="190" y="70" width="241.1" height="20" rx="4" fill="var(--c3)"/><text x="439.1" y="85" class="b">12.3</text><text x="483.1" y="85" class="sm">약 28%</text><text x="20" y="113" class="b">항공유</text><rect class="grow" x="190" y="98" width="82.3" height="20" rx="4" fill="var(--c4)"/><text x="280.3" y="113" class="b">4.2</text><text x="20" y="141" class="b">기타 (아스팔트·LPG 등)</text><rect class="grow" x="190" y="126" width="178.4" height="20" rx="4" fill="var(--line)"/><text x="376.4" y="141" class="b">9.1</text></svg></div>
+<p class="cap">합치면 42갤런보다 조금 많아요. 정제하면서 부피가 늘어나는 '처리 이득'이 있어서예요. 미국 EIA 통계 기반의 대략적인 값이에요.</p>
+</section>
+<section id="crack">
+  <span class="eyebrow">3. 정유사의 마진</span>
+  <h2>크랙 스프레드 읽는 법</h2>
+<p>정유사는 원유를 사서 휘발유·경유를 팔아요. 그 차이가 '원유를 깨서(crack) 버는 돈', <b>크랙 스프레드</b>예요. 대표적인 3:2:1 크랙은 원유 3배럴로 휘발유 2배럴, 경유 1배럴을 만든다고 보고 계산해요. RB·HO는 갤런 가격이라 42를 곱해서 배럴로 바꿔요.</p>
+<div class="tbl"><table><thead><tr><th></th><th>가격</th><th>배럴 환산</th><th>원유 대비</th></tr></thead><tbody><tr><td>CL 원유</td><td class="num">$98.43/배럴</td><td class="num">$98.43</td><td class="num">-</td></tr><tr><td>RB 휘발유</td><td class="num">$3.0730/갤런</td><td class="num">$129.07</td><td class="num">+$30.64</td></tr><tr><td>HO 경유</td><td class="num">$4.6324/갤런</td><td class="num">$194.56</td><td class="bad">+$96.13</td></tr><tr><td class="good">3:2:1 크랙</td><td class="num"></td><td class="num"></td><td class="good">$52.47/배럴</td></tr></tbody></table></div>
+<p class="note">보통 3:2:1 크랙은 배럴당 $20~35 근처예요. 지금 $52대는 역사적으로 아주 높은 수준이고, 특히 <b>경유 마진($96)</b>이 극단적이에요. 중동 정유·수출 차질 우려로 경유가 원유보다 훨씬 더 귀해졌다는 신호로 읽혀요. 월물이 서로 조금 다른 스냅샷 값이라 대략적인 숫자로 봐 주세요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>정제유 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 302" role="img" aria-label="정제유 달력: 4~9월물은 여름용 휘발유, 5~9월 드라이빙 시즌, 11~3월 난방 시즌, 봄·가을 정유 정비, 6~11월 허리케인, 매주 EIA 재고"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="282"/><line x1="294" y1="38" x2="294" y2="282"/><line x1="438" y1="38" x2="438" y2="282"/><line x1="582" y1="38" x2="582" y2="282"/><line x1="726" y1="38" x2="726" y2="282"/></g><line x1="616" y1="38" x2="616" y2="282" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="298" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">휘발유 여름 규격</text><rect x="296" y="50" width="284" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="438" y="67" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">4~9월물 = 여름용 (증발 적은 휘발유)</text><text x="16" y="104" class="b">드라이빙 시즌</text><rect x="344" y="88" width="236" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="462" y="105" text-anchor="middle" style="font-size:12px;fill:var(--c1)" class="b">메모리얼 데이~노동절</text><text x="16" y="142" class="b">난방 시즌</text><rect x="632" y="126" width="92" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><rect x="152" y="126" width="140" height="24" rx="12" fill="var(--c3-soft)" stroke="var(--c3)"/><text x="222" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c3)" class="b">북동부 난방유 수요</text><text x="16" y="180" class="b">정유 정비기</text><rect x="248" y="164" width="92" height="24" rx="12" fill="var(--c4-soft)" stroke="var(--c4)"/><text x="294" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c4)" class="b">봄</text><rect x="536" y="164" width="92" height="24" rx="12" fill="var(--c4-soft)" stroke="var(--c4)"/><text x="582" y="181" text-anchor="middle" style="font-size:12px;fill:var(--c4)" class="b">가을</text><text x="16" y="218" class="b">허리케인</text><rect x="392" y="202" width="284" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><text x="534" y="219" text-anchor="middle" style="font-size:12px;fill:var(--alert)" class="b">멕시코만 정유공장</text><text x="16" y="256" class="b">EIA 주간 재고</text><circle cx="174" cy="252" r="4" fill="var(--c2)"/><circle cx="222" cy="252" r="4" fill="var(--c2)"/><circle cx="270" cy="252" r="4" fill="var(--c2)"/><circle cx="318" cy="252" r="4" fill="var(--c2)"/><circle cx="366" cy="252" r="4" fill="var(--c2)"/><circle cx="414" cy="252" r="4" fill="var(--c2)"/><circle cx="462" cy="252" r="4" fill="var(--c2)"/><circle cx="510" cy="252" r="4" fill="var(--c2)"/><circle cx="558" cy="252" r="4" fill="var(--c2)"/><circle cx="606" cy="252" r="4" fill="var(--c2)"/><circle cx="654" cy="252" r="4" fill="var(--c2)"/><circle cx="702" cy="252" r="4" fill="var(--c2)"/></svg></div>
+<p class="cap">RB는 <b>3월물과 4월물 사이에 규격이 바뀌어서</b> 4월물이 눈에 띄게 비싸요. 지금 12월물은 겨울용 규격이에요. 11월물(RBX6·HOX6)은 10월 30일, 12월물은 11월 30일이 마지막 거래일이에요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>원유 + 정유 공장 + 계절</h2>
+<div class="drivers"><div><div class="k"><h3>원유 가격</h3><span class="dir up">원유 ▲면 ▲</span></div><p>원료값이라 기본적으로 같이 움직여요. CL 페이지 참고.</p></div><div><div class="k"><h3>정유공장 가동</h3><span class="dir up">고장·정비면 ▲</span></div><p>대형 정유공장 화재나 정전 하나로 지역 휘발유값이 튀어요. 미국 정유 가동률은 매주 EIA에 나와요.</p></div><div><div class="k"><h3>휘발유·경유 재고</h3><span class="dir down">재고 ▲면 ▼</span></div><p>매주 수요일 EIA 재고. 원유보다 제품 재고에 RB·HO가 더 민감해요.</p></div><div><div class="k"><h3>허리케인</h3><span class="dir up">정유공장 피해면 ▲</span></div><p>미국 정유 능력의 절반 가까이가 멕시코만 연안에 있어요.</p></div><div><div class="k"><h3>경기·물류</h3><span class="dir up">경기 ▲면 HO ▲</span></div><p>경유는 트럭·공장·농업 연료라 경기 지표와 같이 움직여요.</p></div><div><div class="k"><h3>수출 수요</h3><span class="dir up">해외 부족하면 ▲</span></div><p>미국은 정제유 순수출국. 유럽·중남미 경유 부족은 HO를 끌어올려요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 정제유 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="정제유 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">정유사</text>
+<text x="110" y="90" text-anchor="middle">"마진 줄어들면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ RB·HO 매도 + CL 매수</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">항공·운송사</text>
+<text x="550" y="90" text-anchor="middle">"연료비 오르면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ HO 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">RB·HO 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">42,000갤런</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">항공유 선물은 거래가 적어서 항공사들도 HO로 헤지하는 경우가 많아요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>정유사</h3><p>크랙 스프레드를 미리 잠그려고 원유 사고 제품 파는 거래를 한 번에 해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>항공·트럭·철도</h3><p>연료비 상승을 막으려고 HO를 사요.</p></div><div><span class="tag t-4">유통업체</span><h3>주유소 체인·도매상</h3><p>재고로 들고 있는 휘발유 가치를 지키려고 RB를 팔아요.</p></div><div><span class="tag t-spec">투기</span><h3>에너지 펀드</h3><p>크랙 스프레드, 계절 스프레드(3월-4월물) 거래가 많아요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>RBOB Gasoline (RB)</h3><dl><dt>거래소</dt><dd>NYMEX <span>(CME 그룹)</span></dd><dt>IBKR 심볼</dt><dd>RB <span>예: RBZ6</span></dd><dt>계약 크기</dt><dd>42,000갤런 <span>= 1,000배럴</span></dd><dt>가격</dt><dd>$ / 갤런 <span>소수 4자리</span></dd><dt>최소 틱</dt><dd>$0.0001 = $4.20</dd><dt>1센트 움직이면</dt><dd>$420</dd><dt>월물</dt><dd>매달</dd><dt>결제</dt><dd>실물 인도 <span>뉴욕항</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>NY Harbor ULSD (HO)</h3><dl><dt>거래소</dt><dd>NYMEX</dd><dt>IBKR 심볼</dt><dd>HO <span>예: HOZ6</span></dd><dt>계약 크기</dt><dd>42,000갤런</dd><dt>가격</dt><dd>$ / 갤런</dd><dt>최소 틱</dt><dd>$0.0001 = $4.20</dd><dt>1센트 움직이면</dt><dd>$420</dd><dt>월물</dt><dd>매달</dd><dt>결제</dt><dd>실물 인도 <span>뉴욕항</span></dd></dl></div></div>
+<p class="note">마이크로 RBOB(MRB) 같은 작은 계약도 IBKR에 보이지만 거래가 거의 없어요. 크기가 부담되면 원유 MCL로 방향만 거래하는 방법도 있어요. RB는 스냅샷 시점 540계약, HO는 1,023계약이 거래돼 CL(1.4만)보다 훨씬 한산해요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>10센트 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="3.073" data-x="3.173">RB +10센트</button><button type="button" data-c="1" data-e="4.6324" data-x="4.4324">HO −20센트</button><button type="button" data-c="0" data-e="3.073" data-x="3.083">RB 1센트</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">RB 휘발유 (42,000갤런)</option><option value="1">HO 경유 (42,000갤런)</option></select></label>
+      <label for="in-entry">진입가 ($/갤런)<input id="in-entry" type="number" step="any" value="3.073" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($/갤런)<input id="in-exit" type="number" step="any" value="3.173" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 1센트 = 100틱 = $420. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "RB 휘발유 (42,000갤런)", "tick": 0.0001, "tv": 4.2, "mult": 42000, "dec": 4, "entry": 3.073, "exit": 3.173}, {"name": "HO 경유 (42,000갤런)", "tick": 0.0001, "tv": 4.2, "mult": 42000, "dec": 4, "entry": 4.6324, "exit": 4.7324}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>원유와 같은 시간표</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 정제유 선물 거래 시간. 15:00~다음날 14:00, 집중 06:00~11:30. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="531.3" y="57" width="131.1" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 06:00~11:30 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (하루 1시간 정비)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">뉴욕 주간 = 거래량 집중</text></svg></div>
+<p class="cap">CME 에너지와 같은 시간이에요. 정산은 캘리 오전 11:28~11:30. 캘리 저녁~밤(아시아 시간)에는 RB·HO 호가가 매우 얇아서 몇 틱씩 벌어지기 쉬워요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>만기가 빨라요</h3><p>인도월 직전 달 마지막 영업일에 만기예요. 11월물은 10월 30일. IBKR은 그 전에 청산을 요구할 수 있으니 12월물·1월물로 미리 넘어가세요.</p></div><div><h3>숫자가 작아도 크기는 커요</h3><p>가격이 3.0730처럼 작지만 1계약은 원유 1,000배럴어치예요. 10센트 = $4,200.</p></div><div><h3>규격이 바뀌는 월물</h3><p>RB 3월물→4월물, 9월물→10월물 사이에 여름·겨울 규격이 바뀌면서 가격이 계단처럼 차이 나요. 롤오버 때 손익처럼 보일 수 있어요.</p></div><div><h3>유동성</h3><p>CL보다 훨씬 한산해요. 캘리 저녁~밤에는 특히. 지정가 주문을 쓰세요.</p></div><div><h3>지금 마진이 극단적</h3><p>크랙 스프레드가 역사적 고점권이라 정상화되면 RB·HO가 원유보다 더 크게 빠질 수도 있어요.</p></div><div><h3>실물 인도</h3><p>뉴욕항 인도 상품이라 만기까지 들고 갈 수 없어요.</p></div></div>
+</section>
+<section class="fun"><h3>⛽ 보너스: 미국 휘발유 1리터는 얼마?</h3><p>1갤런은 <b class="mono">3.785리터</b>예요. RB $3.073을 3.785로 나누면 리터당 약 <b class="mono">$0.81</b>, 1,400원 환율로 약 <b>1,140원</b>이에요. 이건 세금 붙기 전 도매 원료값이에요. 미국 주유소 가격은 여기에 연방·주 유류세(갤런당 평균 약 50센트)와 유통 마진이 붙어서 정해져요. 한국은 유류세 비중이 훨씬 커서 같은 국제 가격이라도 주유소 가격이 더 높아요.</p></section>
+</main>
+
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>주가지수 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f2f4f7; --surface:#ffffff; --fg:#1c2230; --muted:#5d6470; --line:#d8dde5; --c1:#1f5fae; --c1-soft:#dde8f6; --c2:#2e7d4f; --c2-soft:#dcefe2; --c3:#6a4bb0; --c3-soft:#e8e1f5; --c4:#b0661f; --c4-soft:#f5e6d6; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#11141a; --surface:#1a1e26; --fg:#e8ebf1; --muted:#a3aab8; --line:#323846; --c1:#7fb0f0; --c1-soft:#17263b; --c2:#7fcf9b; --c2-soft:#173022; --c3:#b9a0f0; --c3-soft:#2a2140; --c4:#e7a96a; --c4-soft:#3a2716; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#11141a; --surface:#1a1e26; --fg:#e8ebf1; --muted:#a3aab8; --line:#323846; --c1:#7fb0f0; --c1-soft:#17263b; --c2:#7fcf9b; --c2-soft:#173022; --c3:#b9a0f0; --c3-soft:#2a2140; --c4:#e7a96a; --c4-soft:#3a2716; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">주가지수 선물 · CME E-MINI · ES · NQ · YM · RTY</span>
+  <h1>주가지수 선물은<br><span class="hl">무엇을 배달</span>할까?</h1>
+  <p class="lead">옥수수 선물은 옥수수를, 금 선물은 금괴를 넘겨요. 그런데 S&amp;P 500 선물을 만기까지 들고 있으면 주식 500종목이 계좌로 들어올까요? 정답은 <b>아무것도 오지 않는다</b>예요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 주가지수 선물은 <b>지수 숫자 × 정해진 금액</b>을 사고파는 약속이고, 만기에는 <b>현금으로만 정산</b>해요. ES라면 지수 1포인트가 $50이에요.</p><p>500개 회사 주식을 지수 비중대로 정확히 쪼개서 넘기는 건 불가능에 가깝죠. 그래서 만기일(3·6·9·12월 셋째 금요일) 아침 시가로 계산한 <b>특별 정산가(SOQ)</b>와 내 진입가의 차이만 돈으로 주고받고 끝나요. 배달할 물건이 없으니 보관비도, 인도 통지도 없어요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>ES 2026년 12월물</small><b>7,755.75</b><span>S&amp;P 500 · 미결제 192만</span></div><div><small>NQ 2026년 12월물</small><b>29,656.75</b><span>나스닥 100 · 미결제 27.3만</span></div><div><small>YM 2026년 12월물</small><b>52,926</b><span>다우 30 · 미결제 9.0만</span></div><div><small>RTY 2026년 12월물</small><b>2,780.5</b><span>러셀 2000 · 미결제 46.4만</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. ES는 이 시간에도 이미 7.7만 계약이 거래됐어요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">현금정산 구조</a><a href="#compare">지수 4종 비교</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 배달 대신 현금</span>
+  <h2>주식 500개 대신 숫자 하나를 거래</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="상장기업 500곳이 S&amp;P 500 지수가 되고, ES 선물은 지수에 50달러를 곱한 값을 거래하며, 만기에는 현금정산한다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">상장 기업 500곳</text><text x="97.2" y="78" text-anchor="middle" class="sm">애플·엔비디아·MS…</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">S&amp;P 500 지수</text><text x="285.8" y="78" text-anchor="middle" class="sm">시가총액 가중 평균</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">ES 선물</text><text x="474.2" y="78" text-anchor="middle" class="sm">지수 × $50</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">만기 현금정산</text><text x="662.8" y="78" text-anchor="middle" class="sm">셋째 금요일 SOQ</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '지수 숫자' 그 자체</text><text x="40" y="190">지수 7,755.75 × $50 = 1계약 약 38.8만 달러어치 미국 대형주를 들고 있는 효과</text><text x="40" y="214">만기에는 주식이 오가지 않고 (정산가 − 진입가) × $50 × 계약수만 현금으로 주고받음</text><text x="40" y="238">그래서 보관비·인도 통지·창고가 없고, 대신 3개월마다 다음 월물로 갈아타요(롤오버)</text></svg></div>
+<div class="tbl"><table><thead><tr><th></th><th>곡물·원자재 선물</th><th>주가지수 선물</th></tr></thead><tbody><tr><td>만기에 오가는 것</td><td>실물(창고증권)</td><td class="good">현금 차액만</td></tr><tr><td>보관비·운송비</td><td>있음 (가격에 반영)</td><td class="good">없음</td></tr><tr><td>선물 가격 = 현물 + …</td><td>보관비 + 이자</td><td>이자 − 배당 (그래서 선물이 지수보다 살짝 높음)</td></tr><tr><td>만기 전 청산 압박</td><td class="bad">첫 인도 통지일 전 필수</td><td>만기까지 보유 가능 (그래도 보통 롤오버)</td></tr></tbody></table></div>
+<p class="note">선물이 현물 지수보다 조금 비싼 이유: 선물을 사면 주식 살 돈을 은행에 두고 이자를 받을 수 있는 대신 배당은 못 받아요. 금리(약 4%대)가 배당수익률(약 1%대)보다 높아서 12월물은 현물보다 대략 수십 포인트 위에서 거래돼요. 이 차이를 <b>베이시스</b>라고 하고, 만기에 0으로 수렴해요.</p>
+</section>
+<section id="compare">
+  <span class="eyebrow">2. 같은 미국 주식, 다른 성격</span>
+  <h2>지수 4종은 무엇이 다를까</h2>
+<div class="tbl"><table><thead><tr><th></th><th>ES · S&amp;P 500</th><th>NQ · 나스닥 100</th><th>YM · 다우 30</th><th>RTY · 러셀 2000</th></tr></thead><tbody><tr><td>종목 수</td><td>약 500</td><td>100</td><td>30</td><td>약 2,000</td></tr><tr><td>계산 방식</td><td>시가총액 가중</td><td>시가총액 가중(수정)</td><td class="bad">주가 가중</td><td>시가총액 가중</td></tr><tr><td>성격</td><td>미국 대형주 전체</td><td>기술·성장주</td><td>전통 우량주</td><td>중소형주</td></tr><tr><td>금리에 민감</td><td>보통</td><td>높음 (성장주)</td><td>보통</td><td class="bad">매우 높음 (빚 많은 기업)</td></tr><tr><td>대표 이미지</td><td>미국 경제 그 자체</td><td>AI·빅테크</td><td>보잉·골드만·홈디포</td><td>미국 내수 경기</td></tr></tbody></table></div>
+<div class="fig"><svg viewBox="0 0 720 120" role="img" aria-label="S&amp;P 500 업종 비중 막대: IT 약 33%, 금융 13%, 통신 10%, 경기소비재 10%, 헬스케어 9%, 산업재 8%, 필수소비재 5%, 기타 12%"><text x="20" y="24" class="sm">S&amp;P 500 업종 비중 (대략, 2026년 기준 추정)</text><rect class="grow" x="20.0" y="40" width="224.4" height="40" fill="var(--c1)"/><text x="132.2" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">IT 33%</text><rect class="grow" x="244.4" y="40" width="88.4" height="40" fill="var(--c3)"/><text x="288.6" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">금융 13%</text><rect class="grow" x="332.8" y="40" width="68.0" height="40" fill="var(--c2)"/><text x="366.8" y="65" text-anchor="middle" class="b" style="fill:var(--surface)">통신 10%</text><rect class="grow" x="400.8" y="40" width="68.0" height="40" fill="var(--c4)"/><rect class="grow" x="468.8" y="40" width="61.2" height="40" fill="var(--c1-soft)"/><rect class="grow" x="530.0" y="40" width="54.4" height="40" fill="var(--c3-soft)"/><rect class="grow" x="584.4" y="40" width="34.0" height="40" fill="var(--c2-soft)"/><rect class="grow" x="618.4" y="40" width="81.6" height="40" fill="var(--line)"/><text x="659.2" y="65" text-anchor="middle" class="b" style="fill:var(--fg)">기타 12%</text><rect x="20" y="96" width="12" height="12" rx="2" fill="var(--c4)"/><text x="38" y="107" class="sm">경기소비재 10%</text><rect x="132" y="96" width="12" height="12" rx="2" fill="var(--c1-soft)"/><text x="150" y="107" class="sm">헬스케어 9%</text><rect x="228" y="96" width="12" height="12" rx="2" fill="var(--c3-soft)"/><text x="246" y="107" class="sm">산업재 8%</text><rect x="316" y="96" width="12" height="12" rx="2" fill="var(--c2-soft)"/><text x="334" y="107" class="sm">필수소비재 5%</text></svg></div>
+<p class="cap">IT·통신 비중이 40%를 넘어서 이제 ES도 상당 부분 '빅테크 지수'예요. 그래서 ES와 NQ는 대체로 같이 움직이고, NQ가 위아래로 더 크게 움직여요. 비중은 시장 상황에 따라 바뀌는 대략적인 값이에요.</p>
+<p class="note"><b>다우는 왜 주가 가중일까?</b> 1896년에 만들 때 계산기가 없어서 주가를 그냥 더해서 나눴고, 그 전통을 지금도 지켜요. 그래서 시가총액이 작아도 주가가 비싼 종목(예: 골드만삭스, 유나이티드헬스)이 지수를 크게 흔들어요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">3. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>지수 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="주가지수 달력: 3,6,9,12월 셋째 금요일 만기, 연 8회 FOMC, 분기마다 실적 시즌, 매달 CPI와 고용지표, 2,5,8,11월 엔비디아 실적"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="616" y1="38" x2="616" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">분기 만기</text><circle cx="277" cy="62" r="7" fill="var(--c1)"/><text x="289" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">3월</text><circle cx="419" cy="62" r="7" fill="var(--c1)"/><text x="431" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">6월</text><circle cx="562" cy="62" r="7" fill="var(--c1)"/><text x="574" y="67" text-anchor="start" style="font-size:12px;fill:var(--c1)" class="b">9월</text><circle cx="706" cy="62" r="7" fill="var(--c1)"/><text x="694" y="67" text-anchor="end" style="font-size:12px;fill:var(--c1)" class="b">12/18 다음 만기</text><text x="16" y="104" class="b">FOMC 금리 결정</text><circle cx="174" cy="100" r="4" fill="var(--c3)"/><circle cx="270" cy="100" r="4" fill="var(--c3)"/><circle cx="318" cy="100" r="4" fill="var(--c3)"/><circle cx="414" cy="100" r="4" fill="var(--c3)"/><circle cx="462" cy="100" r="4" fill="var(--c3)"/><circle cx="558" cy="100" r="4" fill="var(--c3)"/><circle cx="606" cy="100" r="4" fill="var(--c3)"/><circle cx="702" cy="100" r="4" fill="var(--c3)"/><text x="16" y="142" class="b">실적 시즌</text><rect x="152" y="126" width="92" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="198" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">4분기</text><rect x="296" y="126" width="92" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="342" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">1분기</text><rect x="440" y="126" width="92" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="486" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">2분기</text><rect x="584" y="126" width="92" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="630" y="143" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">3분기 (지금)</text><text x="16" y="180" class="b">CPI·고용지표</text><circle cx="174" cy="176" r="4" fill="var(--c4)"/><circle cx="222" cy="176" r="4" fill="var(--c4)"/><circle cx="270" cy="176" r="4" fill="var(--c4)"/><circle cx="318" cy="176" r="4" fill="var(--c4)"/><circle cx="366" cy="176" r="4" fill="var(--c4)"/><circle cx="414" cy="176" r="4" fill="var(--c4)"/><circle cx="462" cy="176" r="4" fill="var(--c4)"/><circle cx="510" cy="176" r="4" fill="var(--c4)"/><circle cx="558" cy="176" r="4" fill="var(--c4)"/><circle cx="606" cy="176" r="4" fill="var(--c4)"/><circle cx="654" cy="176" r="4" fill="var(--c4)"/><circle cx="702" cy="176" r="4" fill="var(--c4)"/><text x="16" y="218" class="b">엔비디아 실적</text><circle cx="222" cy="214" r="4" fill="var(--c1)"/><circle cx="366" cy="214" r="4" fill="var(--c1)"/><circle cx="510" cy="214" r="4" fill="var(--c1)"/><circle cx="654" cy="214" r="4" fill="var(--c1)"/></svg></div>
+<p class="cap">지금(10월 말)은 3분기 실적 시즌 한가운데예요. 빅테크 실적이 몰리는 주간에는 NQ가 하룻밤에 2~3%씩 움직이기도 해요. 12월물 만기는 <b>12월 18일(금)</b>이고, 보통 그 전 주 목요일쯤부터 3월물로 롤오버가 시작돼요. 미국 고용지표(매달 첫 금요일)와 CPI는 캘리포니아 시간 <b>오전 5:30</b>에 나와요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">4. 가격을 흔드는 것들</span>
+  <h2>지수는 금리 + 실적 + 심리</h2>
+<div class="drivers"><div><div class="k"><h3>연준 금리</h3><span class="dir up">인하 기대면 ▲</span></div><p>금리가 내려가면 미래 이익의 현재 가치가 커지고 돈 빌리기도 쉬워져요. FOMC 날 오전 11시(캘리 기준)에 크게 움직여요.</p></div><div><div class="k"><h3>기업 실적</h3><span class="dir up">좋으면 ▲</span></div><p>결국 주가는 이익을 따라가요. 특히 시가총액 상위 7~10개 빅테크 실적이 지수 방향을 좌우해요.</p></div><div><div class="k"><h3>국채 금리 (10년물)</h3><span class="dir down">급등하면 ▼</span></div><p>10년물 금리가 빠르게 오르면 성장주가 먼저 맞아요. ZN 선물 페이지와 같이 보면 좋아요.</p></div><div><div class="k"><h3>AI 투자 사이클</h3><span class="dir both">기대 ▲ / 실망 ▼</span></div><p>엔비디아·MS·메타 같은 회사의 설비투자 계획이 NQ를 크게 흔들어요.</p></div><div><div class="k"><h3>유가·지정학</h3><span class="dir down">급등하면 ▼</span></div><p>지금처럼 원유가 $98대면 물가 우려가 커져요. 중동 뉴스에 밤사이 갭이 생길 수 있어요.</p></div><div><div class="k"><h3>변동성 (VIX)</h3><span class="dir down">치솟으면 ▼</span></div><p>공포지수가 오르면 위험 관리 때문에 펀드들이 기계적으로 선물을 팔아요. VIX 페이지 참고.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">5. 이 시장은 왜 존재하나</span>
+  <h2>누가 지수 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="주가지수 선물의 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">연기금·자산운용사</text>
+<text x="110" y="90" text-anchor="middle">"폭락하면 어쩌지?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 주식은 두고 선물만 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">새 자금 받은 펀드</text>
+<text x="550" y="90" text-anchor="middle">"지금 바로 투자해야"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 주식 사기 전 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">ES 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">대형주 39만$</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">그 사이 CTA·헤지펀드·딜러·개인이 하루 수백만 계약을 거래해요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>연기금·보험사</h3><p>주식 수천억 원어치를 하루에 팔 수 없으니 ES를 팔아서 하락 위험만 빠르게 덜어내요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>자산운용사</h3><p>투자자 돈이 들어왔는데 종목을 고르기 전이라면 선물로 먼저 시장에 노출돼요(이퀴타이제이션).</p></div><div><span class="tag t-4">차익거래</span><h3>딜러·은행</h3><p>선물이 '공정가치'보다 비싸면 선물 팔고 주식 사요. 그래서 선물과 지수가 붙어 다녀요.</p></div><div><span class="tag t-spec">투기</span><h3>CTA·개인</h3><p>추세 추종 펀드, 단타 트레이더. 마이크로(MES·MNQ)는 개인 비중이 특히 높아요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">6. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="specs"><div class="spec"><h3><span class="dot"></span>E-mini S&amp;P 500</h3><dl><dt>거래소</dt><dd>CME <span>(시카고)</span></dd><dt>IBKR 심볼</dt><dd>ES <span>월물 예: ESZ6 = 2026년 12월</span></dd><dt>계약 크기</dt><dd>지수 × $50</dd><dt>최소 틱</dt><dd>0.25 = $12.50</dd><dt>1포인트</dt><dd>$50</dd><dt>월물</dt><dd>3·6·9·12월 <span>(H M U Z)</span></dd><dt>결제</dt><dd>현금정산 <span>셋째 금요일 SOQ</span></dd></dl></div><div class="spec alt"><h3><span class="dot"></span>Micro E-mini S&amp;P 500</h3><dl><dt>IBKR 심볼</dt><dd>MES</dd><dt>계약 크기</dt><dd>지수 × $5 <span>ES의 1/10</span></dd><dt>최소 틱</dt><dd>0.25 = $1.25</dd><dt>1포인트</dt><dd>$5</dd><dt>명목가치</dt><dd>약 $38,800</dd><dt>결제</dt><dd>현금정산</dd></dl></div></div>
+<div class="tbl"><table><thead><tr><th>심볼</th><th>지수</th><th>1포인트</th><th>최소 틱</th><th>명목가치 (현재)</th><th>유동성</th></tr></thead><tbody><tr><td>ES</td><td>S&amp;P 500</td><td class="num">$50</td><td class="num">0.25 = $12.50</td><td class="num">$387,788</td><td class="good">세계 최대</td></tr><tr><td>MES</td><td>S&amp;P 500</td><td class="num">$5</td><td class="num">0.25 = $1.25</td><td class="num">$38,779</td><td class="good">매우 좋음</td></tr><tr><td>NQ</td><td>나스닥 100</td><td class="num">$20</td><td class="num">0.25 = $5.00</td><td class="num">$593,135</td><td class="good">매우 좋음</td></tr><tr><td>MNQ</td><td>나스닥 100</td><td class="num">$2</td><td class="num">0.25 = $0.50</td><td class="num">$59,314</td><td class="good">매우 좋음</td></tr><tr><td>YM</td><td>다우 30</td><td class="num">$5</td><td class="num">1 = $5.00</td><td class="num">$264,630</td><td>보통</td></tr><tr><td>MYM</td><td>다우 30</td><td class="num">$0.50</td><td class="num">1 = $0.50</td><td class="num">$26,463</td><td>보통</td></tr><tr><td>RTY</td><td>러셀 2000</td><td class="num">$50</td><td class="num">0.10 = $5.00</td><td class="num">$139,025</td><td>보통</td></tr><tr><td>M2K</td><td>러셀 2000</td><td class="num">$5</td><td class="num">0.10 = $0.50</td><td class="num">$13,903</td><td>보통</td></tr></tbody></table></div>
+<p class="note">마이크로는 크기만 1/10이고 가격·시간·만기가 똑같아요. 처음이라면 MES·MNQ로 감을 익히는 게 좋아요. YM은 0.25가 아니라 <b>1포인트 단위</b>로, RTY는 <b>0.1 단위</b>로 움직여요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">7. 직접 눌러보기</span>
+  <h2>1% 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="7755.75" data-x="7833.25">ES +1%</button><button type="button" data-c="1" data-e="7755.75" data-x="7678.25">MES −1%</button><button type="button" data-c="2" data-e="29656.75" data-x="30249.75">NQ +2% (실적 밤)</button><button type="button" data-c="7" data-e="2780.5" data-x="2808.3">M2K +1%</button><button type="button" data-c="0" data-e="7755.75" data-x="7765.75">ES 10포인트</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">ES (S&amp;P 500, $50)</option><option value="1">MES (마이크로, $5)</option><option value="2">NQ (나스닥 100, $20)</option><option value="3">MNQ (마이크로, $2)</option><option value="4">YM (다우, $5)</option><option value="5">MYM (마이크로, $0.5)</option><option value="6">RTY (러셀, $50)</option><option value="7">M2K (마이크로, $5)</option></select></label>
+      <label for="in-entry">진입가 (지수 포인트)<input id="in-entry" type="number" step="any" value="7755.75" inputmode="decimal"></label>
+      <label for="in-exit">청산가 (지수 포인트)<input id="in-exit" type="number" step="any" value="7833.25" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 실제 환율로 바꿔 넣으세요. 수수료와 증거금은 빠져 있어요. ES 1% 움직임이 약 $3,900, MES는 약 $390이에요.</p>
+<script>
+(function(){
+  var C = [{"name": "ES (S&P 500, $50)", "tick": 0.25, "tv": 12.5, "mult": 50, "dec": 2, "entry": 7755.75, "exit": 7833.25}, {"name": "MES (마이크로, $5)", "tick": 0.25, "tv": 1.25, "mult": 5, "dec": 2, "entry": 7755.75, "exit": 7833.25}, {"name": "NQ (나스닥 100, $20)", "tick": 0.25, "tv": 5, "mult": 20, "dec": 2, "entry": 29656.75, "exit": 29953.25}, {"name": "MNQ (마이크로, $2)", "tick": 0.25, "tv": 0.5, "mult": 2, "dec": 2, "entry": 29656.75, "exit": 29953.25}, {"name": "YM (다우, $5)", "tick": 1, "tv": 5, "mult": 5, "dec": 0, "entry": 52926, "exit": 53455}, {"name": "MYM (마이크로, $0.5)", "tick": 1, "tv": 0.5, "mult": 0.5, "dec": 0, "entry": 52926, "exit": 53455}, {"name": "RTY (러셀, $50)", "tick": 0.1, "tv": 5, "mult": 50, "dec": 1, "entry": 2780.5, "exit": 2808.3}, {"name": "M2K (마이크로, $5)", "tick": 0.1, "tv": 0.5, "mult": 5, "dec": 1, "entry": 2780.5, "exit": 2808.3}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">8. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>거의 24시간, 진짜 승부는 아침 6:30부터</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 주가지수 선물 거래 시간. 15:00~다음날 14:00, 정규장 06:30~13:00. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="173.8" y="54" width="548.2" height="22" rx="7" fill="var(--c1-soft)" stroke="var(--c1)"/><rect x="543.2" y="57" width="154.9" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">15:00~14:00  ·  집중 06:30~13:00 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="170" y="215" class="sm">CME 글로벡스 (하루 1시간 정비)</text><rect x="450" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="470" y="215" class="sm">미국 정규장 = 거래량 대부분</text></svg></div>
+<p class="cap">시카고 기준 일요일 17:00 ~ 금요일 16:00, 매일 16:00~17:00 한 시간 정비. 캘리포니아 시간으로는 <b>일요일 오후 3시에 열려서 금요일 오후 2시에 닫히고</b>, 평일엔 매일 14:00~15:00 한 시간 쉬어요. 정규장(뉴욕 9:30~16:00)은 캘리 <b>오전 6:30~오후 1시</b>예요. 시카고·뉴욕은 캘리포니아와 같은 날 서머타임을 바꿔서 이 시간은 일년 내내 같아요. 캘리 저녁~밤(아시아 시간)에도 ES·NQ는 거래되지만 호가는 아침보다 얇아요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">9. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>레버리지가 아주 커요</h3><p>ES 1계약은 약 39만 달러(5억 원대)어치 주식이에요. 증거금은 그보다 훨씬 적어서 지수가 3%만 빠져도 증거금 상당 부분이 사라질 수 있어요. 처음엔 MES로.</p></div><div><h3>분기 롤오버</h3><p>12월물은 12/18 만기예요. 만기 1주 전쯤부터 거래량이 3월물(H7)로 넘어가니, 그 전에 갈아탈 계획을 세우세요. 현금정산이라 실물 인도 걱정은 없어요.</p></div><div><h3>주말·밤사이 갭</h3><p>금요일 오후 2시 장이 닫힌 뒤 나온 뉴스는 일요일 오후 3시 개장 때 한 번에 반영돼요. 스톱 주문이 갭 아래에서 체결될 수 있어요.</p></div><div><h3>가격제한(서킷)</h3><p>미국 정규장 밖에서는 전일 정산가 대비 ±7% 제한이 있고, 정규장에는 주식시장과 같은 7%·13%·20% 서킷브레이커가 적용돼요.</p></div><div><h3>YM·RTY는 덜 붐벼요</h3><p>ES·NQ보다 호가가 얇아서 캘리 저녁~새벽에는 스프레드가 몇 틱 벌어지기도 해요. 지정가 주문을 쓰세요.</p></div><div><h3>시세 구독</h3><p>IBKR에서 CME 실시간 시세 구독이 있어야 해요. 없으면 15분 지연 시세가 보여요.</p></div></div>
+</section>
+<section class="fun"><h3>📈 보너스: 다우 1달러의 무게</h3><p>다우는 30개 주가를 더해서 '다우 제수'(약 0.16)로 나눠요. 그래서 어느 종목이든 주가가 <b>1달러</b> 오르면 다우 지수는 약 <b class="mono">6포인트</b> 올라요. YM 1계약으로는 약 <b class="mono">$31</b>이죠. 주가 600달러짜리 종목이 1% 오르면 6달러, 다우가 36포인트 움직여요. 반면 주가 30달러짜리 종목은 10% 올라도 18포인트밖에 못 움직여요. 다우가 '이상한 지수'라는 말을 듣는 이유예요.</p></section>
+</main>
+
+</html>

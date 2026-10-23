@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>코코아 선물 이야기</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f6f2ef; --surface:#ffffff; --fg:#241d19; --muted:#695f58; --line:#ddd3cc; --c1:#7a4a2a; --c1-soft:#f0e3d9; --c2:#3f7a4a; --c2-soft:#ddeddf; --c3:#a0402a; --c3-soft:#f6e0da; --c4:#a07a2a; --c4-soft:#f4ebd5; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#14110f; --surface:#1e1a17; --fg:#eee8e2; --muted:#ada395; --line:#3a322c; --c1:#d9a07a; --c1-soft:#36241a; --c2:#8ccc9a; --c2-soft:#1c3122; --c3:#f0907a; --c3-soft:#3c1d16; --c4:#e0c07a; --c4-soft:#372c16; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#14110f; --surface:#1e1a17; --fg:#eee8e2; --muted:#ada395; --line:#3a322c; --c1:#d9a07a; --c1-soft:#36241a; --c2:#8ccc9a; --c2-soft:#1c3122; --c3:#f0907a; --c3-soft:#3c1d16; --c4:#e0c07a; --c4-soft:#372c16; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <span class="eyebrow">소프트 선물 · ICE 코코아 · CC</span>
+  <h1>코코아 선물은 왜<br><span class="hl">발효해서 말린 콩</span>일까?</h1>
+  <p class="lead">IBKR의 코코아 선물(CC)은 초콜릿 원료인 <b>카카오 콩</b> 10톤을 거래해요. 그런데 나무에서 딴 카카오 열매 속 하얀 과육 상태가 아니라, <b>며칠 발효시킨 뒤 햇볕에 말린 콩</b>이에요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 갓 딴 카카오 콩은 수분이 많아 금방 썩고, 초콜릿 향도 없어요. 농가에서 바나나 잎을 덮어 5~7일 <b>발효</b>시켜야 초콜릿 맛의 원료가 생기고, 수분 7% 정도로 <b>말려야</b> 자루에 담아 몇 년도 보관할 수 있어요. 그래서 국제 거래되는 표준 형태가 '발효·건조 카카오 콩'이에요.</p><p>CC는 미국 항구(뉴욕·델라웨어강·햄프턴로즈·볼티모어 등) 거래소 지정 창고에 있는 콩을 실물 인도해요. 원산지마다 품질 등급이 달라서 기준보다 좋은 산지는 웃돈, 낮은 산지는 할인을 받아요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>CC 2026년 12월물</small><b>$5,839</b><span>/톤 · 미결제 6.1만</span></div><div><small>CC 1계약 명목가치</small><b>$58,390</b><span>10톤 × $5,839</span></div><div><small>2024년 12월 고점 대비</small><b>약 −50%</b><span>당시 $12,000 넘음</span></div></div>
+  <p class="cap">IBKR 시세, 2026-10-21 저녁 8시쯤(캘리포니아 시간) 기준. 아시아 시간대라 거래량은 하루치의 일부예요. 지금 화면과 조금 다를 수 있어요. 12월물은 스냅샷 시점 1.2만 계약 거래됐고, 호가가 비어 있는 고정 값이라 최근 체결가 기준이에요.</p>
+  <nav class="toc" aria-label="목차"><a href="#process">카카오 나무에서 창고까지</a><a href="#world">서아프리카의 작물</a><a href="#history">역사적 폭등</a><a href="#calendar">1년 달력</a><a href="#drivers">가격 요인</a><a href="#who">누가 거래하나</a><a href="#specs">IBKR 계약 정보</a><a href="#calc">손익 계산기</a><a href="#hours">거래 시간</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="process">
+  <span class="eyebrow">1. 카카오 열매에서 초콜릿까지</span>
+  <h2>CC 선물이 넘기는 카카오</h2>
+<div class="fig"><svg viewBox="0 0 760 258" role="img" aria-label="카카오 열매를 농가에서 발효 건조하고, CC 선물은 미국 항구 지정 창고의 카카오 콩 10톤을 넘기며, 콩은 분쇄돼 초콜릿이 된다"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><rect x="20.0" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="97.2" y="54" text-anchor="middle" class="b">카카오 열매</text><text x="97.2" y="78" text-anchor="middle" class="sm">코트디부아르·가나</text><line x1="178.5" y1="62" x2="204.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="208.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="285.8" y="54" text-anchor="middle" class="b">발효·건조</text><text x="285.8" y="78" text-anchor="middle" class="sm">농가에서 1~2주</text><line x1="367.0" y1="62" x2="393.0" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="397.0" y="20" width="154.5" height="84" rx="12" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/><text x="474.2" y="54" text-anchor="middle" class="b" style="fill:var(--c1)">미국 항구 창고</text><text x="474.2" y="78" text-anchor="middle" class="sm">자루 콩 10톤</text><line x1="555.5" y1="62" x2="581.5" y2="62" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><rect x="585.5" y="20" width="154.5" height="84" rx="12" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/><text x="662.8" y="54" text-anchor="middle" class="b">분쇄·초콜릿</text><text x="662.8" y="78" text-anchor="middle" class="sm">버터·파우더</text><line x1="474.2" y1="106" x2="474.2" y2="136" stroke="var(--c1)" stroke-width="2" stroke-dasharray="4 3"/><rect x="20" y="136" width="720" height="112" rx="12" fill="var(--c1-soft)"/><text x="40" y="164" class="b" style="fill:var(--c1)">선물이 거래하는 건 '미국 지정 창고의 발효·건조 카카오 콩 10톤'</text><text x="40" y="190">원산지별 등급이 있어서 산지에 따라 웃돈·할인이 붙어요</text><text x="40" y="214">분쇄공장(그라인더)이 콩을 볶고 갈아 코코아 버터·파우더·리커를 만들어요</text><text x="40" y="238">개인은 받을 수 없어서 첫 통지일 전에 정리해요</text></svg></div>
+</section>
+<section id="world">
+  <span class="eyebrow">2. 세계 코코아 시장</span>
+  <h2>세계 카카오의 60%가 두 나라에서</h2>
+<div class="fig"><svg viewBox="0 0 720 266" role="img" aria-label="나라별 카카오 생산 비중: 코트디부아르 40%, 가나 13%, 에콰도르 9%, 카메룬 6%, 나이지리아 6%, 인도네시아 4%, 기타 22%"><text x="20" y="22" class="sm">나라별 카카오 생산 비중 (대략, 최근 시즌)</text><line x1="190.0" y1="36" x2="190.0" y2="236" stroke="var(--line)"/><text x="190.0" y="258" text-anchor="middle" class="sm">0%</text><line x1="344.8" y1="36" x2="344.8" y2="236" stroke="var(--line)"/><text x="344.8" y="258" text-anchor="middle" class="sm">15%</text><line x1="499.6" y1="36" x2="499.6" y2="236" stroke="var(--line)"/><text x="499.6" y="258" text-anchor="middle" class="sm">30%</text><line x1="654.4" y1="36" x2="654.4" y2="236" stroke="var(--line)"/><text x="654.4" y="258" text-anchor="middle" class="sm">45%</text><text x="20" y="57" class="b" style="fill:var(--c1)">코트디부아르</text><rect class="grow" x="190" y="42" width="412.8" height="20" rx="4" fill="var(--c1)"/><text x="610.8" y="57" class="b" style="fill:var(--c1)">40%</text><text x="645.8" y="57" class="sm">세계 1위</text><text x="20" y="85" class="b" style="fill:var(--c1)">가나</text><rect class="grow" x="190" y="70" width="134.2" height="20" rx="4" fill="var(--c1)"/><text x="332.2" y="85" class="b" style="fill:var(--c1)">13%</text><text x="367.2" y="85" class="sm">최근 급감</text><text x="20" y="113" class="b">에콰도르</text><rect class="grow" x="190" y="98" width="92.9" height="20" rx="4" fill="var(--c2)"/><text x="290.9" y="113" class="b">9%</text><text x="316.9" y="113" class="sm">빠르게 증가</text><text x="20" y="141" class="b" style="fill:var(--c1)">카메룬</text><rect class="grow" x="190" y="126" width="61.9" height="20" rx="4" fill="var(--c1)"/><text x="259.9" y="141" class="b" style="fill:var(--c1)">6%</text><text x="20" y="169" class="b" style="fill:var(--c1)">나이지리아</text><rect class="grow" x="190" y="154" width="61.9" height="20" rx="4" fill="var(--c1)"/><text x="259.9" y="169" class="b" style="fill:var(--c1)">6%</text><text x="20" y="197" class="b">인도네시아</text><rect class="grow" x="190" y="182" width="41.3" height="20" rx="4" fill="var(--c3)"/><text x="239.3" y="197" class="b">4%</text><text x="20" y="225" class="b">기타</text><rect class="grow" x="190" y="210" width="227.1" height="20" rx="4" fill="var(--line)"/><text x="425.1" y="225" class="b">22%</text></svg></div>
+<div class="cards"><div><span class="tag t-1">서아프리카</span><h3>소농 수백만 명</h3><p>대부분 몇 헥타르짜리 작은 농가가 키워요. 나무가 늙고 병(카카오 싹눈 바이러스)이 퍼져 생산이 줄었어요.</p></div><div><span class="tag t-4">정부 고정가격</span><h3>코트디부아르·가나</h3><p>두 나라 정부가 농가 수매가격을 정하고 수출을 관리해요. 가격 발표가 시장 이벤트예요.</p></div><div><span class="tag t-2">남미의 부상</span><h3>에콰도르·브라질</h3><p>높은 가격 덕분에 남미 생산이 빠르게 늘고 있어요.</p></div></div>
+<p class="cap">비중은 국제코코아기구(ICCO) 통계 기반의 대략적인 값이고, 흉작 시즌이라 해마다 크게 바뀌어요.</p>
+</section>
+<section id="history">
+  <span class="eyebrow">3. 역사적인 폭등</span>
+  <h2>2년 만에 5배, 다시 반토막</h2>
+<div class="fig"><svg viewBox="0 0 720 210" role="img" aria-label="코코아 가격 흐름: 2022년 약 2500달러, 2023년 말 4200달러, 2024년 4월 1만달러 이상, 2024년 12월 약 12500달러 최고, 지금 5839달러"><text x="20" y="22" class="sm">CC 가격 흐름 (대략, $/톤)</text><line x1="190.0" y1="36" x2="190.0" y2="180" stroke="var(--line)"/><text x="190.0" y="202" text-anchor="middle" class="sm">$0</text><line x1="307.6" y1="36" x2="307.6" y2="180" stroke="var(--line)"/><text x="307.6" y="202" text-anchor="middle" class="sm">$4,000</text><line x1="425.1" y1="36" x2="425.1" y2="180" stroke="var(--line)"/><text x="425.1" y="202" text-anchor="middle" class="sm">$8,000</text><line x1="542.7" y1="36" x2="542.7" y2="180" stroke="var(--line)"/><text x="542.7" y="202" text-anchor="middle" class="sm">$12,000</text><text x="20" y="57" class="b">2022년 평균</text><rect class="grow" x="190" y="42" width="73.5" height="20" rx="4" fill="var(--c4)"/><text x="271.5" y="57" class="b">≈ $2,500</text><text x="20" y="85" class="b">2023년 말</text><rect class="grow" x="190" y="70" width="123.5" height="20" rx="4" fill="var(--c4)"/><text x="321.4" y="85" class="b">≈ $4,200</text><text x="20" y="113" class="b">2024년 4월</text><rect class="grow" x="190" y="98" width="293.9" height="20" rx="4" fill="var(--alert)"/><text x="491.9" y="113" class="b">≈ $10,000+</text><text x="589.9" y="113" class="sm">첫 폭등</text><text x="20" y="141" class="b">2024년 12월 고점</text><rect class="grow" x="190" y="126" width="367.4" height="20" rx="4" fill="var(--alert)"/><text x="565.4" y="141" class="b">≈ $12,500</text><text x="654.4" y="141" class="sm">사상 최고</text><text x="20" y="169" class="b" style="fill:var(--c1)">지금</text><rect class="grow" x="190" y="154" width="171.6" height="20" rx="4" fill="var(--c1)"/><text x="369.6" y="169" class="b" style="fill:var(--c1)">$5,839</text></svg></div>
+<p class="note">서아프리카의 3년 연속 흉작(이상기후·병해·밀수)으로 공급이 수요보다 크게 부족해지면서 2024년 코코아는 원자재 중 가장 크게 올랐어요. 그 뒤 초콜릿 수요 감소와 남미 증산으로 내려왔지만, 여전히 2022년의 2배가 넘어요. 과거 수치는 대략적인 값이에요.</p>
+</section>
+<section id="calendar">
+  <span class="eyebrow">4. 1년 동안 언제 뭘 봐야 하나</span>
+  <h2>코코아 트레이더의 달력</h2>
+<div class="fig"><svg viewBox="0 0 740 264" role="img" aria-label="코코아 달력: 10~3월 주 수확, 4~9월 중간 수확, 12~2월 하르마탄 건조풍, 1·4·7·10월 중순 분기 분쇄량 발표, 3·5·7·9·12월 CC 월물"><g class="sm" text-anchor="middle"><text x="174" y="28">1월</text><text x="222" y="28">2월</text><text x="270" y="28">3월</text><text x="318" y="28">4월</text><text x="366" y="28">5월</text><text x="414" y="28">6월</text><text x="462" y="28">7월</text><text x="510" y="28">8월</text><text x="558" y="28">9월</text><text x="606" y="28">10월</text><text x="654" y="28">11월</text><text x="702" y="28">12월</text></g><g stroke="var(--line)"><line x1="150" y1="38" x2="150" y2="244"/><line x1="294" y1="38" x2="294" y2="244"/><line x1="438" y1="38" x2="438" y2="244"/><line x1="582" y1="38" x2="582" y2="244"/><line x1="726" y1="38" x2="726" y2="244"/></g><line x1="616" y1="38" x2="616" y2="244" stroke="var(--alert)" stroke-dasharray="3 3"/><text x="616" y="260" text-anchor="middle" class="sm" style="fill:var(--alert)">지금</text><text x="16" y="66" class="b">주 수확 (Main crop)</text><rect x="584" y="50" width="140" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="578" y="67" text-anchor="end" style="font-size:12px;fill:var(--c1)" class="b">10~3월 · 생산의 70~80%</text><rect x="152" y="50" width="140" height="24" rx="12" fill="var(--c1-soft)" stroke="var(--c1)"/><text x="16" y="104" class="b">중간 수확 (Mid crop)</text><rect x="296" y="88" width="284" height="24" rx="12" fill="var(--c2-soft)" stroke="var(--c2)"/><text x="438" y="105" text-anchor="middle" style="font-size:12px;fill:var(--c2)" class="b">4~9월</text><text x="16" y="142" class="b">하르마탄 건조풍</text><rect x="680" y="126" width="44" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><rect x="152" y="126" width="92" height="24" rx="12" fill="var(--alert-soft)" stroke="var(--alert)"/><text x="198" y="143" text-anchor="middle" style="font-size:12px;fill:var(--alert)" class="b">사하라 먼지 바람</text><text x="16" y="180" class="b">분쇄량 발표</text><circle cx="173" cy="176" r="7" fill="var(--c3)"/><text x="185" y="181" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b"></text><circle cx="317" cy="176" r="7" fill="var(--c3)"/><text x="329" y="181" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b"></text><circle cx="461" cy="176" r="7" fill="var(--c3)"/><text x="473" y="181" text-anchor="start" style="font-size:12px;fill:var(--c3)" class="b"></text><circle cx="605" cy="176" r="7" fill="var(--c3)"/><text x="593" y="181" text-anchor="end" style="font-size:12px;fill:var(--c3)" class="b">분기별</text><text x="16" y="218" class="b">CC 월물</text><circle cx="269" cy="214" r="7" fill="var(--c4)"/><text x="281" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">3월</text><circle cx="365" cy="214" r="7" fill="var(--c4)"/><text x="377" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">5월</text><circle cx="461" cy="214" r="7" fill="var(--c4)"/><text x="473" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">7월</text><circle cx="557" cy="214" r="7" fill="var(--c4)"/><text x="569" y="219" text-anchor="start" style="font-size:12px;fill:var(--c4)" class="b">9월</text><circle cx="701" cy="214" r="7" fill="var(--c4)"/><text x="689" y="219" text-anchor="end" style="font-size:12px;fill:var(--c4)" class="b">12월</text></svg></div>
+<p class="cap">지금은 <b>주 수확(Main crop)이 막 시작되는 시기</b>예요. 코트디부아르 항구 입고량(매주 업계 추정)이 작황을 가늠하는 핵심 숫자예요. 1·4·7·10월 중순에 유럽·북미·아시아 분쇄량이 나오는데, 이게 초콜릿 수요의 바로미터예요. 12월물 첫 통지일은 11월 중순이라 곧 3월물로 넘어가요.</p>
+</section>
+<section id="drivers">
+  <span class="eyebrow">5. 가격을 흔드는 것들</span>
+  <h2>코코아는 서아프리카 날씨 + 수요</h2>
+<div class="drivers"><div><div class="k"><h3>서아프리카 날씨</h3><span class="dir up">가뭄·폭우면 ▲</span></div><p>비가 너무 많으면 병, 적으면 열매가 작아요. 12~2월 하르마탄 바람이 강하면 생산 감소.</p></div><div><div class="k"><h3>병해·나무 노화</h3><span class="dir up">확산되면 ▲</span></div><p>카카오 싹눈 바이러스(CSSVD), 흑점병. 새 나무를 심어도 수확까지 3~5년.</p></div><div><div class="k"><h3>항구 입고량</h3><span class="dir down">많으면 ▼</span></div><p>코트디부아르 항구에 들어오는 콩의 양. 매주 업계 추정치.</p></div><div><div class="k"><h3>분쇄량 (수요)</h3><span class="dir up">많으면 ▲</span></div><p>분기별 분쇄량이 줄면 초콜릿 수요 부진 신호로 하락.</p></div><div><div class="k"><h3>정부 정책</h3><span class="dir both">수매가·수출 정책</span></div><p>코트디부아르·가나의 농가 수매가, 선판매 물량 발표.</p></div><div><div class="k"><h3>EU 산림파괴 규제</h3><span class="dir up">규제 강화면 ▲</span></div><p>유럽이 산림파괴 없는 코코아만 받는 규제를 도입하면서 공급망 비용이 올라요.</p></div></div>
+</section>
+<section id="who">
+  <span class="eyebrow">6. 이 시장은 왜 존재하나</span>
+  <h2>누가 코코아 선물을 거래할까</h2>
+<div class="fig narrow"><svg viewBox="0 0 660 200" role="img" aria-label="코코아 선물 헤지 구조">
+<rect x="10" y="30" width="200" height="112" rx="14" fill="var(--c2-soft)"/>
+<text x="110" y="62" text-anchor="middle" class="b" style="fill:var(--c2)">수출상·협동조합</text>
+<text x="110" y="90" text-anchor="middle">"값 떨어지면?"</text>
+<text x="110" y="116" text-anchor="middle" class="sm">→ 선물 매도</text>
+<rect x="450" y="30" width="200" height="112" rx="14" fill="var(--c3-soft)"/>
+<text x="550" y="62" text-anchor="middle" class="b" style="fill:var(--c3)">초콜릿 회사</text>
+<text x="550" y="90" text-anchor="middle">"원료값 오르면?"</text>
+<text x="550" y="116" text-anchor="middle" class="sm">→ 선물 매수</text>
+<circle cx="330" cy="86" r="56" fill="var(--c1-soft)" stroke="var(--c1)" stroke-width="2"/>
+<text x="330" y="82" text-anchor="middle" class="b" style="fill:var(--c1)">CC 선물</text>
+<text x="330" y="102" text-anchor="middle" class="sm">카카오 콩 10톤</text>
+<line x1="215" y1="86" x2="270" y2="86" stroke="var(--c2)" stroke-width="3"/>
+<line x1="390" y1="86" x2="445" y2="86" stroke="var(--c3)" stroke-width="3"/>
+<text x="330" y="182" text-anchor="middle" class="sm">변동성이 너무 커지면서 거래소 증거금이 올라 헤지가 어려워진 시기도 있었어요</text></svg></div>
+<div class="cards"><div><span class="tag t-2">매도 헤지</span><h3>수출상·그라인더</h3><p>콩을 사서 들고 있는 동안 가격 하락에 대비해요.</p></div><div><span class="tag t-3">매수 헤지</span><h3>허쉬·몬델리즈·네슬레</h3><p>몇 달~1년 뒤 쓸 원료값을 고정해요. 초콜릿 가격 인상 뉴스의 배경.</p></div><div><span class="tag t-4">그라인더</span><h3>배리칼레보·올람</h3><p>콩을 갈아 버터·파우더로 파는 회사. 버터·파우더 가격과 콩값 차이(비율)를 관리해요.</p></div><div><span class="tag t-spec">투기</span><h3>펀드</h3><p>2024년 폭등 땐 증거금 부담으로 오히려 시장 참여자가 줄어 유동성이 얇아졌어요.</p></div></div>
+</section>
+<section id="specs">
+  <span class="eyebrow">7. 트레이딩할 때 알아야 할 것</span>
+  <h2>IBKR 계약 기본 정보</h2>
+<div class="spec"><h3><span class="dot"></span>Cocoa (CC)</h3><dl><dt>거래소</dt><dd>ICE Futures US <span>(뉴욕)</span></dd><dt>IBKR 심볼</dt><dd>CC <span>예: CCZ6 = 2026년 12월</span></dd><dt>계약 크기</dt><dd>10미터톤</dd><dt>가격</dt><dd>$ / 톤</dd><dt>최소 틱</dt><dd>$1 = $10</dd><dt>$100 움직이면</dt><dd>$1,000</dd><dt>월물</dt><dd>3·5·7·9·12월 <span>(H K N U Z)</span></dd><dt>결제</dt><dd>실물 인도 <span>미국 항구 창고</span></dd></dl></div>
+<p class="note">런던 코코아(ICE 유럽, 파운드 표시)도 있지만 미국 선물만 쓴다면 CC예요. 작은 계약은 없어요. 지금 가격에선 하루 3~6% 움직임($200~350, 1계약 $2,000~3,500)이 흔해요.</p>
+</section>
+<section id="calc">
+  <span class="eyebrow">8. 직접 눌러보기</span>
+  <h2>$200 움직이면 얼마일까</h2>
+<div class="calc">
+    <div class="presets">빠른 입력: <button type="button" data-c="0" data-e="5839" data-x="6039">CC +$200</button><button type="button" data-c="0" data-e="5839" data-x="5547">CC −5%</button><button type="button" data-c="0" data-e="5839" data-x="6423">CC +10%</button></div>
+    <div class="inputs">
+      <label for="in-ct">계약<select id="in-ct"><option value="0">CC 코코아 (10톤)</option></select></label>
+      <label for="in-entry">진입가 ($/톤)<input id="in-entry" type="number" step="any" value="5839" inputmode="decimal"></label>
+      <label for="in-exit">청산가 ($/톤)<input id="in-exit" type="number" step="any" value="6039" inputmode="decimal"></label>
+      <label for="in-qty">계약 수<input id="in-qty" type="number" step="1" min="1" value="1" inputmode="numeric"></label>
+      <label for="in-side">방향<select id="in-side"><option value="1">매수 (롱)</option><option value="-1">매도 (숏)</option></select></label>
+    </div>
+    <div class="out">
+      <div><small>1계약 명목가치 (진입 기준)</small><b id="o-notional">–</b></div>
+      <div><small>움직인 틱 수</small><b id="o-ticks">–</b></div>
+      <div><small>손익 (달러)</small><b id="o-pnl">–</b></div>
+      <div><small>가격 변화율</small><b id="o-krw">–</b></div>
+    </div>
+    <p class="cap" id="o-explain"></p>
+  </div>
+  <p class="note">진입가 기본값은 위 IBKR 시세예요. 수수료·증거금 제외.</p>
+<script>
+(function(){
+  var C = [{"name": "CC 코코아 (10톤)", "tick": 1, "tv": 10, "mult": 10, "dec": 0, "entry": 5839, "exit": 6039}];
+  var $ = function(id){return document.getElementById(id)};
+  var usd = function(v,d){var s=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});return (v<0?'−$':'$')+s};
+  function f32(v){var w=Math.floor(v+1e-9), r=(v-w)*32; return w+'-'+(Math.round(r*1000)/1000).toString().replace(/^(\d)(\.|$)/,'0$1$2')}
+  function fmt(c,v){return c.f32 ? v.toFixed(c.dec)+' ('+f32(v)+')' : v.toFixed(c.dec)}
+  function calc(){
+    var c = C[parseInt($('in-ct').value,10)];
+    var e = parseFloat($('in-entry').value), x = parseFloat($('in-exit').value);
+    var q = Math.max(1, parseInt($('in-qty').value,10) || 1), side = parseInt($('in-side').value,10);
+    if (isNaN(e) || isNaN(x)) { ['o-notional','o-ticks','o-pnl','o-krw'].forEach(function(id){$(id).textContent='–'}); $('o-explain').textContent=''; return; }
+    // ticks = price change / minimum tick; each tick is worth a fixed dollar amount per contract
+    var ticks = Math.round((x - e) / c.tick);
+    var pnl = ticks * c.tv * q * side;
+    var cents = c.tv % 1 !== 0 ? 2 : 0;
+    $('o-notional').textContent = usd(e * c.mult);
+    $('o-ticks').textContent = (ticks>0?'+':'') + ticks.toLocaleString('en-US') + '틱';
+    var p = $('o-pnl'); p.textContent = (pnl>0?'+':'') + usd(pnl, cents); p.className = pnl>0?'pos':(pnl<0?'neg':'');
+    var pct = (x - e) / e * 100; var k = $('o-krw'); k.textContent = (pct>0?'+':'') + pct.toFixed(2) + '%';
+    $('o-explain').textContent = c.name + ' · ' + fmt(c,e) + ' → ' + fmt(c,x) + ' : ' + Math.abs(ticks).toLocaleString('en-US') + '틱 × $' + c.tv + ' × ' + q + '계약' + (side<0?' (숏이라 부호 반대)':'') + ' = ' + usd(pnl, cents);
+  }
+  $('in-ct').addEventListener('change', function(){ var c=C[parseInt(this.value,10)]; $('in-entry').value=c.entry; $('in-exit').value=c.exit; calc(); });
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){ $('in-ct').value=b.dataset.c; $('in-entry').value=b.dataset.e; $('in-exit').value=b.dataset.x; calc(); });
+  });
+  ['in-entry','in-exit','in-qty','in-side'].forEach(function(id){$(id).addEventListener('input', calc)});
+  calc();
+})();
+</script>
+</section>
+<section id="hours">
+  <span class="eyebrow">9. 캘리포니아 시간으로 언제 열리나</span>
+  <h2>캘리 새벽에 열려 오전 10:30에 닫혀요</h2>
+<div class="fig"><svg viewBox="0 0 740 226" role="img" aria-label="캘리포니아 시간 코코아 선물 거래 시간. 01:45~10:30. 일년 내내 같음"><rect x="245.3" y="32" width="286.0" height="164" fill="var(--line)" opacity=".35"/><g class="sm" text-anchor="middle"><text x="150" y="24">14시</text><text x="245" y="24">18시</text><text x="341" y="24">22시</text><text x="436" y="24">02시</text><text x="531" y="24">06시</text><text x="627" y="24">10시</text><text x="722" y="24">14시</text><text x="388" y="44">밤</text></g><g stroke="var(--line)"><line x1="150" y1="32" x2="150" y2="196"/><line x1="245" y1="32" x2="245" y2="196"/><line x1="341" y1="32" x2="341" y2="196"/><line x1="436" y1="32" x2="436" y2="196"/><line x1="531" y1="32" x2="531" y2="196"/><line x1="627" y1="32" x2="627" y2="196"/><line x1="722" y1="32" x2="722" y2="196"/></g><text x="16" y="70" class="b" style="fill:var(--c1)">이 상품</text><rect x="430.0" y="57" width="208.5" height="16" rx="7" fill="var(--c1)" stroke="var(--c1)"/><text x="150" y="96" class="sm">집중 01:45~10:30 (캘리 기준, 일년 내내 같음)</text><text x="16" y="131" class="sm">도쿄·상하이</text><rect x="221.5" y="122" width="166.8" height="10" rx="7" fill="var(--c4)" opacity=".45"/><text x="16" y="155" class="sm">런던</text><rect x="388.3" y="146" width="202.6" height="10" rx="7" fill="var(--c2)" opacity=".45"/><text x="16" y="179" class="sm">뉴욕 증시</text><rect x="543.2" y="170" width="154.9" height="10" rx="7" fill="var(--c1)" opacity=".45"/><rect x="150" y="206" width="14" height="10" rx="3" fill="var(--c1)"/><text x="170" y="215" class="sm">ICE 코코아 거래 시간 (하루 한 번)</text></svg></div>
+<p class="cap">뉴욕 기준 04:45~13:30. 캘리포니아 시간 <b>새벽 1:45에 열려서 오전 10:30에 닫혀요</b>. 런던 코코아가 같이 열려 있는 캘리 새벽~오전 8시 반, 특히 런던 오후와 뉴욕 오전이 겹치는 오전 5시 이후에 거래가 많아요.</p>
+</section>
+<section id="cautions">
+  <span class="eyebrow">10. 주의점</span>
+  <h2>들어가기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>12월물은 곧 정리</h3><p>CC 12월물 첫 통지일은 인도월 10영업일 전쯤(11월 중순)이에요. 다른 상품보다 일러요. 지금 들어간다면 3월물(CCH7)을 쓰세요.</p></div><div><h3>극단적인 변동성</h3><p>2024~2025년엔 하루 10% 넘게 움직인 날도 있었어요. 1계약 $5,000 이상.</p></div><div><h3>증거금이 높아요</h3><p>변동성이 커서 거래소 증거금이 다른 소프트보다 훨씬 높게 잡혀 있어요. IBKR 주문 화면에서 확인하세요.</p></div><div><h3>유동성이 얇아졌어요</h3><p>가격 폭등 이후 참여자가 줄어 호가 간격이 넓어요. 지정가 필수.</p></div><div><h3>ICE 시세 구독</h3><p>ICE US 소프트 시세 구독이 필요해요.</p></div><div><h3>가격제한폭 없음</h3><p>ICE 코코아는 하루 가격제한폭이 없어요.</p></div></div>
+</section>
+<section class="fun"><h3>🍫 보너스: 다크 초콜릿 한 판 속 카카오값은?</h3><p>카카오 70% 다크 초콜릿 100g에는 카카오 원료가 약 70g 들어가요. 콩 기준으로 대략 계산하면 $5,839/톤 = 1g에 $0.0058이니까 약 <b class="mono">$0.41</b>, 1,400원 환율로 약 <b>570원</b>이에요. 2022년($2,500)에는 약 250원이었으니 두 배 넘게 오른 셈이죠. 그래서 초콜릿 회사들이 가격을 올리거나 과자 크기를 줄이는(슈링크플레이션) 일이 많았어요.</p></section>
+</main>
+
+</html>
