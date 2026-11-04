@@ -39,6 +39,11 @@ for m, key in mod2key.items():
     if not h.lstrip().lower().startswith("<!doctype"):
         h = HEAD + h.replace("<main>", (BACK if key != "index" else "") + "<main>", 1) + "\n</html>\n"
     open(f"docs/{key}.html", "w").write(h)
+for f in glob.glob("out/etf_*.html"):
+    key = os.path.basename(f)[4:-5] + "-etf"
+    h = fix(open(f).read())
+    h = HEAD + h.replace("<main>", BACK + "<main>", 1) + "\n</html>\n"
+    open(f"docs/{key}.html", "w").write(h)
 for f in glob.glob("legacy/*.html"):
     h = fix(open(f).read())
     open(f"docs/{os.path.basename(f)}", "w").write(h)

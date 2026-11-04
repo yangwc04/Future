@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>천연가스 관련 ETF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f2f4f7; --surface:#ffffff; --fg:#20221f; --muted:#5b6370; --line:#d6dbe3; --c1:#2453a6; --c1-soft:#dde6f6; --c2:#2f7a5a; --c2-soft:#dcefe6; --c3:#c0601a; --c3-soft:#f8e5d6; --c4:#5a6a7a; --c4-soft:#e3e8ed; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#10131a; --surface:#191d26; --fg:#eaebe6; --muted:#a6aaa2; --line:#303746; --c1:#86aef0; --c1-soft:#16233d; --c2:#80cfa8; --c2-soft:#163026; --c3:#f2a066; --c3-soft:#3b2412; --c4:#a8b6c4; --c4-soft:#232a31; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#10131a; --surface:#191d26; --fg:#eaebe6; --muted:#a6aaa2; --line:#303746; --c1:#86aef0; --c1-soft:#16233d; --c2:#80cfa8; --c2-soft:#163026; --c3:#f2a066; --c3-soft:#3b2412; --c4:#a8b6c4; --c4-soft:#232a31; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+<style>
+.etf-t td:first-child b{font-family:var(--mono);font-size:1.02rem}
+.etf-t td:first-child small{display:block;color:var(--muted);font-size:.78rem;line-height:1.35;white-space:normal;min-width:120px}
+.etf-t td.memo{font-size:.85rem;color:var(--muted);min-width:180px}
+.lev{display:inline-block;font-family:var(--mono);font-size:.85rem;font-weight:600;padding:1px 9px;border-radius:99px;white-space:nowrap}
+.lev.l1{background:var(--c3-soft);color:var(--c3)} .lev.lx{background:var(--c1-soft);color:var(--c1)}
+.lev.inv{background:var(--alert-soft);color:var(--alert)} .lev.mix{background:var(--c4-soft);color:var(--c4)}
+.st{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:6px;white-space:nowrap;border:1px solid var(--line)}
+.liq{font-size:.8rem;font-weight:700;white-space:nowrap} .liq.g4{color:var(--c2)} .liq.g3{color:var(--c3)} .liq.g2{color:var(--muted)} .liq.g1{color:var(--alert)}
+.grp{display:flex;flex-direction:column;gap:10px}
+.grp+.grp{margin-top:18px}
+.none-box{background:var(--alert-soft);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.none-box strong{color:var(--alert)}
+.backlink{align-self:flex-start;font-size:.9rem;font-weight:700;text-decoration:none;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:6px 14px}
+.backlink:hover,.backlink:focus-visible{border-color:#ffe3a3;outline:none}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <a class="backlink" href="natgas.html">← 천연가스 선물 설명으로 돌아가기</a>
+  <span class="eyebrow">관련 ETF · NG · QG</span>
+  <h1>천연가스 선물을 담은<br><span class="hl">ETF</span>는 뭐가 있을까?</h1>
+  <p class="lead">천연가스 ETF도 원유처럼 <b>NG 선물을 사서 매달 굴리는</b> 구조예요. 천연가스는 콘탱고가 특히 심해서 오래 들면 손해가 크기로 유명해요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 1배는 <b>UNG</b>, 2배 롱은 <b>BOIL</b>, 2배 숏은 <b>KOLD</b>예요. 셋 다 NG 선물을 직접 담아요.</p><p>UNG는 2008년 상장 이후 가격이 90% 넘게 빠졌어요. 천연가스 가격이 그만큼 빠진 게 아니라 매달 롤오버 비용이 쌓였기 때문이에요.</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>관련 ETF 수</small><b>5개</b><span>이 페이지에 정리한 미국 상장 상품</span></div><div><small>거래 제일 많은 상품</small><b>UNG</b><span>$2.0억 / 하루</span></div><div><small>레버리지 롱 대표</small><b>BOIL</b><span>$9,787만 / 하루</span></div><div><small>인버스(숏) 대표</small><b>KOLD</b><span>$1.0억 / 하루</span></div></div>
+  <p class="cap">IBKR 조회: 2026-11-04 오전 6:30~7:00 (캘리포니아 시간, 정규장 개장 전후). 거래대금은 IBKR의 최근 90일 하루 평균, 주식 수는 그 금액을 현재가로 나눈 근사치예요. 운용자산(AUM)은 IBKR 순자산 값이에요.</p>
+  <nav class="toc" aria-label="목차"><a href="#pick">추천</a><a href="#list">ETF 목록</a><a href="#volume">거래량 비교</a><a href="#struct">구조 읽는 법</a><a href="#vsfut">선물 vs ETF</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="pick">
+  <span class="eyebrow">1. 이렇게 고르세요</span>
+  <h2>목적별 추천</h2>
+<div class="cards"><div><span class="tag t-3">1배</span><h3>단기 반등</h3><p><b>UNG</b>. 며칠 단위로만 쓰세요.</p></div><div><span class="tag t-1">2배 롱</span><h3>겨울 한파 베팅</h3><p><b>BOIL</b>.</p></div><div><span class="tag t-spec">2배 숏</span><h3>따뜻한 겨울 · 재고 과잉</h3><p><b>KOLD</b>.</p></div><div><span class="tag t-4">선물이 나을 때</span><h3>정확한 월물 선택</h3><p>천연가스는 월물마다 가격 차이가 커요. 겨울물(1·2월)만 골라서 사고 싶으면 QG(미니) 선물로 직접 고르는 게 나아요.</p></div></div>
+</section>
+<section id="list">
+  <span class="eyebrow">2. 한 줄씩 비교</span>
+  <h2>관련 ETF 전체 목록</h2>
+<div class="grp"><h3>천연가스 선물 보유 ETF</h3><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>UNG</b><small>United States Natural Gas</small></td><td><span class="lev l1">1배</span></td><td class="num">$2.0억</td><td class="num">2,149만 주</td><td class="num">$5.0억</td><td><span class="st">선물 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">1배 대표. 근월물 위주</td></tr><tr><td><b>UNL</b><small>United States 12 Month Nat Gas</small></td><td><span class="lev l1">1배</span></td><td class="num">$30만</td><td class="num">5.8만 주</td><td class="num">$1,447만</td><td><span class="st">선물 보유</span></td><td><span class="liq g1">얇음</span></td><td class="memo">12개 월물 분산, 거래 얇음</td></tr><tr><td><b>BOIL</b><small>ProShares Ultra 천연가스</small></td><td><span class="lev lx">2배</span></td><td class="num">$9,787만</td><td class="num">608만 주</td><td class="num">$4.1억</td><td><span class="st">선물 보유</span></td><td><span class="liq g3">좋음</span></td><td class="memo">2배 롱</td></tr><tr><td><b>KOLD</b><small>ProShares UltraShort 천연가스</small></td><td><span class="lev inv">-2배</span></td><td class="num">$1.0억</td><td class="num">302만 주</td><td class="num">$5,473만</td><td><span class="st">선물 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">2배 숏</td></tr></tbody></table></div></div>
+<div class="grp"><h3>참고: 가스 생산 회사 주식</h3><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>FCG</b><small>퍼스트트러스트 천연가스</small></td><td><span class="lev l1">1배</span></td><td class="num">$2,555만</td><td class="num">86만 주</td><td class="num">$7.3억</td><td><span class="st">관련 주식</span></td><td><span class="liq g3">좋음</span></td><td class="memo">가스 회사 주식. 선물과 따로 놀 때가 많음</td></tr></tbody></table></div></div><p class="cap">유동성 등급: 하루 거래대금 $1억 이상 아주 좋음 · $1천만 이상 좋음 · $100만 이상 보통 · 그 아래 얇음(스프레드 주의).</p>
+</section>
+<section id="volume">
+  <span class="eyebrow">3. 거래량 한눈에</span>
+  <h2>어디에 돈이 몰려 있나</h2>
+<div class="fig"><svg viewBox="0 0 720 194" role="img" aria-label="천연가스 관련 ETF 90일 평균 거래대금 비교"><text x="20" y="20" class="sm">90일 평균 하루 거래대금 (로그 눈금: 한 칸 = 10배)</text><line x1="90.0" y1="30" x2="90.0" y2="164" stroke="var(--line)"/><text x="90.0" y="186" text-anchor="middle" class="sm">$1만</text><line x1="175.0" y1="30" x2="175.0" y2="164" stroke="var(--line)"/><text x="175.0" y="186" text-anchor="middle" class="sm">$10만</text><line x1="260.0" y1="30" x2="260.0" y2="164" stroke="var(--line)"/><text x="260.0" y="186" text-anchor="middle" class="sm">$100만</text><line x1="345.0" y1="30" x2="345.0" y2="164" stroke="var(--line)"/><text x="345.0" y="186" text-anchor="middle" class="sm">$1천만</text><line x1="430.0" y1="30" x2="430.0" y2="164" stroke="var(--line)"/><text x="430.0" y="186" text-anchor="middle" class="sm">$1억</text><line x1="515.0" y1="30" x2="515.0" y2="164" stroke="var(--line)"/><text x="515.0" y="186" text-anchor="middle" class="sm">$10억</text><line x1="600.0" y1="30" x2="600.0" y2="164" stroke="var(--line)"/><text x="600.0" y="186" text-anchor="middle" class="sm">$100억</text><text x="20" y="50" class="b" style="font-family:var(--mono)">UNG</text><rect class="grow" x="90" y="37" width="364.7" height="17" rx="4" fill="var(--c2)"/><text x="462.7" y="50" class="sm">$2.0억</text><text x="20" y="76" class="b" style="font-family:var(--mono)">KOLD</text><rect class="grow" x="90" y="63" width="340.5" height="17" rx="4" fill="var(--c2)"/><text x="438.5" y="76" class="sm">$1.0억</text><text x="20" y="102" class="b" style="font-family:var(--mono)">BOIL</text><rect class="grow" x="90" y="89" width="339.2" height="17" rx="4" fill="var(--c3)"/><text x="437.2" y="102" class="sm">$9,787만</text><text x="20" y="128" class="b" style="font-family:var(--mono)">FCG</text><rect class="grow" x="90" y="115" width="289.6" height="17" rx="4" fill="var(--c3)"/><text x="387.6" y="128" class="sm">$2,555만</text><text x="20" y="154" class="b" style="font-family:var(--mono)">UNL</text><rect class="grow" x="90" y="141" width="126.0" height="17" rx="4" fill="var(--alert)"/><text x="224.0" y="154" class="sm">$30만</text></svg></div><p class="cap">막대 색: 초록 $1억 이상 · 파랑 $1천만 이상 · 보라 $100만 이상 · 빨강 그 아래. 로그 눈금이라 한 칸 차이가 10배예요.</p>
+</section>
+<section id="struct">
+  <span class="eyebrow">4. 구조 읽는 법</span>
+  <h2>이 페이지에 나오는 상품 구조</h2>
+<div class="cards"><div><span class="tag t-3">선물 보유</span><h3>선물 보유</h3><p>거래소 선물을 직접 사서 만기 전에 다음 달로 굴려요(롤오버). 선물 가격을 가장 그대로 따라가요.</p></div><div><span class="tag t-3">관련 주식</span><h3>관련 주식</h3><p>상품이 아니라 그 상품을 만드는 회사(광산·목재·에너지 회사) 주식을 담아요. 선물과 따로 놀 때가 많아요.</p></div></div>
+</section>
+<section id="vsfut">
+  <span class="eyebrow">5. 선물로 할까, ETF로 할까</span>
+  <h2>IBKR 선물과 ETF 차이</h2>
+<div class="tbl"><table><thead><tr><th></th><th>선물 (IBKR)</th><th>ETF</th></tr></thead><tbody><tr><td>거래 시간 (캘리포니아)</td><td>거의 24시간 (일~금)</td><td>정규장 06:30~13:00 · IBKR 확장시간 01:00~17:00, 확장시간엔 호가가 얇아요</td></tr><tr><td>최소 단위</td><td>1계약 (명목가치 수만~수십만 달러)</td><td>1주 (수십 달러부터)</td></tr><tr><td>레버리지</td><td>증거금으로 자연스럽게 큼</td><td>상품에 정해진 배수만큼 (매일 리셋)</td></tr><tr><td>만기·롤오버</td><td>직접 다음 월물로 넘겨야 해요</td><td>펀드가 알아서 굴려요 (비용은 가격에 녹아 있음)</td></tr><tr><td>비용</td><td>수수료 + 스프레드</td><td>연 보수(0.1~1%대) + 스프레드</td></tr><tr><td>세금 서류</td><td>1256 계약 (60/40 과세)</td><td>보통 1099 · 일부 상품은 K-1 (조합형)</td></tr></tbody></table></div>
+</section>
+<section id="cautions">
+  <span class="eyebrow">6. 주의점</span>
+  <h2>사기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div class="hot"><h3>롤오버 비용이 아주 커요</h3><p>천연가스는 먼 월물이 비싼 콘탱고가 심해서, UNG를 1년 들고 있으면 가스 가격이 그대로여도 크게 손해 볼 수 있어요.</p></div><div><h3>K-1 세금 서류</h3><p>USO·UNG·DBA처럼 조합(LP) 형태 상품은 1099 대신 K-1 서류가 나오고, 세금 신고가 조금 번거로워요. 한국 거주자라면 세무사에게 먼저 확인하세요.</p></div><div><h3>레버리지·인버스는 '하루' 기준</h3><p>2배, -2배 같은 배수는 하루 수익률에만 맞춰져 있어요. 오르락내리락하는 장에서 며칠 이상 들고 있으면 기초자산이 제자리여도 손실이 쌓여요(변동성 손실). 단기 매매용으로 쓰세요.</p></div><div><h3>장 시간 밖에서는 얇아요</h3><p>ETF는 캘리포니아 06:30~13:00 정규장에 거래가 몰려요. 선물은 밤에도 움직이는데, 그 사이 ETF는 다음 날 아침에 갭으로 따라가요.</p></div></div>
+</section>
+
+</main>
+
+</html>

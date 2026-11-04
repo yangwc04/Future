@@ -462,7 +462,21 @@ def calc(contracts, presets, unit_label, note_text):
 }})();
 </script>"""
 
+ETF_LINK = None   # set by build.py: URL of this market's "관련 ETF" page
+
+ETF_BTN_CSS = ("<style>.etfbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:1rem;"
+               "text-decoration:none;color:#1b1b1b !important;background:#ffe3a3;border-radius:99px;padding:10px 18px;"
+               "box-shadow:0 2px 10px rgba(0,0,0,.18);transition:transform .15s}"
+               ".etfbtn:hover,.etfbtn:focus-visible{transform:translateY(-1px);outline:2px solid #fff;outline-offset:2px}"
+               ".etfbtn small{font-weight:600;font-size:.8rem;opacity:.75}</style>")
+
+def etf_button(url):
+    return (f'{ETF_BTN_CSS}<a class="etfbtn" href="{url}" target="_blank" rel="noopener">📊 관련 ETF 보기 '
+            f'<small>레버리지 · 거래량 · 구조</small> →</a>\n  ')
+
 def page(title, palette, head_html, sections, fun_html=""):
+    if ETF_LINK and '<nav class="toc"' in head_html:
+        head_html = head_html.replace('<nav class="toc"', etf_button(ETF_LINK) + '<nav class="toc"', 1)
     return HEAD % esc(title) + css(palette) + "\n<main>\n" + head_html + "\n" + "\n".join(sections) + "\n" + fun_html + "\n</main>\n"
 
 # ---------- palettes ----------

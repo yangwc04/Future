@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>주가지수 관련 ETF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+
+<style>
+/* Layout: one reading column that follows the contract from the real-world thing to the IBKR order screen */
+:root{ --bg:#f2f4f7; --surface:#ffffff; --fg:#1c2230; --muted:#5d6470; --line:#d8dde5; --c1:#1f5fae; --c1-soft:#dde8f6; --c2:#2e7d4f; --c2-soft:#dcefe2; --c3:#6a4bb0; --c3-soft:#e8e1f5; --c4:#b0661f; --c4-soft:#f5e6d6; --alert:#b23b2e; --alert-soft:#f7e0dc;
+  --display:"Black Han Sans","Noto Sans KR",system-ui,sans-serif;
+  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#11141a; --surface:#1a1e26; --fg:#e8ebf1; --muted:#a3aab8; --line:#323846; --c1:#7fb0f0; --c1-soft:#17263b; --c2:#7fcf9b; --c2-soft:#173022; --c3:#b9a0f0; --c3-soft:#2a2140; --c4:#e7a96a; --c4-soft:#3a2716; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}}
+:root[data-theme="dark"]{ --bg:#11141a; --surface:#1a1e26; --fg:#e8ebf1; --muted:#a3aab8; --line:#323846; --c1:#7fb0f0; --c1-soft:#17263b; --c2:#7fcf9b; --c2-soft:#173022; --c3:#b9a0f0; --c3-soft:#2a2140; --c4:#e7a96a; --c4-soft:#3a2716; --alert:#ff8576; --alert-soft:#3d1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;padding-block:40px 72px;display:flex;flex-direction:column;gap:60px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.3;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem)} h2{font-size:1.75rem} h3{font-size:1.15rem}
+p{margin:0}
+a{color:var(--c3)}
+section,header{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:.8rem;font-weight:800;letter-spacing:.08em;color:var(--c1)}
+.lead{font-size:1.08rem;color:var(--muted)}
+.hl{color:var(--c1)}
+.answer{background:var(--c1-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.answer strong{color:var(--c1)}
+.quote{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.quote>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote small{color:var(--muted);font-size:.8rem}
+.quote b{font-family:var(--mono);font-weight:500;font-size:1.2rem;font-variant-numeric:tabular-nums}
+.quote span{font-size:.8rem;color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
+.toc a:hover,.toc a:focus-visible{border-color:var(--c1);outline:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:600px}
+.fig.narrow svg{min-width:480px}
+.cap{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--fg);font-size:14px}
+svg .sm{font-size:12px;fill:var(--muted)}
+svg .b{font-weight:800}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:600;white-space:nowrap}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.bad{color:var(--alert)} td.good{color:var(--c2);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.cards>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:800;padding:2px 10px;border-radius:99px}
+.t-1{background:var(--c1-soft);color:var(--c1)} .t-2{background:var(--c2-soft);color:var(--c2)}
+.t-3{background:var(--c3-soft);color:var(--c3)} .t-4{background:var(--c4-soft);color:var(--c4)}
+.t-spec{background:var(--alert-soft);color:var(--alert)}
+.drivers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.drivers>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.drivers .dir{font-size:.8rem;font-weight:800;white-space:nowrap}
+.up{color:var(--alert)} .down{color:var(--c2)} .both{color:var(--c3)}
+.drivers .k{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.spec h3{padding:12px 14px;display:flex;align-items:center;gap:8px;background:var(--c1-soft)}
+.spec h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--c1);flex:none}
+.spec.alt h3{background:var(--c3-soft)} .spec.alt h3 .dot{background:var(--c3)}
+.spec dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.spec dt,.spec dd{margin:0;padding:9px 14px;border-top:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.spec dd{font-family:var(--mono);font-size:.9rem;font-variant-numeric:tabular-nums;min-width:0}
+.spec dd span{font-family:var(--body);color:var(--muted);font-size:.82rem}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.inputs label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.inputs input,.inputs select{font:inherit;font-family:var(--mono);font-size:1rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box}
+.inputs select{font-family:var(--body)}
+.inputs input:focus-visible,.inputs select:focus-visible,.presets button:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);padding:4px 12px;border-radius:99px;cursor:pointer}
+.presets button:hover{border-color:var(--c1)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out>div{background:var(--bg);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.out small{color:var(--muted);font-size:.8rem}
+.out b{font-family:var(--mono);font-size:1.15rem;font-variant-numeric:tabular-nums;font-weight:500;overflow-wrap:anywhere}
+.pos{color:var(--c2)} .neg{color:var(--alert)}
+.note{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.warn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.warn>div{border-top:3px solid var(--alert);background:var(--surface);border-radius:0 0 12px 12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.warn>div.hot{border-top-color:var(--c1);background:var(--c1-soft)}
+.fun{background:var(--surface);border:1px dashed var(--c1);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.back{font-size:.85rem;color:var(--muted)}
+/* ---- refreshed look: hero header, pill eyebrows, softer cards ---- */
+:root{--hero-a:color-mix(in srgb,var(--c1) 90%,#000);--hero-b:color-mix(in srgb,color-mix(in srgb,var(--c1) 55%,var(--c4)) 62%,#000);--shadow:0 1px 2px rgba(20,25,35,.05),0 6px 20px rgba(20,25,35,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}}
+:root[data-theme="dark"]{--hero-a:color-mix(in srgb,var(--c1) 34%,#0b0d10);--hero-b:color-mix(in srgb,var(--c4) 30%,#0b0d10);--shadow:none}
+main{gap:68px}
+h1,h2,h3{word-break:keep-all}
+main>header{background:radial-gradient(130% 150% at 0% 0%,var(--hero-a) 0%,var(--hero-a) 30%,var(--hero-b) 100%);color:#fff;
+  border-radius:24px;padding:32px 30px;gap:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+main>header::after{content:"";position:absolute;right:-90px;top:-90px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+main>header>*{position:relative;z-index:1}
+main>header .eyebrow{color:#ffe3a3}
+main>header .hl{color:#ffe3a3}
+main>header .lead{color:rgba(255,255,255,.88)}
+main>header .lead b{color:#fff}
+main>header .answer{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);color:#fff}
+main>header .answer strong,main>header .answer b{color:#ffe3a3}
+main>header .quote>div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+main>header .quote small,main>header .quote span,main>header .cap{color:rgba(255,255,255,.75)}
+main>header .toc a{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24);color:#fff}
+main>header .toc a:hover,main>header .toc a:focus-visible{border-color:#ffe3a3}
+main>header a{color:#ffe3a3}
+main>header .back{color:rgba(255,255,255,.8)}
+section>.eyebrow{align-self:flex-start;background:var(--c1-soft);color:var(--c1);border-radius:99px;padding:3px 12px;letter-spacing:.03em}
+section>h2{font-size:clamp(1.5rem,4.2vw,1.95rem)}
+section>h3{margin-top:6px}
+.fig,.calc,.cards>div,.drivers>div,.spec,.quote>div,.warn>div{box-shadow:var(--shadow)}
+.fig{border-radius:18px}
+.cards>div,.drivers>div{border-radius:16px;transition:transform .15s,border-color .15s}
+.cards>div:hover,.drivers>div:hover{transform:translateY(-2px);border-color:var(--c1)}
+.cards h3,.drivers h3{font-size:1.05rem}
+.warn{grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))}
+.warn>div{border-radius:0 0 14px 14px}
+.answer{border-radius:16px}
+.fun{border-radius:18px;background:linear-gradient(135deg,var(--c1-soft),var(--surface) 70%)}
+.note{border-left-color:var(--c1)}
+@media (max-width:560px){main>header{padding:22px 18px;border-radius:20px}}
+@media (prefers-reduced-motion: no-preference){
+  .grow{animation:grow .9s ease-out both;transform-box:fill-box;transform-origin:left}
+  @keyframes grow{from{transform:scaleX(.3)}to{transform:scaleX(1)}}
+}
+</style>
+<style>
+.etf-t td:first-child b{font-family:var(--mono);font-size:1.02rem}
+.etf-t td:first-child small{display:block;color:var(--muted);font-size:.78rem;line-height:1.35;white-space:normal;min-width:120px}
+.etf-t td.memo{font-size:.85rem;color:var(--muted);min-width:180px}
+.lev{display:inline-block;font-family:var(--mono);font-size:.85rem;font-weight:600;padding:1px 9px;border-radius:99px;white-space:nowrap}
+.lev.l1{background:var(--c3-soft);color:var(--c3)} .lev.lx{background:var(--c1-soft);color:var(--c1)}
+.lev.inv{background:var(--alert-soft);color:var(--alert)} .lev.mix{background:var(--c4-soft);color:var(--c4)}
+.st{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:6px;white-space:nowrap;border:1px solid var(--line)}
+.liq{font-size:.8rem;font-weight:700;white-space:nowrap} .liq.g4{color:var(--c2)} .liq.g3{color:var(--c3)} .liq.g2{color:var(--muted)} .liq.g1{color:var(--alert)}
+.grp{display:flex;flex-direction:column;gap:10px}
+.grp+.grp{margin-top:18px}
+.none-box{background:var(--alert-soft);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.none-box strong{color:var(--alert)}
+.backlink{align-self:flex-start;font-size:.9rem;font-weight:700;text-decoration:none;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:6px 14px}
+.backlink:hover,.backlink:focus-visible{border-color:#ffe3a3;outline:none}
+</style>
+
+<a href="index.html" style="position:fixed;top:12px;left:12px;z-index:50;font:600 13px/1 system-ui,sans-serif;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;text-decoration:none;backdrop-filter:blur(6px)">← 한눈에 보기</a>
+<main>
+<header>
+  <a class="backlink" href="equity.html">← 주가지수 선물 설명으로 돌아가기</a>
+  <span class="eyebrow">관련 ETF · ES · NQ · YM · RTY</span>
+  <h1>주가지수 선물 대신<br><span class="hl">ETF로 사면</span> 뭐가 있을까?</h1>
+  <p class="lead">S&P500(ES), 나스닥100(NQ), 다우(YM), 러셀2000(RTY) 선물마다 같은 지수를 따라가는 미국 ETF가 1배, 2배, 3배, 그리고 인버스까지 다 있어요. 지수 ETF는 선물을 사는 게 아니라 <b>주식을 직접 담거나 스왑</b>으로 지수를 따라가요.</p>
+  <div class="answer"><p><strong>한 줄 정답:</strong> 1배는 <b>SPY · QQQ · DIA · IWM</b>, 3배 롱은 <b>SPXL · TQQQ · UDOW · TNA</b>, 3배 숏은 <b>SPXS · SQQQ · SDOW · TZA</b>가 각 지수에서 거래가 제일 많아요.</p><p>주가지수 선물만 담아서 운용하는 ETF는 사실상 없어요. 그래도 지수가 같으니 움직임은 선물과 거의 같아요(배당과 금리 차이만큼만 달라요).</p></div>
+  <div class="quote" aria-label="IBKR 시세"><div><small>관련 ETF 수</small><b>32개</b><span>이 페이지에 정리한 미국 상장 상품</span></div><div><small>거래 제일 많은 상품</small><b>SPY</b><span>$311억 / 하루</span></div><div><small>레버리지 롱 대표</small><b>TQQQ</b><span>$32.7억 / 하루</span></div><div><small>인버스(숏) 대표</small><b>SQQQ</b><span>$19.0억 / 하루</span></div></div>
+  <p class="cap">IBKR 조회: 2026-11-04 오전 6:30~7:00 (캘리포니아 시간, 정규장 개장 전후). 거래대금은 IBKR의 최근 90일 하루 평균, 주식 수는 그 금액을 현재가로 나눈 근사치예요. 운용자산(AUM)은 IBKR 순자산 값이에요.</p>
+  <nav class="toc" aria-label="목차"><a href="#pick">추천</a><a href="#list">ETF 목록</a><a href="#volume">거래량 비교</a><a href="#struct">구조 읽는 법</a><a href="#vsfut">선물 vs ETF</a><a href="#cautions">주의점</a></nav>
+</header>
+<section id="pick">
+  <span class="eyebrow">1. 이렇게 고르세요</span>
+  <h2>목적별 추천</h2>
+<div class="cards"><div><span class="tag t-3">1배</span><h3>그냥 지수를 사고 싶다면</h3><p><b>SPY</b>(S&P), <b>QQQ</b>(나스닥), <b>DIA</b>(다우), <b>IWM</b>(러셀). 오래 들고 갈 거면 보수가 싼 VOO · QQQM · VTWO도 좋아요.</p></div><div><span class="tag t-1">3배 롱</span><h3>하루 이틀 강하게 롱</h3><p><b>SPXL</b> · <b>TQQQ</b> · <b>UDOW</b> · <b>TNA</b>. 같은 3배라도 거래가 많은 쪽이 스프레드가 좁아요.</p></div><div><span class="tag t-spec">인버스</span><h3>하락에 베팅·헤지</h3><p>-1배는 <b>SH · PSQ · DOG · RWM</b>, -3배는 <b>SPXS · SQQQ · SDOW · TZA</b>.</p></div><div><span class="tag t-4">선물이 나을 때</span><h3>며칠 이상 레버리지</h3><p>레버리지를 오래 들고 갈 거면 MES · MNQ · MYM · M2K 마이크로 선물이 매일 리셋이 없어서 더 깔끔해요.</p></div></div>
+</section>
+<section id="list">
+  <span class="eyebrow">2. 한 줄씩 비교</span>
+  <h2>관련 ETF 전체 목록</h2>
+<div class="grp"><h3>S&P 500 · ES / MES</h3><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>SPY</b><small>SPDR S&P 500</small></td><td><span class="lev l1">1배</span></td><td class="num">$311억</td><td class="num">4,069만 주</td><td class="num">$7,969억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">세계에서 거래가 가장 많은 ETF. 옵션도 제일 활발</td></tr><tr><td><b>VOO</b><small>뱅가드 S&P 500</small></td><td><span class="lev l1">1배</span></td><td class="num">$50.4억</td><td class="num">718만 주</td><td class="num">$1.0조</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">보수 0.03%, 오래 들고 갈 때</td></tr><tr><td><b>IVV</b><small>아이셰어즈 S&P 500</small></td><td><span class="lev l1">1배</span></td><td class="num">$49.6억</td><td class="num">646만 주</td><td class="num">$8,700억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">VOO와 거의 같음</td></tr><tr><td><b>SSO</b><small>ProShares Ultra S&P500</small></td><td><span class="lev lx">2배</span></td><td class="num">$2.5억</td><td class="num">358만 주</td><td class="num">$84.5억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>UPRO</b><small>ProShares UltraPro S&P500</small></td><td><span class="lev lx">3배</span></td><td class="num">$2.7억</td><td class="num">189만 주</td><td class="num">$51.9억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>SPXL</b><small>Direxion S&P500 Bull 3X</small></td><td><span class="lev lx">3배</span></td><td class="num">$4.3억</td><td class="num">155만 주</td><td class="num">$66.6억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">3배 롱 중 거래 1위</td></tr><tr><td><b>SH</b><small>ProShares Short S&P500</small></td><td><span class="lev inv">-1배</span></td><td class="num">$2.7억</td><td class="num">842만 주</td><td class="num">$9.5억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">-1배 숏 대표</td></tr><tr><td><b>SDS</b><small>ProShares UltraShort S&P500</small></td><td><span class="lev inv">-2배</span></td><td class="num">$1.7억</td><td class="num">317만 주</td><td class="num">$3.7억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>SPXU</b><small>ProShares UltraPro Short S&P500</small></td><td><span class="lev inv">-3배</span></td><td class="num">$2.8억</td><td class="num">796만 주</td><td class="num">$4.3억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>SPXS</b><small>Direxion S&P500 Bear 3X</small></td><td><span class="lev inv">-3배</span></td><td class="num">$3.1억</td><td class="num">1,244만 주</td><td class="num">$3.3억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">3배 숏 중 거래 1위</td></tr></tbody></table></div></div>
+<div class="grp"><h3>나스닥 100 · NQ / MNQ</h3><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>QQQ</b><small>인베스코 QQQ</small></td><td><span class="lev l1">1배</span></td><td class="num">$241억</td><td class="num">3,492만 주</td><td class="num">$4,638억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">나스닥100 대표, 거래대금 세계 2위급</td></tr><tr><td><b>QQQM</b><small>인베스코 나스닥100</small></td><td><span class="lev l1">1배</span></td><td class="num">$8.2억</td><td class="num">290만 주</td><td class="num">$1,060억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">QQQ보다 보수 낮고 주가 낮음</td></tr><tr><td><b>QLD</b><small>ProShares Ultra QQQ</small></td><td><span class="lev lx">2배</span></td><td class="num">$3.4억</td><td class="num">419만 주</td><td class="num">$133억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>TQQQ</b><small>ProShares UltraPro QQQ</small></td><td><span class="lev lx">3배</span></td><td class="num">$32.7억</td><td class="num">5,309만 주</td><td class="num">$321억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">레버리지 ETF 중 거래 1위</td></tr><tr><td><b>PSQ</b><small>ProShares Short QQQ</small></td><td><span class="lev inv">-1배</span></td><td class="num">$4.2억</td><td class="num">1,567만 주</td><td class="num">$6.1억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>QID</b><small>ProShares UltraShort QQQ</small></td><td><span class="lev inv">-2배</span></td><td class="num">$5.3억</td><td class="num">3,519만 주</td><td class="num">$3.1억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>SQQQ</b><small>ProShares UltraPro Short QQQ</small></td><td><span class="lev inv">-3배</span></td><td class="num">$19.0억</td><td class="num">4,530만 주</td><td class="num">$20.4억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">인버스 중 거래 1위</td></tr></tbody></table></div></div>
+<div class="grp"><h3>다우존스 30 · YM / MYM</h3><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>DIA</b><small>SPDR 다우존스</small></td><td><span class="lev l1">1배</span></td><td class="num">$17.1억</td><td class="num">323만 주</td><td class="num">$451억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>DDM</b><small>ProShares Ultra Dow30</small></td><td><span class="lev lx">2배</span></td><td class="num">$1,179만</td><td class="num">18만 주</td><td class="num">$5.1억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo">거래 적음</td></tr><tr><td><b>UDOW</b><small>ProShares UltraPro Dow30</small></td><td><span class="lev lx">3배</span></td><td class="num">$1.2억</td><td class="num">177만 주</td><td class="num">$8.4억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>DOG</b><small>ProShares Short Dow30</small></td><td><span class="lev inv">-1배</span></td><td class="num">$1.3억</td><td class="num">624만 주</td><td class="num">$1.2억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>DXD</b><small>ProShares UltraShort Dow30</small></td><td><span class="lev inv">-2배</span></td><td class="num">$5,080만</td><td class="num">301만 주</td><td class="num">$4,170만</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr><tr><td><b>SDOW</b><small>ProShares UltraPro Short Dow30</small></td><td><span class="lev inv">-3배</span></td><td class="num">$9,163만</td><td class="num">393만 주</td><td class="num">$1.5억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr></tbody></table></div></div>
+<div class="grp"><h3>러셀 2000 · RTY / M2K</h3><p class="note">러셀 표는 10/28 조사 결과를 오늘 다시 조회해서 갱신했어요.</p><div class="tbl"><table class="etf-t"><thead><tr><th>티커</th><th>레버리지</th><th>90일 평균 거래대금</th><th>≈ 하루 주식 수</th><th>운용자산</th><th>구조</th><th>유동성</th><th>메모</th></tr></thead><tbody><tr><td><b>IWM</b><small>아이셰어즈 러셀2000</small></td><td><span class="lev l1">1배</span></td><td class="num">$61.8억</td><td class="num">2,163만 주</td><td class="num">$755억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">러셀 대표, 옵션도 활발</td></tr><tr><td><b>VTWO</b><small>뱅가드 러셀2000</small></td><td><span class="lev l1">1배</span></td><td class="num">$1.6억</td><td class="num">136만 주</td><td class="num">$166억</td><td><span class="st">주식 보유</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo"></td></tr><tr><td><b>UWM</b><small>ProShares Ultra Russell2000</small></td><td><span class="lev lx">2배</span></td><td class="num">$1,824만</td><td class="num">31만 주</td><td class="num">$2.2억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr><tr><td><b>TNA</b><small>Direxion Small Cap Bull 3X</small></td><td><span class="lev lx">3배</span></td><td class="num">$2.6억</td><td class="num">422만 주</td><td class="num">$13.3억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">3배 롱 대표</td></tr><tr><td><b>URTY</b><small>ProShares UltraPro Russell2000</small></td><td><span class="lev lx">3배</span></td><td class="num">$2,670만</td><td class="num">37만 주</td><td class="num">$2.8억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr><tr><td><b>RWM</b><small>ProShares Short Russell2000</small></td><td><span class="lev inv">-1배</span></td><td class="num">$5.0억</td><td class="num">3,550만 주</td><td class="num">$1.6억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">AUM 대비 거래 많음</td></tr><tr><td><b>TWM</b><small>ProShares UltraShort Russell2000</small></td><td><span class="lev inv">-2배</span></td><td class="num">$1,934만</td><td class="num">84만 주</td><td class="num">$5,638만</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr><tr><td><b>TZA</b><small>Direxion Small Cap Bear 3X</small></td><td><span class="lev inv">-3배</span></td><td class="num">$1.9억</td><td class="num">429만 주</td><td class="num">$2.0억</td><td><span class="st">스왑 위주</span></td><td><span class="liq g4">아주 좋음</span></td><td class="memo">3배 숏 대표</td></tr><tr><td><b>SRTY</b><small>ProShares UltraPro Short Russell2000</small></td><td><span class="lev inv">-3배</span></td><td class="num">$3,594만</td><td class="num">146만 주</td><td class="num">$6,819만</td><td><span class="st">스왑 위주</span></td><td><span class="liq g3">좋음</span></td><td class="memo"></td></tr></tbody></table></div></div><p class="cap">유동성 등급: 하루 거래대금 $1억 이상 아주 좋음 · $1천만 이상 좋음 · $100만 이상 보통 · 그 아래 얇음(스프레드 주의).</p>
+</section>
+<section id="volume">
+  <span class="eyebrow">3. 거래량 한눈에</span>
+  <h2>어디에 돈이 몰려 있나</h2>
+<div class="fig"><svg viewBox="0 0 720 896" role="img" aria-label="주가지수 관련 ETF 90일 평균 거래대금 비교"><text x="20" y="20" class="sm">90일 평균 하루 거래대금 (로그 눈금: 한 칸 = 10배)</text><line x1="90.0" y1="30" x2="90.0" y2="866" stroke="var(--line)"/><text x="90.0" y="888" text-anchor="middle" class="sm">$1만</text><line x1="162.9" y1="30" x2="162.9" y2="866" stroke="var(--line)"/><text x="162.9" y="888" text-anchor="middle" class="sm">$10만</text><line x1="235.7" y1="30" x2="235.7" y2="866" stroke="var(--line)"/><text x="235.7" y="888" text-anchor="middle" class="sm">$100만</text><line x1="308.6" y1="30" x2="308.6" y2="866" stroke="var(--line)"/><text x="308.6" y="888" text-anchor="middle" class="sm">$1천만</text><line x1="381.4" y1="30" x2="381.4" y2="866" stroke="var(--line)"/><text x="381.4" y="888" text-anchor="middle" class="sm">$1억</text><line x1="454.3" y1="30" x2="454.3" y2="866" stroke="var(--line)"/><text x="454.3" y="888" text-anchor="middle" class="sm">$10억</text><line x1="527.1" y1="30" x2="527.1" y2="866" stroke="var(--line)"/><text x="527.1" y="888" text-anchor="middle" class="sm">$100억</text><line x1="600.0" y1="30" x2="600.0" y2="866" stroke="var(--line)"/><text x="600.0" y="888" text-anchor="middle" class="sm">$1천억</text><text x="20" y="50" class="b" style="font-family:var(--mono)">SPY</text><rect class="grow" x="90" y="37" width="473.0" height="17" rx="4" fill="var(--c2)"/><text x="571.0" y="50" class="sm">$311억</text><text x="20" y="76" class="b" style="font-family:var(--mono)">QQQ</text><rect class="grow" x="90" y="63" width="465.0" height="17" rx="4" fill="var(--c2)"/><text x="563.0" y="76" class="sm">$241억</text><text x="20" y="102" class="b" style="font-family:var(--mono)">IWM</text><rect class="grow" x="90" y="89" width="421.9" height="17" rx="4" fill="var(--c2)"/><text x="519.9" y="102" class="sm">$61.8억</text><text x="20" y="128" class="b" style="font-family:var(--mono)">VOO</text><rect class="grow" x="90" y="115" width="415.4" height="17" rx="4" fill="var(--c2)"/><text x="513.4" y="128" class="sm">$50.4억</text><text x="20" y="154" class="b" style="font-family:var(--mono)">IVV</text><rect class="grow" x="90" y="141" width="415.0" height="17" rx="4" fill="var(--c2)"/><text x="513.0" y="154" class="sm">$49.6억</text><text x="20" y="180" class="b" style="font-family:var(--mono)">TQQQ</text><rect class="grow" x="90" y="167" width="401.8" height="17" rx="4" fill="var(--c2)"/><text x="499.8" y="180" class="sm">$32.7억</text><text x="20" y="206" class="b" style="font-family:var(--mono)">SQQQ</text><rect class="grow" x="90" y="193" width="384.6" height="17" rx="4" fill="var(--c2)"/><text x="482.6" y="206" class="sm">$19.0억</text><text x="20" y="232" class="b" style="font-family:var(--mono)">DIA</text><rect class="grow" x="90" y="219" width="381.3" height="17" rx="4" fill="var(--c2)"/><text x="479.3" y="232" class="sm">$17.1억</text><text x="20" y="258" class="b" style="font-family:var(--mono)">QQQM</text><rect class="grow" x="90" y="245" width="358.1" height="17" rx="4" fill="var(--c2)"/><text x="456.1" y="258" class="sm">$8.2억</text><text x="20" y="284" class="b" style="font-family:var(--mono)">QID</text><rect class="grow" x="90" y="271" width="344.3" height="17" rx="4" fill="var(--c2)"/><text x="442.3" y="284" class="sm">$5.3억</text><text x="20" y="310" class="b" style="font-family:var(--mono)">RWM</text><rect class="grow" x="90" y="297" width="342.3" height="17" rx="4" fill="var(--c2)"/><text x="440.3" y="310" class="sm">$5.0억</text><text x="20" y="336" class="b" style="font-family:var(--mono)">SPXL</text><rect class="grow" x="90" y="323" width="337.8" height="17" rx="4" fill="var(--c2)"/><text x="435.8" y="336" class="sm">$4.3억</text><text x="20" y="362" class="b" style="font-family:var(--mono)">PSQ</text><rect class="grow" x="90" y="349" width="336.7" height="17" rx="4" fill="var(--c2)"/><text x="434.7" y="362" class="sm">$4.2억</text><text x="20" y="388" class="b" style="font-family:var(--mono)">QLD</text><rect class="grow" x="90" y="375" width="330.6" height="17" rx="4" fill="var(--c2)"/><text x="428.6" y="388" class="sm">$3.4억</text><text x="20" y="414" class="b" style="font-family:var(--mono)">SPXS</text><rect class="grow" x="90" y="401" width="327.1" height="17" rx="4" fill="var(--c2)"/><text x="425.1" y="414" class="sm">$3.1억</text><text x="20" y="440" class="b" style="font-family:var(--mono)">SPXU</text><rect class="grow" x="90" y="427" width="323.8" height="17" rx="4" fill="var(--c2)"/><text x="421.8" y="440" class="sm">$2.8억</text><text x="20" y="466" class="b" style="font-family:var(--mono)">UPRO</text><rect class="grow" x="90" y="453" width="323.4" height="17" rx="4" fill="var(--c2)"/><text x="421.4" y="466" class="sm">$2.7억</text><text x="20" y="492" class="b" style="font-family:var(--mono)">SH</text><rect class="grow" x="90" y="479" width="323.3" height="17" rx="4" fill="var(--c2)"/><text x="421.3" y="492" class="sm">$2.7억</text><text x="20" y="518" class="b" style="font-family:var(--mono)">TNA</text><rect class="grow" x="90" y="505" width="321.7" height="17" rx="4" fill="var(--c2)"/><text x="419.7" y="518" class="sm">$2.6억</text><text x="20" y="544" class="b" style="font-family:var(--mono)">SSO</text><rect class="grow" x="90" y="531" width="320.1" height="17" rx="4" fill="var(--c2)"/><text x="418.1" y="544" class="sm">$2.5억</text><text x="20" y="570" class="b" style="font-family:var(--mono)">TZA</text><rect class="grow" x="90" y="557" width="311.6" height="17" rx="4" fill="var(--c2)"/><text x="409.6" y="570" class="sm">$1.9억</text><text x="20" y="596" class="b" style="font-family:var(--mono)">SDS</text><rect class="grow" x="90" y="583" width="308.8" height="17" rx="4" fill="var(--c2)"/><text x="406.8" y="596" class="sm">$1.7억</text><text x="20" y="622" class="b" style="font-family:var(--mono)">VTWO</text><rect class="grow" x="90" y="609" width="305.8" height="17" rx="4" fill="var(--c2)"/><text x="403.8" y="622" class="sm">$1.6억</text><text x="20" y="648" class="b" style="font-family:var(--mono)">DOG</text><rect class="grow" x="90" y="635" width="300.8" height="17" rx="4" fill="var(--c2)"/><text x="398.8" y="648" class="sm">$1.3억</text><text x="20" y="674" class="b" style="font-family:var(--mono)">UDOW</text><rect class="grow" x="90" y="661" width="298.1" height="17" rx="4" fill="var(--c2)"/><text x="396.1" y="674" class="sm">$1.2억</text><text x="20" y="700" class="b" style="font-family:var(--mono)">SDOW</text><rect class="grow" x="90" y="687" width="288.7" height="17" rx="4" fill="var(--c3)"/><text x="386.7" y="700" class="sm">$9,163만</text><text x="20" y="726" class="b" style="font-family:var(--mono)">DXD</text><rect class="grow" x="90" y="713" width="270.0" height="17" rx="4" fill="var(--c3)"/><text x="368.0" y="726" class="sm">$5,080만</text><text x="20" y="752" class="b" style="font-family:var(--mono)">SRTY</text><rect class="grow" x="90" y="739" width="259.0" height="17" rx="4" fill="var(--c3)"/><text x="357.0" y="752" class="sm">$3,594만</text><text x="20" y="778" class="b" style="font-family:var(--mono)">URTY</text><rect class="grow" x="90" y="765" width="249.6" height="17" rx="4" fill="var(--c3)"/><text x="347.6" y="778" class="sm">$2,670만</text><text x="20" y="804" class="b" style="font-family:var(--mono)">TWM</text><rect class="grow" x="90" y="791" width="239.4" height="17" rx="4" fill="var(--c3)"/><text x="337.4" y="804" class="sm">$1,934만</text><text x="20" y="830" class="b" style="font-family:var(--mono)">UWM</text><rect class="grow" x="90" y="817" width="237.6" height="17" rx="4" fill="var(--c3)"/><text x="335.6" y="830" class="sm">$1,824만</text><text x="20" y="856" class="b" style="font-family:var(--mono)">DDM</text><rect class="grow" x="90" y="843" width="223.8" height="17" rx="4" fill="var(--c3)"/><text x="321.8" y="856" class="sm">$1,179만</text></svg></div><p class="cap">막대 색: 초록 $1억 이상 · 파랑 $1천만 이상 · 보라 $100만 이상 · 빨강 그 아래. 로그 눈금이라 한 칸 차이가 10배예요.</p>
+</section>
+<section id="struct">
+  <span class="eyebrow">4. 구조 읽는 법</span>
+  <h2>이 페이지에 나오는 상품 구조</h2>
+<div class="cards"><div><span class="tag t-3">주식 보유</span><h3>주식 보유</h3><p>지수에 들어 있는 주식을 직접 사요. 배당이 나오고 선물과 거의 같이 움직여요.</p></div><div><span class="tag t-3">스왑 위주</span><h3>스왑 위주</h3><p>주로 은행과 맺은 스왑 계약으로 지수 수익률을 받아요. 선물은 거의 안 써요.</p></div></div>
+</section>
+<section id="vsfut">
+  <span class="eyebrow">5. 선물로 할까, ETF로 할까</span>
+  <h2>IBKR 선물과 ETF 차이</h2>
+<div class="tbl"><table><thead><tr><th></th><th>선물 (IBKR)</th><th>ETF</th></tr></thead><tbody><tr><td>거래 시간 (캘리포니아)</td><td>거의 24시간 (일~금)</td><td>정규장 06:30~13:00 · IBKR 확장시간 01:00~17:00, 확장시간엔 호가가 얇아요</td></tr><tr><td>최소 단위</td><td>1계약 (명목가치 수만~수십만 달러)</td><td>1주 (수십 달러부터)</td></tr><tr><td>레버리지</td><td>증거금으로 자연스럽게 큼</td><td>상품에 정해진 배수만큼 (매일 리셋)</td></tr><tr><td>만기·롤오버</td><td>직접 다음 월물로 넘겨야 해요</td><td>펀드가 알아서 굴려요 (비용은 가격에 녹아 있음)</td></tr><tr><td>비용</td><td>수수료 + 스프레드</td><td>연 보수(0.1~1%대) + 스프레드</td></tr><tr><td>세금 서류</td><td>1256 계약 (60/40 과세)</td><td>보통 1099</td></tr></tbody></table></div>
+</section>
+<section id="cautions">
+  <span class="eyebrow">6. 주의점</span>
+  <h2>사기 전에 꼭 알아둘 것</h2>
+<div class="warn"><div><h3>레버리지·인버스는 '하루' 기준</h3><p>2배, -2배 같은 배수는 하루 수익률에만 맞춰져 있어요. 오르락내리락하는 장에서 며칠 이상 들고 있으면 기초자산이 제자리여도 손실이 쌓여요(변동성 손실). 단기 매매용으로 쓰세요.</p></div><div><h3>장 시간 밖에서는 얇아요</h3><p>ETF는 캘리포니아 06:30~13:00 정규장에 거래가 몰려요. 선물은 밤에도 움직이는데, 그 사이 ETF는 다음 날 아침에 갭으로 따라가요.</p></div><div><h3>같은 지수라도 3배는 3배가 아님</h3><p>TQQQ를 한 달 들고 있으면 나스닥이 10% 올라도 30%가 아니라 그보다 적거나 많을 수 있어요. 매일 3배를 다시 맞추기 때문이에요.</p></div><div><h3>거래가 적은 상품은 지정가로</h3><p>하루 거래대금이 $100만도 안 되는 상품은 호가 사이가 넓어요. 시장가 주문 대신 지정가로 넣으세요.</p></div><div><h3>배당</h3><p>SPY·QQQ 같은 1배 ETF는 배당을 주지만 선물은 배당이 가격에 미리 빠져 있어요. 그래서 선물과 ETF 가격 차이가 조금 나요.</p></div></div>
+</section>
+<section class="fun"><h3>📈 보너스: ES 1계약 = SPY 몇 주?</h3><p>ES는 S&P500 × $50이라 지수 7,600이면 약 $38만이에요. SPY 한 주가 지수의 약 1/10이니 ES 1계약은 SPY 약 500주, MES 1계약은 약 50주와 비슷한 크기예요.</p></section>
+</main>
+
+</html>
